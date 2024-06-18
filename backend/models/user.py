@@ -22,8 +22,9 @@ class User:
             self.email = 'user1@gmail.com'
             self.password = '12345'
             self.skills = 'skills in json'
+            self.about = 'passionate software developer'
             self.team_count = 10
-            storage.new_user(self)
+        storage.new_user(self)
 
     def save_user(self):
         """stores the user to storage engine"""

@@ -1,11 +1,18 @@
 import unittest
 from unittest.mock import patch
 from models.user import User
+from models import storage
+from services.user_service import UserService
 
 mike = User()
-print(mike)
-mike.save_user()
-print(mike.to_dict())
+UserService.create_user()
+# print(mike)
+# mike.save_user()
+print("------ ------ -----")
+print("reloading user from a file")
+user_infile = storage.reload_user()
+for key, value in user_infile.items():
+    print(key, value)
 
 
 class TestUser(unittest.TestCase):

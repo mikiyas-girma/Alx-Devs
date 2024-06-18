@@ -1,6 +1,6 @@
 {
-    "User.9b738f2b-5c93-44b6-890e-42be44d58878": {
-        "id": "9b738f2b-5c93-44b6-890e-42be44d58878",
+    "User.45ee57a5-4567-49cc-bb8d-6273b28dece1": {
+        "id": "45ee57a5-4567-49cc-bb8d-6273b28dece1",
         "name": "User1",
         "username": "username1",
         "email": "user1@gmail.com",
@@ -8,13 +8,38 @@
         "skills": "skills in json",
         "team_count": 10
     },
-    "User.9ca05f80-82bb-4102-a9cf-fce9ea36ad84": {
-        "id": "9ca05f80-82bb-4102-a9cf-fce9ea36ad84",
+    "User.serid12": {
+        "id": "serid12",
+        "name": "mikeser",
+        "username": "sirusername",
+        "skills": {
+            "frontend": [
+                "React",
+                "Tailwindcss"
+            ],
+            "backend": [
+                "Flask",
+                "Django"
+            ]
+        }
+    },
+    "User.64cb8191-7b3e-4589-ac33-01ee0cdd63fa": {
+        "id": "64cb8191-7b3e-4589-ac33-01ee0cdd63fa",
         "name": "User1",
         "username": "username1",
         "email": "user1@gmail.com",
         "password": "12345",
         "skills": "skills in json",
+        "team_count": 10
+    },
+    "User.75357ae2-5cfe-4f4c-a3ae-4fc0b3a0d3d4": {
+        "id": "75357ae2-5cfe-4f4c-a3ae-4fc0b3a0d3d4",
+        "name": "User1",
+        "username": "username1",
+        "email": "user1@gmail.com",
+        "password": "12345",
+        "skills": "skills in json",
+        "about": "passionate software developer",
         "team_count": 10
     }
 }
