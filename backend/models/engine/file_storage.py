@@ -34,7 +34,7 @@ class FileStorage:
         for key, value in self.__user_objects.items():
             user_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(user_dict, file)
+            json.dump(user_dict, file, indent=4)
 
     def reload_user(self):
         """decodes json file to usable python objects"""
@@ -47,3 +47,4 @@ class FileStorage:
                 for key, value in user_dict.items():
                     user_objs[key] = self.User(**value)
                 self.__user_objects = user_objs
+            return self.__user_objects

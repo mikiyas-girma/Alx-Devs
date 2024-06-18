@@ -10,7 +10,7 @@ class User:
     """
 
     def __init__(self, *args, **kwargs):
-        """Instiantes new user """
+        """Instantiates new user """
         from models import storage
         if len(kwargs) > 0:
             for key, value in kwargs.items():
@@ -23,7 +23,7 @@ class User:
             self.password = '12345'
             self.skills = 'skills in json'
             self.team_count = 10
-            storage.new_user()
+            storage.new_user(self)
 
     def save_user(self):
         """stores the user to storage engine"""
@@ -39,8 +39,3 @@ class User:
         dict = {}
         dict = self.__dict__.copy()
         return dict
-
-
-mike = User()
-mike.save_user()
-print(mike)
