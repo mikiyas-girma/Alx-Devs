@@ -48,6 +48,32 @@ class DBStorage:
             return
         self.__session.add(obj)
 
+    def all(self, cls=None):
+        """queries on the current db session and returns
+            a dictionary of models
+        """
+        classes = [User]
+        obj_dict = {}
+        if cls is None:
+            for cls in classes:
+                query = self.__session.query(cls)
+                for obj in query.all():
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    print(key)
+                    obj_dict[key] = obj
+        else:
+            query = self.__session.query(cls)
+            for obj in query.all():
+                key = obj.__class__.__name__ + '.' + obj.id
+                obj_dict[key] = obj
+        return obj_dict
+
     def save(self):
         """commits all changes in the current database session"""
         self.__session.commit()
+
+    def close(self):
+        """
+        calls remove() on the private session attribute
+        """
+        self.__session.close()

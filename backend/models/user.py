@@ -51,4 +51,7 @@ class User(Base):
         """return the dictionary representation of the user class"""
         dict = {}
         dict = self.__dict__.copy()
+        dict["__class__"] = str(type(self).__name__)
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
         return dict
