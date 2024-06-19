@@ -14,7 +14,9 @@ class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    name: Mapped[str] = mapped_column(String(80), unique=True, nullable=False)
+    username: Mapped[str] = mapped_column(String(80), unique=True,
+                                          nullable=False)
+    name: Mapped[str] = mapped_column(String(36), nullable=True)
     email: Mapped[str] = mapped_column(String(120), unique=True,
                                        nullable=False)
     password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
@@ -23,24 +25,16 @@ class User(Base):
 
     def __init__(self, *args, **kwargs):
         """Instantiates new user """
-        from models import storage
-        if len(kwargs) > 0:
-            for key, value in kwargs.items():
-                self.__setattr__(key, value)
-        else:
-            self.id = str(uuid.uuid4())
-            self.name = 'User1'
-            self.username = 'username1'
-            self.email = 'user1@gmail.com'
-            self.password_hash = '12345'
-            self.skills = 'skills in json'
-            self.about = 'passionate software developer'
-            self.team_count = 10
-        storage.new(self)
+        if not kwargs:
+            raise ValueError("Not enough information provided")
+        self.id = str(uuid.uuid4())
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def save_user(self):
         """stores the user to storage engine"""
         from models import storage
+        storage.new(self)
         storage.save()
 
     def __str__(self) -> str:
@@ -49,9 +43,9 @@ class User(Base):
 
     def to_dict(self):
         """return the dictionary representation of the user class"""
-        dict = {}
-        dict = self.__dict__.copy()
-        dict["__class__"] = str(type(self).__name__)
-        if "_sa_instance_state" in dict:
-            del dict["_sa_instance_state"]
-        return dict
+        user_dict = {}
+        user_dict = self.__dict__.copy()
+        user_dict["__class__"] = str(type(self).__name__)
+        if "_sa_instance_state" in user_dict:
+            del user_dict["_sa_instance_state"]
+        return user_dict
