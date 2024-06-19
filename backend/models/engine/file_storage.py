@@ -12,31 +12,30 @@ class FileStorage:
     """
 
     __file_path = 'file.json'
-    __user_objects = {}
-    __project__objects = {}
+    __objects = {}
 
     def __init__(self):
         """initializes file storage instance"""
         self.User = import_module('models.user').User
 
-    def all_users(self):
+    def all(self):
         """returns all the stored objects"""
-        return self.__user_objects
+        return self.__objects
 
-    def new_user(self, user):
+    def new(self, user):
         """stores new user that is not stored previously"""
         user_id = f"{user.__class__.__name__}.{user.id}"
-        self.__user_objects[user_id] = user
+        self.__objects[user_id] = user
 
-    def save_user(self):
+    def save(self):
         """encodes the stored objects and saves it json file"""
         user_dict = {}
-        for key, value in self.__user_objects.items():
+        for key, value in self.__objects.items():
             user_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as file:
             json.dump(user_dict, file, indent=4)
 
-    def reload_user(self):
+    def reload(self):
         """decodes json file to usable python objects"""
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, 'r', encoding='utf-8') as file:
@@ -46,5 +45,5 @@ class FileStorage:
                 user_objs = {}
                 for key, value in user_dict.items():
                     user_objs[key] = self.User(**value)
-                self.__user_objects = user_objs
-            return self.__user_objects
+                self.__objects = user_objs
+            return self.__objects
