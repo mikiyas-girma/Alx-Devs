@@ -5,6 +5,8 @@
 
 from api.v1.routes import app_views
 from flask import jsonify, request, abort
+from flask_jwt_extended import (create_access_token, jwt_required,
+                                get_jwt_identity)
 from models import storage
 from models.user import User
 
@@ -48,3 +50,38 @@ def get_user(user_id):
     if not user:
         abort(404)
     return jsonify(user.to_dict())
+
+
+@app_views.route('/login', methods=['POST'], strict_slashes=False)
+def login():
+    """
+       authenticates the user to access protected page
+    """
+    print("login api")
+    req = request.get_json()
+    if not isinstance(req, dict):
+        abort(400, "Not a json")
+    if 'username' not in req:
+        abort(400, "username is missing")
+    if 'password' not in req:
+        abort(400, "missing password")
+
+    user = storage.get(User, username=req['username'])
+    if not user or not user.check_password(req['password']):
+        return jsonify({"msg": "invalid username or password"}), 401
+
+    access_token = create_access_token(identity=user.id)
+    return jsonify(access_token=access_token), 200
+
+
+@app_views.route('/projects/', methods=['GET'], strict_slashes=False)
+@jwt_required()
+def create_project():
+    """
+        create a project where users are able to join
+    """
+    current_user_id = get_jwt_identity()
+    user = storage.get(User, id=current_user_id)
+    if not user:
+        return jsonify({"msg": "You are not authorized to access this"})
+    return jsonify({"msg": "project created successfully"}), 200

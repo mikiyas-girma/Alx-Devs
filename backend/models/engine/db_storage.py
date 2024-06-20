@@ -5,7 +5,6 @@ from os import getenv
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-import models
 from models.base import Base
 from models.user import User  # noqa
 
@@ -69,15 +68,20 @@ class DBStorage:
                 obj_dict[key] = obj
         return obj_dict
 
-    def get(self, cls, id):
+    def get(self, cls, id=None, username=None):
         """
-        get specific object of the given class with given id
+        get specific object of the given class with given id or username
         """
-        obj_dict = models.storage.all(cls)
-        match_string = cls.__name__ + '.' + id
-        for key, value in obj_dict.items():
-            if key == match_string:
-                return value
+        if id:
+            match_string = cls.__name__ + '.' + id
+            obj_dict = self.all(cls)
+            return obj_dict.get(match_string)
+
+        if username:
+            obj_dict = self.all(cls)
+            for key, value in obj_dict.items():
+                if key.startswith(cls.__name__) and value.username == username:
+                    return value
 
         return None
 
