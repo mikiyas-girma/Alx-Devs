@@ -39,3 +39,12 @@ def register_user():
     new_user = User(**request.json)
     new_user.save_user()
     return jsonify(new_user.to_dict()), 201
+
+
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def get_user(user_id):
+    """get specific user with given id"""
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404)
+    return jsonify(user.to_dict())
