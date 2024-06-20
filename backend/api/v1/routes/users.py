@@ -4,11 +4,13 @@
 """
 
 from api.v1.routes import app_views
-from flask import jsonify, request, abort
-from flask_jwt_extended import (create_access_token, jwt_required,
-                                get_jwt_identity)
+from flask import jsonify, request, abort, make_response
+from flask_jwt_extended import (
+                    create_access_token, jwt_required, get_csrf_token,
+                    get_jwt_identity, set_access_cookies, unset_jwt_cookies)
 from models import storage
 from models.user import User
+from datetime import timedelta
 
 
 @app_views.route('/users/', strict_slashes=False)
@@ -70,8 +72,25 @@ def login():
     if not user or not user.check_password(req['password']):
         return jsonify({"msg": "invalid username or password"}), 401
 
-    access_token = create_access_token(identity=user.id)
-    return jsonify(access_token=access_token), 200
+    access_token = create_access_token(identity=user.id,
+                                       expires_delta=timedelta(days=1))
+    response = make_response(jsonify({"msg": "Login successfull"}), 200)
+    set_access_cookies(response, access_token)
+
+    response.set_cookie('csrf_access_token', get_csrf_token(access_token),
+                        httponly=False, secure=True, samesite='Lax')
+    return response
+
+
+@app_views.route('/logout', methods=['POST'], strict_slashes=False)
+@jwt_required()
+def logout():
+    """ log out the user and delete the access token cookie
+    """
+    response = make_response(jsonify({"msg": "Logout successful"}), 200)
+    unset_jwt_cookies(response)
+
+    return response
 
 
 @app_views.route('/projects/', methods=['GET'], strict_slashes=False)
