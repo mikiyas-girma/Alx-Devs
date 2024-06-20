@@ -3,6 +3,7 @@
 User model
 """
 import uuid
+import bcrypt
 from models.base import Base
 from sqlalchemy import Integer, String, JSON
 from sqlalchemy.orm import Mapped, mapped_column
@@ -19,7 +20,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(36), nullable=True)
     email: Mapped[str] = mapped_column(String(120), unique=True,
                                        nullable=False)
-    password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
+    password: Mapped[str] = mapped_column(String(128), nullable=False)
     skills: Mapped[list[str]] = mapped_column(JSON, nullable=True)
     team_count: Mapped[int] = mapped_column(Integer, default=0)
 
@@ -29,7 +30,20 @@ class User(Base):
             raise ValueError("Not enough information provided")
         self.id = str(uuid.uuid4())
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key == 'password':
+                self.password = self._generate_pwd_hash(value)
+            else:
+                setattr(self, key, value)
+
+    def _generate_pwd_hash(self, password: str) -> str:
+        """Hashes the password using bcrypt """
+        return bcrypt.hashpw(password.encode('utf-8'),
+                             bcrypt.gensalt()).decode('utf-8')
+
+    def check_password(self, password: str) -> str:
+        """verifies the password against the stored hash """
+        return bcrypt.checkpw(password.encode('utf-8'),
+                              self.password.encode('utf-8'))
 
     def save_user(self):
         """stores the user to storage engine"""

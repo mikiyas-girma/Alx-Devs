@@ -12,10 +12,10 @@ class UserService:
     def create_user(data):
         """creates a new user"""
         new_user = User(
-            name='mikias',
-            username='mikeuser2',
-            email='mikigirma@gmail.com',
-            password_hash='djfdfh33dfdf',
+            name='mike3',
+            username='mikeuser3',
+            email='mikigirma3@gmail.com',
+            password='12345',
             skills={
                 'frontend': ['React', 'Tailwindcss'],
                 'backend': ['Flask', 'Django']

@@ -2,7 +2,7 @@
 """ restful service with flask application """
 
 from flask import Flask, jsonify
-# from models import storage
+from models import storage
 from api.v1.routes import app_views
 
 app = Flask(__name__)
@@ -10,10 +10,10 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 
-# @app.teardown_appcontext
-# def do_teardown(self):
-#     """ close the storage engine """
-#     storage.close()
+@app.teardown_appcontext
+def do_teardown(self):
+    """ close the storage engine """
+    storage.close()
 
 
 @app.errorhandler(404)

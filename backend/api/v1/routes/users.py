@@ -33,7 +33,7 @@ def register_user():
         abort(400, "email is required")
     if 'username' not in req:
         abort(400, "username is required")
-    if 'password_hash' not in req:
+    if 'password' not in req:
         abort(400, "password is required")
 
     new_user = User(**request.json)
