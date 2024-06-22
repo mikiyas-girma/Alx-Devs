@@ -6,7 +6,7 @@ import uuid
 import bcrypt
 from models.base import Base
 from sqlalchemy import Integer, String, JSON
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class User(Base):
@@ -23,6 +23,9 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(128), nullable=False)
     skills: Mapped[list[str]] = mapped_column(JSON, nullable=True)
     team_count: Mapped[int] = mapped_column(Integer, default=0)
+
+    projects = relationship('Project', back_populates='creator')
+    user_projects = relationship('UserProject', back_populates='user')
 
     def __init__(self, *args, **kwargs):
         """Instantiates new user """
@@ -52,7 +55,7 @@ class User(Base):
         storage.save()
 
     def __str__(self) -> str:
-        """prints user readable string representation of User model"""
+        """prints user readable(nice) string representation of User model"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def to_dict(self):
