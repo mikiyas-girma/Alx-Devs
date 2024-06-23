@@ -37,3 +37,13 @@ class UserProject(Base):
 
         for key, value in kwargs.items():
             setattr(self, key, value)
+
+    def save_user_project(self):
+        """
+            stores the relationship between user and project
+            in user_projects table
+        """
+        from models import storage
+
+        storage.new(self)
+        storage.save()

@@ -54,7 +54,7 @@ class DBStorage:
         """queries on the current db session and returns
             a dictionary of models
         """
-        classes = [User, Project]
+        classes = [User, Project, UserProject]
         obj_dict = {}
         if cls is None:
             for cls in classes:

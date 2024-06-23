@@ -9,6 +9,7 @@ from models import storage
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from models.user import User
 from models.project import Project
+from models.userproject import UserProject
 
 
 @app_views.route('/projects/', methods=['GET'], strict_slashes=False)
@@ -52,4 +53,11 @@ def create_project():
     new_project = Project(creator_id=current_user_id, **request.json)
     new_project.save_project()
 
-    return jsonify(new_project.to_dict(), {"user_id": current_user_id}), 201
+    user_project = UserProject(user_id=current_user_id,
+                               project_id=new_project.id,
+                               role='Owner',
+                               status='approved')
+    user_project.save_user_project()
+
+    return jsonify({"msg": "project created successfully",
+                    "project": new_project.to_dict()}), 201
