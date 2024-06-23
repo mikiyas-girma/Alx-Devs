@@ -32,6 +32,14 @@ def page_not_found(e):
     return jsonify(msg), 404
 
 
+@jwt.unauthorized_loader
+def unauthorized_req(callbackdata):
+    """used to return when a custom message when a request is made
+    with invalid or missing token
+    """
+    return jsonify({"msg": "Invalid token or token missing"}), 401
+
+
 @app.route('/api')
 def api():
     """status of the api"""

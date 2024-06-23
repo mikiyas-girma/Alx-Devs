@@ -7,7 +7,7 @@ from api.v1.routes import app_views
 from flask import jsonify, request, abort, make_response
 from flask_jwt_extended import (
                     create_access_token, jwt_required, get_csrf_token,
-                    get_jwt_identity, set_access_cookies, unset_jwt_cookies)
+                    set_access_cookies, unset_jwt_cookies)
 from models import storage
 from models.user import User
 from datetime import timedelta
@@ -91,16 +91,3 @@ def logout():
     unset_jwt_cookies(response)
 
     return response
-
-
-@app_views.route('/projects/', methods=['GET'], strict_slashes=False)
-@jwt_required()
-def create_project():
-    """
-        create a project where users are able to join
-    """
-    current_user_id = get_jwt_identity()
-    user = storage.get(User, id=current_user_id)
-    if not user:
-        return jsonify({"msg": "You are not authorized to access this"})
-    return jsonify({"msg": "project created successfully"}), 200

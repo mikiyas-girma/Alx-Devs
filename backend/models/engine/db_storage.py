@@ -7,6 +7,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base import Base
 from models.user import User  # noqa
+from models.project import Project  # noqa
+from models.userproject import UserProject  # noqa
 
 load_dotenv()
 
@@ -52,7 +54,7 @@ class DBStorage:
         """queries on the current db session and returns
             a dictionary of models
         """
-        classes = [User]
+        classes = [User, Project]
         obj_dict = {}
         if cls is None:
             for cls in classes:
