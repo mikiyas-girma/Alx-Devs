@@ -27,6 +27,13 @@ def ask_tojoin(project_id):
     project = storage.get(Project, id=project_id)
     if not project:
         return jsonify({"msg": "project not found"})
+    if user_id == project.creator_id:
+        return jsonify({"msg": "not allowed to request to a project you own"})
+
+    existing_application = storage.exists(UserProject, user_id=user_id,
+                                          project_id=project.id)
+    if existing_application:
+        return jsonify({"msg": "already applied to this project"})
 
     data = request.get_json()
     if not isinstance(data, dict):
@@ -34,10 +41,10 @@ def ask_tojoin(project_id):
     if 'role' not in data:
         abort(400, 'role is required')
 
-    user_project = UserProject(user_id=user.id,
-                               project_id=project.id,
-                               role=data['role']
-                               )
-    user_project.save_user_project()
+    # user_project = UserProject(user_id=user.id,
+    #                            project_id=project.id,
+    #                            role=data['role']
+    #                            )
+    # user_project.save_user_project()
 
     return jsonify({"msg": "request to join submitted"})

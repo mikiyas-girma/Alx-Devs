@@ -60,7 +60,7 @@ class DBStorage:
             for cls in classes:
                 query = self.__session.query(cls)
                 for obj in query.all():
-                    key = obj.__class__.__name__ + '.' + obj.id
+                    key = obj.__class__.__name__ + '.' + str(obj.id)
                     print(key)
                     obj_dict[key] = obj
         else:
@@ -86,6 +86,13 @@ class DBStorage:
                     return value
 
         return None
+
+    def exists(self, cls, **kwargs):
+        """
+            Checks if an object of the given class with the given filter
+            criteria exists. Returns True if it exists, False otherwise.
+        """
+        return self.__session.query(cls).filter_by(**kwargs).first() is not None  # noqa
 
     def save(self):
         """commits all changes in the current database session"""

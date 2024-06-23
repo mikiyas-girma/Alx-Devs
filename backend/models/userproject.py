@@ -4,7 +4,8 @@
     between users and projects
 """
 
-from sqlalchemy import Integer, String, ForeignKey, Enum
+import uuid
+from sqlalchemy import String, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.base import Base
 
@@ -16,7 +17,7 @@ class UserProject(Base):
 
     __tablename__ = 'user_projects'
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
     user_id: Mapped[str] = mapped_column(String(36), ForeignKey('users.id'))
     project_id: Mapped[str] = mapped_column(String(36),
                                             ForeignKey('projects.id'))
@@ -35,6 +36,7 @@ class UserProject(Base):
         if not kwargs:
             raise ValueError("Not enough information provided")
 
+        self.id = str(uuid.uuid4())
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -47,3 +49,16 @@ class UserProject(Base):
 
         storage.new(self)
         storage.save()
+
+    def __str__(self) -> str:
+        """prints user readable(nice) string representation of Project model"""
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+
+    def to_dict(self):
+        """return the dictionary representation of the project class"""
+        user_project_dict = {}
+        user_project_dict = self.__dict__.copy()
+        user_project_dict["__class__"] = str(type(self).__name__)
+        if "_sa_instance_state" in user_project_dict:
+            del user_project_dict["_sa_instance_state"]
+        return user_project_dict
