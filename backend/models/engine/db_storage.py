@@ -92,7 +92,13 @@ class DBStorage:
             Checks if an object of the given class with the given filter
             criteria exists. Returns True if it exists, False otherwise.
         """
-        return self.__session.query(cls).filter_by(**kwargs).first() is not None  # noqa
+        return self.__session.query(cls).filter_by(**kwargs).first()
+
+    def delete(self, obj):
+        """
+            deletes an object of a class with given id
+        """
+        self.__session.delete(obj)
 
     def save(self):
         """commits all changes in the current database session"""
