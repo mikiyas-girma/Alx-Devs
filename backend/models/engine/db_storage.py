@@ -87,12 +87,19 @@ class DBStorage:
 
         return None
 
-    def filter(self, cls, **kwargs):
+    def filter_one(self, cls, **kwargs):
         """
             finds  an object of the given class with the given filter
             criteria exists. Returns the object if found
         """
         return self.__session.query(cls).filter_by(**kwargs).first()
+
+    def filter_all(self, cls, **kwargs):
+        """
+            finds  an object of the given class with the given filter
+            criteria exists. Returns the object if found
+        """
+        return self.__session.query(cls).filter_by(**kwargs).all()
 
     def delete(self, obj):
         """

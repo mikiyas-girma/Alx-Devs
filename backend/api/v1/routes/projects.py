@@ -52,6 +52,8 @@ def create_project():
 
     new_project = Project(creator_id=current_user_id, **request.json)
     new_project.save_project()
+    user.team_count += 1
+    storage.save()
 
     user_project = UserProject(user_id=current_user_id,
                                project_id=new_project.id,
@@ -78,6 +80,13 @@ def remove_project(project_id):
         return jsonify({"msg": "project not found"}), 404
     if not user_id == project.creator_id:
         return jsonify({"msg": "Permission denied"}), 403
+
+    user_projects = storage.filter_all(UserProject, project_id=project_id,
+                                       status='approved')
+    for user_project in user_projects:
+        user = user_project.user
+        user.team_count -= 1
+        storage.new(user)
 
     storage.delete(project)
     storage.save()

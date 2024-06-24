@@ -30,8 +30,8 @@ def ask_tojoin(project_id):
     if user_id == project.creator_id:
         return jsonify({"msg": "not allowed to request to a project you own"}), 401  # noqa
 
-    existing_application = storage.filter(UserProject, user_id=user_id,
-                                          project_id=project_id)
+    existing_application = storage.filter_one(UserProject, user_id=user_id,
+                                              project_id=project_id)
     if existing_application:
         return jsonify({"msg": "You already applied to this project"}), 401
 
@@ -62,8 +62,8 @@ def leave_project(project_id):
     if not user:
         return jsonify({"msg": "login first to get access"}), 401
 
-    existing_application = storage.filter(UserProject, user_id=user_id,
-                                          project_id=project_id)
+    existing_application = storage.filter_one(UserProject, user_id=user_id,
+                                              project_id=project_id)
     if not existing_application:
         return jsonify({"msg": "You are not part of this yet"}), 401
 
@@ -87,13 +87,13 @@ def approve_request(user_project_id):
         requested to a team
     """
     user_id = get_jwt_identity()
-    user_project = storage.filter(UserProject, id=user_project_id)
+    user_project = storage.filter_one(UserProject, id=user_project_id)
 
     if not user_project:
         return jsonify({"msg": "Request not found"}), 404
 
-    approver = storage.filter(UserProject, user_id=user_id,
-                              project_id=user_project.project_id)
+    approver = storage.filter_one(UserProject, user_id=user_id,
+                                  project_id=user_project.project_id)
 
     if not approver.role == "Owner":
         return jsonify({"msg": "Permission denied"}), 403
@@ -101,7 +101,7 @@ def approve_request(user_project_id):
         return ({"msg": "Already approved"}), 200
 
     user_project.status = 'approved'
-    user = storage.filter(User, id=user_project.user_id)
+    user = storage.filter_one(User, id=user_project.user_id)
     user.team_count += 1
 
     storage.save()
@@ -117,20 +117,20 @@ def reject_request(user_project_id):
         requested to a team
     """
     user_id = get_jwt_identity()
-    user_project = storage.filter(UserProject, id=user_project_id)
+    user_project = storage.filter_one(UserProject, id=user_project_id)
 
     if not user_project:
         return jsonify({"msg": "Request not found"}), 404
 
-    approver = storage.filter(UserProject, user_id=user_id,
-                              project_id=user_project.project_id)
+    approver = storage.filter_one(UserProject, user_id=user_id,
+                                  project_id=user_project.project_id)
 
     if not approver.role == "Owner":
         return jsonify({"msg": "Permission denied"}), 403
     if user_project.role == 'Owner':
         return ({"msg": "You can't remove Owner"}), 401
 
-    user = storage.filter(User, id=user_project.user_id)
+    user = storage.filter_one(User, id=user_project.user_id)
     storage.delete(user_project)
     user.team_count -= 1
 
