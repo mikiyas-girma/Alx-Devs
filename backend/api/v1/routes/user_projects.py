@@ -74,7 +74,7 @@ def leave_project(project_id):
 
 
 @app_views.route('/user_projects/<user_project_id>/approve',
-                 methods=['GET'], strict_slashes=False)
+                 methods=['PATCH'], strict_slashes=False)
 @jwt_required()
 def approve_request(user_project_id):
     """to allow project owner to (approve) request and add user
@@ -89,5 +89,8 @@ def approve_request(user_project_id):
         return jsonify({"msg": "Request not found"}), 404
     if not approver.role == "Owner":
         return jsonify({"msg": "Permission denied"}), 403
+
+    user_project.status = 'approved'
+    storage.save()
 
     return jsonify({"msg": "Successfully approved the request"})
