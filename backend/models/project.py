@@ -4,7 +4,7 @@
 """
 import uuid
 from models.base import Base
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -19,6 +19,8 @@ class Project(Base):
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     title: Mapped[str] = mapped_column(String(80), nullable=False)
     description: Mapped[str] = mapped_column(String(250))
+    application: Mapped[str] = mapped_column(Enum(
+                        'open', 'closed', name='application'), default='open')
 
     creator_id: Mapped[str] = mapped_column(String(36), ForeignKey('users.id'))
     creator = relationship('User', back_populates='projects')

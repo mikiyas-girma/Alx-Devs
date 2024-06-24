@@ -87,10 +87,10 @@ class DBStorage:
 
         return None
 
-    def exists(self, cls, **kwargs):
+    def filter(self, cls, **kwargs):
         """
-            Checks if an object of the given class with the given filter
-            criteria exists. Returns True if it exists, False otherwise.
+            finds  an object of the given class with the given filter
+            criteria exists. Returns the object if found
         """
         return self.__session.query(cls).filter_by(**kwargs).first()
 
