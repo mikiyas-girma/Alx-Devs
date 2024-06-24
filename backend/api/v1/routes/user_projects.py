@@ -67,6 +67,12 @@ def leave_project(project_id):
     if not existing_application:
         return jsonify({"msg": "You are not part of this yet"}), 401
 
+    if existing_application.role == 'Owner':
+        return jsonify({"msg": "Please Give ownership to another person first"}), 403  # noqa
+
+    if existing_application.status == 'approved':
+        user.team_count -= 1
+
     storage.delete(existing_application)
     storage.save()
 
@@ -82,15 +88,52 @@ def approve_request(user_project_id):
     """
     user_id = get_jwt_identity()
     user_project = storage.filter(UserProject, id=user_project_id)
-    approver = storage.filter(UserProject, user_id=user_id,
-                              project_id=user_project.project_id)
 
     if not user_project:
         return jsonify({"msg": "Request not found"}), 404
+
+    approver = storage.filter(UserProject, user_id=user_id,
+                              project_id=user_project.project_id)
+
     if not approver.role == "Owner":
         return jsonify({"msg": "Permission denied"}), 403
+    if user_project.status == 'approved':
+        return ({"msg": "Already approved"}), 200
 
     user_project.status = 'approved'
+    user = storage.filter(User, id=user_project.user_id)
+    user.team_count += 1
+
     storage.save()
 
-    return jsonify({"msg": "Successfully approved the request"})
+    return jsonify({"msg": "Successfully approved the request"}), 200
+
+
+@app_views.route('/user_projects/<user_project_id>/reject',
+                 methods=['DELETE'], strict_slashes=False)
+@jwt_required()
+def reject_request(user_project_id):
+    """to allow project owner to (approve) request and add user
+        requested to a team
+    """
+    user_id = get_jwt_identity()
+    user_project = storage.filter(UserProject, id=user_project_id)
+
+    if not user_project:
+        return jsonify({"msg": "Request not found"}), 404
+
+    approver = storage.filter(UserProject, user_id=user_id,
+                              project_id=user_project.project_id)
+
+    if not approver.role == "Owner":
+        return jsonify({"msg": "Permission denied"}), 403
+    if user_project.role == 'Owner':
+        return ({"msg": "You can't remove Owner"}), 401
+
+    user = storage.filter(User, id=user_project.user_id)
+    storage.delete(user_project)
+    user.team_count -= 1
+
+    storage.save()
+
+    return jsonify({"msg": "Successfully removed the user"}), 200

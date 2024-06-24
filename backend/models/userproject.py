@@ -18,9 +18,13 @@ class UserProject(Base):
     __tablename__ = 'user_projects'
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    user_id: Mapped[str] = mapped_column(String(36), ForeignKey('users.id'))
+    user_id: Mapped[str] = mapped_column(String(36),
+                                         ForeignKey('users.id',
+                                                    ondelete='CASCADE'))
+
     project_id: Mapped[str] = mapped_column(String(36),
-                                            ForeignKey('projects.id'))
+                                            ForeignKey('projects.id',
+                                            ondelete='CASCADE'))
 
     role: Mapped[str] = mapped_column(String(50), nullable=False)
     status: Mapped[str] = mapped_column(Enum('pending', 'approved', 'rejected',

@@ -25,7 +25,8 @@ class Project(Base):
     creator_id: Mapped[str] = mapped_column(String(36), ForeignKey('users.id'))
     creator = relationship('User', back_populates='projects')
 
-    user_projects = relationship('UserProject', back_populates='project')
+    user_projects = relationship('UserProject', back_populates='project',
+                                 cascade='all, delete-orphan')
 
     def __init__(self, creator_id, *args, **kwargs):
         """
