@@ -3,8 +3,6 @@
    api view for several blueprints
 """
 
-from models import storage
-from models.user import User
 from flask import jsonify
 from api.v1.routes import app_views
 

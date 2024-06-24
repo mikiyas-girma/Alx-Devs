@@ -61,3 +61,25 @@ def create_project():
 
     return jsonify({"msg": "project created successfully",
                     "project": new_project.to_dict()}), 201
+
+
+@app_views.route('/projects/<project_id>/', methods=['DELETE'],
+                 strict_slashes=False)
+@jwt_required()
+def remove_project(project_id):
+    """ allows to remove a project with specified id """
+
+    user_id = get_jwt_identity()
+    project = storage.get(Project, id=project_id)
+
+    if not user_id:
+        return jsonify({"msg": "Login First before attempting"}), 401
+    if not project:
+        return jsonify({"msg": "project not found"}), 404
+    if not user_id == project.creator_id:
+        return jsonify({"msg": "Permission denied"}), 403
+
+    storage.delete(project)
+    storage.save()
+
+    return jsonify({"msg": "project deleted successfully"}), 200
