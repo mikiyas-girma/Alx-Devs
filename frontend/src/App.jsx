@@ -1,13 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
+import {
+    createBrowserRouter, 
+    RouterProvider
+} from 'react-router-dom'
+
+import routes from './routes'
+import Layout from './pages/Layout'
+import Page404 from './pages/Page404'
+
 function App() {
+
+    const router = createBrowserRouter([
+        {
+            element: <Layout />,
+            errorElement: <Page404 />,
+
+            children: routes
+        }
+    ])
+
     return (
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <RouterProvider router={router} />
     )
   }
 
