@@ -7,13 +7,13 @@ import { Suspense } from "react"
 export default function Layout() {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <main>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Outlet />
                 </Suspense>
             </main>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

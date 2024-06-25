@@ -16,9 +16,6 @@ import {
 const Home = () => {
     return (
         <>
-            <div>
-                <Button>shadcn btn</Button>
-            </div>
             <AlertDialog>
                 <AlertDialogTrigger>Open</AlertDialogTrigger>
                 <AlertDialogContent>
