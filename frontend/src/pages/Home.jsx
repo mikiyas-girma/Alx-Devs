@@ -31,11 +31,11 @@ const Home = () => {
                                 <CardTitle>CMMS </CardTitle>
                                 <CardDescription>
                                     The Construction and Machinery Material Management System
-                                    (CMMMS) is a web-based application that helps in managing
+                                    (CMMS) is a web-based application that helps in managing
                                      ...
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className='mt-auto'>
                                 <Button className='m-4'>View</Button>
                             </CardContent>
                         </Card>

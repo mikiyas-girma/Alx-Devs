@@ -3,7 +3,8 @@ const PathConstants = {
     HOME: "/",
     ABOUT: "about",
     SIGNUP: "signup",
-    LOGIN: "login"
+    LOGIN: "login",
+    PROFILE: "profile",
 }
 
 export default PathConstants
