@@ -9,6 +9,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Link } from "react-router-dom"
+import PathConstants from "@/routes/pathConstants"
 
 const Home = () => {
     return (
@@ -36,7 +38,9 @@ const Home = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className='mt-auto'>
-                                <Button className='m-4'>View</Button>
+                                <Button className='m-4' asChild>
+                                    <Link to={`${PathConstants.PROJECT.replace(':id', '1')}`}>View</Link>
+                                </Button>
                             </CardContent>
                         </Card>
                     </div>

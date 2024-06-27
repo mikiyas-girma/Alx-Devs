@@ -46,7 +46,7 @@ const Profile = () => {
                     <p className="p-2 border">Name: Mikiyas Girma</p>
                     <p className="p-2 border">email: mikiyasgirma1621@gmail.com</p>
                     <p className="p-2 border">Phone: +251927279885</p>
-                    <p className="p-2 border">Social Links: https://github.com/mikiyas-girma/</p>
+                    <p className="p-2 border">Github: https://github.com/mikiyas-girma </p>
                 </CardContent>
                 <CardContent>
                     <Button type='submit'>Update</Button>

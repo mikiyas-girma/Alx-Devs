@@ -5,6 +5,7 @@ const PathConstants = {
     SIGNUP: "signup",
     LOGIN: "login",
     PROFILE: "profile",
+    PROJECT: "project/:id",
 }
 
 export default PathConstants

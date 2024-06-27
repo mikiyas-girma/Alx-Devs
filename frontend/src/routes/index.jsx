@@ -7,6 +7,7 @@ const About = React.lazy(() => import("../pages/About"))
 const SIGNUP = React.lazy(() => import("../pages/Signup"))
 const LOGIN = React.lazy(() => import("../pages/Login"))
 const Profile = React.lazy(() => import("../pages/Profile"))
+const Project = React.lazy(() => import("../pages/Project"))
 
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
     { path: PathConstants.SIGNUP, element: <SIGNUP />},
     { path: PathConstants.LOGIN, element: <LOGIN />},
     { path: PathConstants.PROFILE, element: <Profile />},
+    { path: PathConstants.PROJECT, element: <Project />}
 ]
 
 
