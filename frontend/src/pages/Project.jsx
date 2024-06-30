@@ -15,11 +15,11 @@ const Project = () => {
     const { id } = useParams();
     return (
         <>
-        <div>
-            <Card>
+        <div className="m-2">
+            <Card className=''>
                 <CardHeader>
                     <CardTitle>Project {id}</CardTitle>
-                    <CardDescription>Project Description</CardDescription>
+                    <CardDescription>Project Description here</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Button className='m-4'>View</Button>
