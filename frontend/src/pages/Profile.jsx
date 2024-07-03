@@ -19,7 +19,7 @@ const Profile = () => {
             <div className="w-1/2 order-2 md:m-4 flex items-center">
                 <div className="text-left">
                     <Button className='m-2' variant='outline' asChild>
-                        <Link>My Projects</Link>
+                        <Link to='../my_projects' >My Projects</Link>
                     </Button>
                     <br />
                     <Button className='m-2' variant='outline' asChild>
@@ -27,7 +27,7 @@ const Profile = () => {
                     </Button>
                     <br />
                     <Button className='m-2' variant='outline' asChild>
-                        <Link>My Applications</Link>
+                        <Link to='#' >My Applications</Link>
                     </Button>
                 </div>
             </div>

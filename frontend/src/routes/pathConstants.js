@@ -1,4 +1,5 @@
 
+
 const PathConstants = {
     HOME: "/",
     ABOUT: "about",
@@ -7,6 +8,7 @@ const PathConstants = {
     PROFILE: "profile",
     PROJECT: "project/:id",
     CREATE_PROJECT: "create_project",
+    MY_PROJECTS: "my_projects"
 }
 
 export default PathConstants
