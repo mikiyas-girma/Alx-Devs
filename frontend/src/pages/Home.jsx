@@ -18,7 +18,7 @@ const Home = () => {
             <Card className="min-h-screen">
                 <Card className='flex justify-around border-green-50'>
                     <Button className='m-4 border-green-700' variant='outline'>My Applications</Button>
-                    <Button className='m-4 border-green-700' variant='outline'>Create Project</Button>
+                    <Link to='create_project'><Button className='m-4 border-green-700' variant='outline'>Create Project</Button></Link>
                 </Card>
                 <h2 className="my-7 font-serif text-xl text-center">Explore Some Projects You Can Do</h2>
                 <div className="m-auto w-96 sm:w-2/3 gap-4 flex justify-around">
@@ -32,7 +32,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -51,7 +51,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -70,7 +70,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -89,7 +89,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -108,7 +108,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -127,7 +127,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -146,7 +146,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -165,7 +165,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...
@@ -184,7 +184,7 @@ const Home = () => {
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
                                 <CardDescription className='text-base tracking-wider
-                                                            text-current'>
+                                                            text-current font-serif'>
                                     The Construction and Machinery Material Management System
                                     (CMMS) is a web-based application that helps in managing
                                      ...

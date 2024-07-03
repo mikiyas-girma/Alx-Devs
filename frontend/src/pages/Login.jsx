@@ -16,7 +16,7 @@ const Login = () => {
         <>
         <div className="m-auto w-96 sm:w-2/3 lg:w-1/2 lg:p-12 rounded-lg">
             <Card>
-                <CardHeader>
+                <CardHeader className='text-center'>
                     <CardTitle>Login to Your Account</CardTitle>
                     <CardDescription className="text-blue-900 ">Lets see what's New</CardDescription>
                 </CardHeader>
@@ -24,7 +24,7 @@ const Login = () => {
                     <Input type='text' placeholder='user name' className='m-4' />
                     <Input type='password' placeholder='password' className='m-4' />
                 </CardContent>
-                <CardContent>
+                <CardContent className='text-center'>
                     <Button type='submit'>Login</Button>
                 </CardContent>
             </Card>
