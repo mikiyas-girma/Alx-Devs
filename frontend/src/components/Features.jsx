@@ -10,52 +10,52 @@ import {
 
 const Features = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8 bg-gradient-to-l from-cyan-500 via-violet-300 to-blue-300">
-            <Card className='p-4' style={{
-                background: 'rgba(255, 255, 255, 0.2)',
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
+            <Card className='p-4 text-center' style={{
+                background: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(1px)',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.18)'
             }}>
                 <CardHeader>
-                    <CardTitle>Feature 1</CardTitle>
+                    <CardTitle>Discover Projects</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptatibus.
+                    <CardDescription className='text-black'>
+                    Find projects that match your skills and interests. 
+                    Connect with opportunities tailored just for you.
                     </CardDescription>
                 </CardContent>
             </Card>
-            <Card className='p-4' style={{
-                background: 'rgba(255, 255, 255, 0.2)',
+            <Card className='p-4 text-center' style={{
+                background: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(10px)',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.18)'
             }}>
                 <CardHeader>
-                    <CardTitle>Feature 1</CardTitle>
+                    <CardTitle>Build Your Portfolio</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptatibus.
+                    <CardDescription className='text-black'>
+                    Showcase your contributions and skills. Create a portfolio 
+                    that stands out to employers and collaborators.
                     </CardDescription>
                 </CardContent>
             </Card>
-            <Card className='p-4' style={{
-                background: 'rgba(255, 255, 255, 0.2)',
+            <Card className='p-4 text-center' style={{
+                background: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(10px)',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.18)'
             }}>
                 <CardHeader>
-                    <CardTitle>Feature 1</CardTitle>
+                    <CardTitle>Flexible Approval Process</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptatibus.
+                    <CardDescription className='text-black'>
+                    Project creators can easily approve or reject requests to join their projects,
+                    ensuring the right fit for the team.
                     </CardDescription>
                 </CardContent>
             </Card>
