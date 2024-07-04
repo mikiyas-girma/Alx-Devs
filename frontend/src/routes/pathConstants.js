@@ -2,14 +2,14 @@
 
 const PathConstants = {
     LANDING: "/Alx-Devs/",
-    HOME: "home",
-    ABOUT: "about",
-    SIGNUP: "signup",
-    LOGIN: "login",
-    PROFILE: "profile",
-    PROJECT: "project/:id",
-    CREATE_PROJECT: "create_project",
-    MY_PROJECTS: "my_projects"
+    HOME: "/Alx-Devs/home",
+    ABOUT: "/Alx-Devs/about",
+    SIGNUP: "/Alx-Devs/signup",
+    LOGIN: "/Alx-Devs/login",
+    PROFILE: "/Alx-Devs/profile",
+    PROJECT: "/Alx-Devs/project/:id",
+    CREATE_PROJECT: "/Alx-Devs/create_project",
+    MY_PROJECTS: "/Alx-Devs/my_projects"
 }
 
 export default PathConstants

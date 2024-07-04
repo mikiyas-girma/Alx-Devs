@@ -34,7 +34,7 @@ const Profile = () => {
             <div className="w-full md:order-2">
                 <CardHeader>
                     <div className=" flex justify-center items-center">
-                        <img className="w-32 h-32 rounded-full" src="/mikepp2.jpg" alt="" />
+                        <img className="w-32 h-32 rounded-full" src="mikepp2.jpg" alt="" />
                     </div>
                 </CardHeader>
                 <div className="mx-10 flex justify-center">
