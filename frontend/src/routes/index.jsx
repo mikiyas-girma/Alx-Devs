@@ -10,6 +10,7 @@ const Profile = React.lazy(() => import("../pages/Profile"))
 const Project = React.lazy(() => import("../pages/Project"))
 const CreateProject = React.lazy(() => import("../pages/CreateProject"))
 const MyProjects = React.lazy(() => import("../pages/MyProjects"))
+const LandingPage = React.lazy(() => import("../pages/LandingPage"))
 
 
 const routes = [
@@ -20,7 +21,8 @@ const routes = [
     { path: PathConstants.PROFILE, element: <Profile />},
     { path: PathConstants.PROJECT, element: <Project />},
     { path: PathConstants.CREATE_PROJECT, element: <CreateProject />},
-    { path: PathConstants.MY_PROJECTS, element: <MyProjects />}
+    { path: PathConstants.MY_PROJECTS, element: <MyProjects />},
+    { path: PathConstants.LANDING, element: <LandingPage />}
 ]
 
 
