@@ -1,7 +1,7 @@
 
 
 const PathConstants = {
-    LANDING: "/",
+    LANDING: "/Alx-Devs/",
     HOME: "home",
     ABOUT: "about",
     SIGNUP: "signup",
