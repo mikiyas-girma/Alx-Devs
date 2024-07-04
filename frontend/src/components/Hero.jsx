@@ -4,7 +4,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 const HeroSection = () => {
     return (
-        <div className=''>
+        <div className='drop-shadow-xl'>
         <AspectRatio ratio={ 4 / 2 } className="bg-no-repeat bg-top bg-cover" style={{ backgroundImage: `url('/landing1.jpg')` }}>
             <div className='text-white flex flex-col items-center h-full justify-center'>
                 <h1 className="flex text-7xl font-bold">Collaborate 
