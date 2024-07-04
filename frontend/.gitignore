@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 .vite/*
-dist-ssr
+# dist-ssr
 *.local
 
 # Editor directories and files
@@ -26,3 +26,6 @@ dist-ssr
 
 # include lib folder in src dir
 src/lib/*
+
+# include dist folder in root dir
+dist/*
