@@ -6,8 +6,10 @@ from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 from models import storage
 from api.v1.routes import app_views
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app=app)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 app.config['JWT_SECRET_KEY'] = getenv('JWT_SECRET_KEY')
