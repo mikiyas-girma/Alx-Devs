@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Link } from 'react-router-dom';
 
 
 
@@ -28,7 +29,7 @@ const Signup = () => {
                     <Input type='password' placeholder='Confirm password' className='m-4' />
                 </CardContent>
                 <CardContent className='text-center'>
-                    <Button type='submit'>Register</Button>
+                    <Link to='../login' ><Button type='submit'>Register</Button></Link>
                 </CardContent>
             </Card>
         </div>
