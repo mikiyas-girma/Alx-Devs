@@ -40,6 +40,11 @@ def register_user():
     if 'password' not in req:
         abort(400, "password is required")
 
+    if storage.get(User, username=req['username']):
+        abort(400, "username already exists")
+    if User.get_by_email(User, req['email']):
+        abort(400, "user with email already exists")
+
     new_user = User(**request.json)
     new_user.save_user()
     return jsonify(new_user.to_dict()), 201

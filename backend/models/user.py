@@ -48,6 +48,15 @@ class User(Base):
         return bcrypt.checkpw(password.encode('utf-8'),
                               self.password.encode('utf-8'))
 
+    def get_by_email(self, email: str):
+        """get user by email"""
+        from models import storage
+        obj_dict = storage.all(User)
+        for user in obj_dict.values():
+            if user.email == email:
+                return user
+        return None
+
     def save_user(self):
         """stores the user to storage engine"""
         from models import storage
