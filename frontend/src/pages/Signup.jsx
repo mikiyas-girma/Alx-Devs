@@ -9,10 +9,59 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axiosInstance from "@/utils/axiosInstance";
 
 
 
 const Signup = () => {
+
+    const [formData, setFormData] = useState({
+        name: '',
+        username: '',
+        email: ''
+    });
+    const [password, setPassword] = useState('');
+    const [confirmpassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+
+
+    const handleConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value);
+        if (password !== e.target.value) {
+            setError('Passwords do not match');
+        } else {
+            setError('');
+        }
+    }
+
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+
+    const handleRegistration = async (e) => {
+        e.preventDefault();
+        if (password !== confirmpassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
+        try {
+            const response = await axiosInstance.post('/users/', {
+                ...formData,
+                password
+            });
+            console.log("Registration successful", response.data)
+        } catch (error) {
+            console.log("error happened")
+        }
+        
+    }
     return (
         <>
         <div className="m-auto w-96 sm:w-2/3 lg:w-1/2 lg:p-12 rounded-lg">
@@ -21,16 +70,54 @@ const Signup = () => {
                     <CardTitle>Sign up to register</CardTitle>
                     <CardDescription className="text-blue-900 ">Explore the power of working together</CardDescription>
                 </CardHeader>
+                <form onSubmit={handleRegistration} >
                 <CardContent className='w-3/4 m-auto'>
-                    <Input type='text' placeholder='name' className='m-4' />
-                    <Input type='text' placeholder='user name' className='m-4' />
-                    <Input type='email' placeholder='email' className='m-4' />
-                    <Input type='password' placeholder='password' className='m-4' />
-                    <Input type='password' placeholder='Confirm password' className='m-4' />
+                    <Input
+                        className='m-4'
+                        name='name'
+                        type='text'
+                        placeholder='name' 
+                        value={formData.name}
+                        onChange={handleChange}
+                     />
+                    <Input
+                        className='m-4' 
+                        name='username'
+                        type='text'
+                        placeholder='user name'
+                        value={formData.username}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        className='m-4'
+                        name='email'
+                        type='email'
+                        placeholder='email' 
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        className='m-4'
+                        type='password'
+                        name='password'
+                        placeholder='password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Input 
+                        className='m-4'
+                        type='password'
+                        name='confirmpassword'
+                        placeholder='Confirm password' 
+                        value={confirmpassword}
+                        onChange={handleConfirmPassword}
+                    />
+                    {error && <p className='text-red-500'>{error}</p> }
                 </CardContent>
                 <CardContent className='text-center'>
-                    <Link to='../login' ><Button type='submit'>Register</Button></Link>
+                    <Button type='submit'>Register</Button>
                 </CardContent>
+                </form>
             </Card>
         </div>
         </>
