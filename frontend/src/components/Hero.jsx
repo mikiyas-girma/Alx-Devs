@@ -10,7 +10,7 @@ const HeroSection = () => {
                 <h1 className="flex text-7xl font-bold">Collaborate 
                      <span className='mx-2'> & </span> <br /> Grow with Alx Devs</h1>
                 <p className="text-xl m-6">Find peers, join projects, and build your portfolio together.</p>
-                <Link to="/Alx-Devs/signup" 
+                <Link to="/signup" 
                     className="self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-7 rounded-xl">
                     Get Started
                 </Link>

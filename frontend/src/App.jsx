@@ -11,14 +11,19 @@ import Page404 from './pages/Page404'
 
 function App() {
 
-    const router = createBrowserRouter([
+    const router = createBrowserRouter(
+    [
         {
             element: <Layout />,
             errorElement: <Page404 />,
 
             children: routes
         }
-    ])
+    ],
+    {
+        basename: '/Alx-Devs'
+    }
+)
 
     return (
       <RouterProvider router={router} />

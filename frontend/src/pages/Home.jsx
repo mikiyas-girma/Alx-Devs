@@ -17,10 +17,10 @@ const Home = () => {
         <>
             <Card className="min-h-screen">
                 <Card className='flex justify-around border-green-50'>
-                    <Link to='profile' >
+                    <Link to='../profile' >
                         <Button className='m-4 border-green-700' variant='outline'>My Applications</Button>
                     </Link>
-                    <Link to='#'><Button className='m-4 border-green-700' variant='outline'>Create Project</Button></Link>
+                    <Link to='../create_project'><Button className='m-4 border-green-700' variant='outline'>Create Project</Button></Link>
                 </Card>
                 <h2 className="my-7 font-serif text-xl text-center">Explore Some Projects You Can Do</h2>
                 <div className="m-auto w-96 sm:w-2/3 gap-4 flex justify-around">
