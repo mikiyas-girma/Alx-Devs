@@ -1,5 +1,6 @@
 import React from "react";
 import PathConstants from "./pathConstants";
+import ProtectedRoute from "@/utils/ProtectedRoute";
 
 
 const Home = React.lazy(() => import("../pages/Home"))
@@ -18,10 +19,10 @@ const routes = [
     { path: PathConstants.ABOUT, element: <About />},
     { path: PathConstants.SIGNUP, element: <SIGNUP />},
     { path: PathConstants.LOGIN, element: <LOGIN />},
-    { path: PathConstants.PROFILE, element: <Profile />},
-    { path: PathConstants.PROJECT, element: <Project />},
-    { path: PathConstants.CREATE_PROJECT, element: <CreateProject />},
-    { path: PathConstants.MY_PROJECTS, element: <MyProjects />},
+    { path: PathConstants.PROFILE, element: <ProtectedRoute element={<Profile />} /> },
+    { path: PathConstants.PROJECT, element: <ProtectedRoute element={<Project />} /> },
+    { path: PathConstants.CREATE_PROJECT, element: <ProtectedRoute element={<CreateProject />} /> },
+    { path: PathConstants.MY_PROJECTS, element: <ProtectedRoute element={<MyProjects />} /> },
     { path: PathConstants.LANDING, element: <LandingPage />}
 ]
 

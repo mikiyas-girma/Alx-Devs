@@ -33,7 +33,7 @@ const Login = () => {
             console.log("Login successful", response.data);
             setError('');
             // Redirect to home page
-            navigate('/create_project');
+            navigate('/home');
         } catch (error) {
             console.error("Login failed", error);
             setError('Invalid credentials');
