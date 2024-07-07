@@ -80,7 +80,9 @@ def login():
     access_token = create_access_token(identity=user.id,
                                        expires_delta=timedelta(days=1))
     response = make_response(jsonify({"msg": "Login successfull"}), 200)
-    set_access_cookies(response, access_token)
+    # set_access_cookies(response, access_token)
+    response.set_cookie('access_token', access_token, httponly=True,
+                        secure=True, samesite='Lax')
 
     response.set_cookie('csrf_access_token', get_csrf_token(access_token),
                         httponly=False, secure=True, samesite='Lax')

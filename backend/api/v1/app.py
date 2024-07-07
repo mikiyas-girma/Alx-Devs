@@ -9,7 +9,9 @@ from api.v1.routes import app_views
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app=app)
+CORS(app=app, resources={r"/api/*": {"origins": "*"}},
+     supports_credentials=True)
+
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 app.config['JWT_SECRET_KEY'] = getenv('JWT_SECRET_KEY')
