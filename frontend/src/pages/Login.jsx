@@ -27,6 +27,9 @@ const Login = () => {
                 <CardContent className='text-center'>
                     <Button type='submit'>Login</Button>
                 </CardContent>
+                <CardContent className='text-center'>
+                    <CardDescription>Don't have an account? <a href='signup' className='text-blue-900'>Register</a></CardDescription>
+                </CardContent>
             </Card>
         </div>
         </>

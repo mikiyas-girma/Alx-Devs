@@ -32,18 +32,18 @@ def register_user():
     """
     req = request.get_json()
     if not isinstance(req, dict):
-        abort(400, "not a JSON")
+        return jsonify({"msg": "Not a json"}), 400
     if 'email' not in req:
-        abort(400, "email is required")
+        return jsonify({"msg": "email is required"}), 400
     if 'username' not in req:
-        abort(400, "username is required")
+        return jsonify({"msg": "username is required"}), 400
     if 'password' not in req:
-        abort(400, "password is required")
+        return jsonify({"msg": "password is required"}), 400
 
     if storage.get(User, username=req['username']):
-        abort(400, "username already exists")
+        return jsonify({"msg": "user with username already exists"}), 400
     if User.get_by_email(User, req['email']):
-        abort(400, "user with email already exists")
+        return jsonify({"msg": "user with email already exists"}), 400
 
     new_user = User(**request.json)
     new_user.save_user()

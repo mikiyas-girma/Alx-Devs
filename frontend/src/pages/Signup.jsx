@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axiosInstance from "@/utils/axiosInstance";
+import { set } from "react-hook-form";
 
 
 
@@ -58,7 +59,8 @@ const Signup = () => {
             });
             console.log("Registration successful", response.data)
         } catch (error) {
-            console.log("error happened")
+            console.log(error.response.data.msg)
+            setError(error.response.data.msg);
         }
         
     }
@@ -79,6 +81,7 @@ const Signup = () => {
                         placeholder='name' 
                         value={formData.name}
                         onChange={handleChange}
+                        required
                      />
                     <Input
                         className='m-4' 
@@ -87,6 +90,7 @@ const Signup = () => {
                         placeholder='user name'
                         value={formData.username}
                         onChange={handleChange}
+                        required
                     />
                     <Input
                         className='m-4'
@@ -95,6 +99,7 @@ const Signup = () => {
                         placeholder='email' 
                         value={formData.email}
                         onChange={handleChange}
+                        required
                     />
                     <Input
                         className='m-4'
@@ -103,6 +108,7 @@ const Signup = () => {
                         placeholder='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                     <Input 
                         className='m-4'
@@ -111,11 +117,15 @@ const Signup = () => {
                         placeholder='Confirm password' 
                         value={confirmpassword}
                         onChange={handleConfirmPassword}
+                        required
                     />
                     {error && <p className='text-red-500'>{error}</p> }
                 </CardContent>
                 <CardContent className='text-center'>
                     <Button type='submit'>Register</Button>
+                </CardContent>
+                <CardContent className='text-center'>
+                    <p>Already have an account? <Link to='/login' className='text-blue-500'>Login</Link></p>
                 </CardContent>
                 </form>
             </Card>

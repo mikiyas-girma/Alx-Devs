@@ -34,6 +34,27 @@ def page_not_found(e):
     return jsonify(msg), 404
 
 
+@app.errorhandler(400)
+def bad_request(e):
+    """ handler for 400 error """
+    msg = {"error": "Bad request"}
+    return jsonify(msg), 400
+
+
+@app.errorhandler(401)
+def unauthorized(e):
+    """ handler for 401 error """
+    msg = {"error": "Unauthorized"}
+    return jsonify(msg), 401
+
+
+@app.errorhandler(403)
+def forbidden(e):
+    """ handler for 403 error """
+    msg = {"error": "Forbidden"}
+    return jsonify(msg), 403
+
+
 @jwt.unauthorized_loader
 def unauthorized_req(callbackdata):
     """used to return when a custom message when a request is made
