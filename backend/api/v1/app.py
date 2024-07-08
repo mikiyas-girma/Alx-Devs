@@ -2,15 +2,20 @@
 """ restful service with flask application """
 
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager
 from models import storage
 from api.v1.routes import app_views
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app=app, resources={r"/api/*": {"origins": "*", "allow_headers": "*"}},
-     supports_credentials=True)
+# CORS(app, supports_credentials=True,
+#      origins=["https://mikiyas-girma.github.io", "http://localhost:5000", "https://172e-196-189-224-7.ngrok-free.app"])
+
+CORS(app, supports_credentials=True,
+     resources={r"/*": {"origins": ["http://localhost:5173", "https://mikiyas-girma.github.io",
+                                    "https://172e-196-189-224-7.ngrok-free.app"]}})
+
 
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False

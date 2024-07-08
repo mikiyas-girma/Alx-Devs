@@ -41,11 +41,11 @@ const Project = () => {
                             <p className="text-blue-900">Proposal Link: <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">peeps</a></p>
                         </div>
                         <CardFooter className='justify-center'>
-                            <button className="p-[3px] relative">
+                            <div className="p-[3px] relative">
                                 <button className="shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear">
                                     Apply Here
                                 </button>
-                            </button>
+                            </div>
                         </CardFooter>
                     </div>
                     <div className="flex-1 m-6 ">
