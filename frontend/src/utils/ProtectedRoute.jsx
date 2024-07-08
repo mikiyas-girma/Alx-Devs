@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 
 const isAuthenticated = () => {
-    const token = getCookie("access_token");
+    const token = getCookie("csrf_access_token");
     return token ? true : false;
 };
 

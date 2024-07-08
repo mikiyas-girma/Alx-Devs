@@ -10,7 +10,7 @@ from flask_jwt_extended import (
                     set_access_cookies, unset_jwt_cookies)
 from models import storage
 from models.user import User
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 @app_views.route('/users/', strict_slashes=False)
@@ -78,14 +78,22 @@ def login():
         return jsonify({"msg": "invalid username or password"}), 401
 
     access_token = create_access_token(identity=user.id,
-                                       expires_delta=timedelta(days=1))
+                                       expires_delta=timedelta(hours=4))
     response = make_response(jsonify({"msg": "Login successfull"}), 200)
+
+    cookie_expiration = timedelta(hours=4)
+    expires_at = datetime.now() + cookie_expiration
+
     # set_access_cookies(response, access_token)
-    response.set_cookie('access_token', access_token, httponly=False,
-                        secure=False, samesite='None')
+    response.set_cookie('access_token', access_token, httponly=True,
+                        secure=True, samesite='Lax',
+                        max_age=cookie_expiration.total_seconds(),
+                        expires=expires_at)
 
     response.set_cookie('csrf_access_token', get_csrf_token(access_token),
-                        httponly=False, secure=False, samesite='None')
+                        httponly=False, secure=True, samesite='strict',
+                        max_age=cookie_expiration.total_seconds(),
+                        expires=expires_at)
     return response
 
 

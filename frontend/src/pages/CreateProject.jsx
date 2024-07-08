@@ -13,6 +13,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 // Define the Zod schema
 const schema = z.object({
@@ -22,12 +23,14 @@ const schema = z.object({
 });
 
 const CreateProject = () => {
+
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+        console.log(data.title);
     };
 
     return (
@@ -39,16 +42,31 @@ const CreateProject = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <CardContent className='w-3/4 m-auto'>
                     <div className="flex flex-col">
-                        <Input {...register('title')} type='text' placeholder='Title' className='mt-1 rounded' />
+                        <Input
+                            {...register('title')} 
+                            type='text' 
+                            placeholder='Title' 
+                            className='mt-1 rounded' 
+                        />
                         {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                     </div>
                     <div className="flex flex-col mt-4">
-                        <Textarea {...register('description')} className='mt-1 rounded' placeholder='Project description' />
+                        <Textarea 
+                            {...register('description')} 
+                            className='mt-1 rounded' 
+                            placeholder='Project description' 
+                        />
                         {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                         <label className="text-sm font-light">Tell us about the project, number of required team members, etc.</label>
                     </div>
                     <div className="flex flex-col mt-4">
-                        <Input {...register('proposal')} type='text' placeholder='Proposal link' id='proposal' className='mt-1 rounded' />
+                        <Input 
+                            {...register('proposal')} 
+                            type='text' 
+                            placeholder='Proposal link' 
+                            id='proposal' 
+                            className='mt-1 rounded' 
+                        />
                         <label htmlFor="proposal" className="text-sm font-light">(optional)</label>
                     </div>
                 </CardContent>
