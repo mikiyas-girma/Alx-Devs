@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { getCookie } from "@/utils/utilities";
+
 
 // Define the Zod schema
 const schema = z.object({
@@ -29,8 +32,27 @@ const CreateProject = () => {
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        console.log(data.title);
+    const onSubmit = async (data) => {
+
+        try {
+            const csrfToken = getCookie('csrf_access_token');
+            const response = await axiosInstance.post('/projects/', {
+                title: data.title,
+                description: data.description
+            },
+            {
+                headers: {
+                    'X-CSRF-Token': csrfToken
+                }
+            });
+            console.log("project created successfully", response.data);
+
+        } catch (error) {
+            console.log(getCookie('csrf_access_token'))
+            console.log("error creating the project", error)
+        }
+
+
     };
 
     return (

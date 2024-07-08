@@ -84,14 +84,14 @@ def login():
     cookie_expiration = timedelta(hours=4)
     expires_at = datetime.now() + cookie_expiration
 
-    # set_access_cookies(response, access_token)
-    response.set_cookie('access_token', access_token, httponly=True,
-                        secure=True, samesite='Lax',
-                        max_age=cookie_expiration.total_seconds(),
-                        expires=expires_at)
+    set_access_cookies(response, access_token)
+    # response.set_cookie('access_token', access_token, httponly=True,
+    #                     secure=False, samesite='None',
+    #                     max_age=cookie_expiration.total_seconds(),
+    #                     expires=expires_at)
 
     response.set_cookie('csrf_access_token', get_csrf_token(access_token),
-                        httponly=False, secure=True, samesite='strict',
+                        httponly=False, secure=False, samesite='None',
                         max_age=cookie_expiration.total_seconds(),
                         expires=expires_at)
     return response
