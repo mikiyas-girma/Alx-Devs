@@ -1,6 +1,6 @@
 {
   "homepage": "https://mikiyas-girma.github.io/Alx-Devs",
-  "proxy": "https://172e-196-189-224-7.ngrok-free.app/api/v1",
+  "proxy": "http://localhost:5000/api/v1",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
