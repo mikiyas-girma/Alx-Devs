@@ -18,7 +18,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
+import { CircleUser, Menu, Package2, ScreenShare } from "lucide-react"
   
 
 
@@ -31,12 +31,12 @@ const Header = () => {
             to="/home"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" />
+            <ScreenShare  color="#03AC13" className="h-6 w-6" />
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
             to="/home"
-            className="text-[#234F1E] text-muted-foreground transition-colors hover:text-foreground"
+            className="text-[#03AC13] text-muted-foreground transition-colors hover:text-foreground"
           >
             Projects
           </Link>
@@ -85,7 +85,7 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+                <CircleUser color='#03AC13' className="h-5 w-5" />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
