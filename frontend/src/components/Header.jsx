@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { CircleUser, Menu, Package2, ScreenShare } from "lucide-react"
+import { ModeToggle }  from './mode-toggle';
   
 
 
@@ -99,6 +100,9 @@ const Header = () => {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <ModeToggle className='ml-2' />
+
           </div>
         </div>
       </header>

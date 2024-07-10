@@ -1,33 +1,36 @@
 import './index.css'
 
 import {
-    createBrowserRouter, 
+    createBrowserRouter,
     RouterProvider
 } from 'react-router-dom'
 
 import routes from './routes'
 import Layout from './pages/Layout'
 import Page404 from './pages/Page404'
+import { ThemeProvider } from './components/theme-provider'
 
 function App() {
 
     const router = createBrowserRouter(
-    [
-        {
-            element: <Layout />,
-            errorElement: <Page404 />,
+        [
+            {
+                element: <Layout />,
+                errorElement: <Page404 />,
 
-            children: routes
+                children: routes
+            }
+        ],
+        {
+            basename: '/Alx-Devs'
         }
-    ],
-    {
-        basename: '/Alx-Devs'
-    }
-)
+    )
 
     return (
-      <RouterProvider router={router} />
+        <ThemeProvider defaultTheme="dark" storageKey='vite-ui-theme'>
+            <RouterProvider router={router} />
+        </ThemeProvider>
     )
-  }
+}
 
 export default App

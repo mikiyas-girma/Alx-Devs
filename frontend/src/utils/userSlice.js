@@ -11,8 +11,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUserLogin: (state, action) => {
-            const { id, username, email, name, skills, team_count} = action.payload;
-            const userData = {id, username, email, name, skills, team_count}
+            const { id, username, email, name, bio,  phone, github, image, skills, team_count} = action.payload;
+            const userData = {id, username, email, name, skills, team_count, bio,  phone, github, image}
 
             state.user = userData;
             localStorage.setItem('user', JSON.stringify(userData));
