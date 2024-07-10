@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import axiosInstance from "@/utils/axiosInstance"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setUserLogin } from "@/utils/userSlice"
 
 
 
@@ -20,6 +22,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -30,8 +33,10 @@ const Login = () => {
                 username,
                 password
             });
-            console.log("Login successful", response.data.user);
+            console.log("Login successful");
             setError('');
+            // Update user state
+            dispatch(setUserLogin(response.data.user));
             // Redirect to home page
             navigate('/home');
             return response.data;

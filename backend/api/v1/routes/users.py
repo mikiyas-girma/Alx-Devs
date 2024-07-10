@@ -59,7 +59,7 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/login', methods=['POST', 'GET'], strict_slashes=False)
 def login():
     """
        authenticates the user to access protected page
@@ -79,7 +79,7 @@ def login():
 
     access_token = create_access_token(identity=user.id,
                                        expires_delta=timedelta(hours=4))
-    response = make_response(jsonify({"msg": "Login successfull"}), 200)
+    response = make_response(jsonify({"msg": "Login successfull", "user": user.to_dict()}), 200)
 
     cookie_expiration = timedelta(hours=4)
     expires_at = datetime.now() + cookie_expiration
@@ -94,6 +94,8 @@ def login():
                         httponly=False, secure=True, samesite='None',
                         max_age=cookie_expiration.total_seconds(),
                         expires=expires_at)
+    # ret_user = make_response(jsonify(user.to_dict()), 200)
+    # ret_user.headers['access_token'] = access_token
     return response
 
 

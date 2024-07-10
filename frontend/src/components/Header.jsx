@@ -36,7 +36,7 @@ const Header = () => {
           </Link>
           <Link
             to="/home"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className="text-[#234F1E] text-muted-foreground transition-colors hover:text-foreground"
           >
             Projects
           </Link>

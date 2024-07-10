@@ -14,11 +14,14 @@ import PathConstants from "@/routes/pathConstants";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
 
 
 
 const Home = () => {
     const [projects, setProjects] = useState([]);
+
+    const user = useSelector((state) => state.user.user);
 
     useEffect(() => {
         axiosInstance.get('/projects')
@@ -37,6 +40,13 @@ const Home = () => {
         <>
             <Card className="min-h-screen">
                 <Card className='flex justify-around border-green-50'>
+                    <CardHeader className='text-center text-[#03AC13]'>
+                        <CardTitle>Welcome {user?.username}</CardTitle>
+                        <CardDescription className='text-base tracking-wider
+                                                            text-current font-serif'>
+                            Explore and Apply for Projects
+                        </CardDescription>
+                    </CardHeader>
                     <Link to='../profile' >
                         <Button className='m-4 border-green-700' variant='outline'>My Applications</Button>
                     </Link>
@@ -63,7 +73,7 @@ const Home = () => {
                         <div key={project.id} className="flex-1">
                             <Card className='h-full flex flex-col'>
                                 <CardHeader>
-                                    <CardTitle className='text-center'>{project.title}</CardTitle>
+                                    <CardTitle className='text-center text-[#03C04A]'>{project.title}</CardTitle>
                                     <CardDescription className='text-base tracking-wider
                                                             text-current font-serif'>
                                         {project.description}
@@ -71,7 +81,12 @@ const Home = () => {
                                 </CardHeader>
                                 <CardContent className='mt-auto'>
                                     <Button variant='outline' asChild>
-                                        <Link className="m-auto" to={`${PathConstants.PROJECT.replace(':id', project.id)}`}>View</Link>
+                                        <Link
+                                            className="m-auto text-[#354A21]"
+                                            to={`${PathConstants.PROJECT.replace(':id', project.id)}`}
+                                        >
+                                            View
+                                        </Link>
                                     </Button>
                                 </CardContent>
                             </Card>
