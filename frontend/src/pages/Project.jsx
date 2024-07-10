@@ -18,7 +18,7 @@ const Project = () => {
     const { id } = useParams();
     return (
         <>
-            <div className="m-4 bg-gray-50">
+            <div className="m-4">
                 <Card className='flex min-h-full'>
                     <div className="flex-1">
                         <CardHeader className='text-center'>
@@ -73,7 +73,7 @@ const Project = () => {
                     </div>
                 </Card>
                     <div className="text-center">
-                        <button className="p-2 my-4 border-4 border-blue-400 rounded-xl hover:border-blue-600">See Another Projects</button>
+                        <button className="p-2 my-4 border-4">See Another Projects</button>
                     </div>
             </div>
         </>

@@ -31,6 +31,24 @@ def get_projects():
     return jsonify(projects_list)
 
 
+@app_views.route('/projects/<project_id>/', methods=['GET'],
+                 strict_slashes=False)
+@jwt_required()
+def get_project(project_id):
+    """
+        get a project with specified id
+    """
+    current_user_id = get_jwt_identity()
+    user = storage.get(User, id=current_user_id)
+    if not user:
+        return jsonify({"msg": "You are not authorized to access this"})
+    project = storage.get(Project, id=project_id)
+    if not project:
+        return jsonify({"msg": "project not found"}), 404
+
+    return jsonify(project.to_dict())
+
+
 @app_views.route('/projects/', methods=['POST'], strict_slashes=False)
 @jwt_required()
 def create_project():

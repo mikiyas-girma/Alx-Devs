@@ -58,7 +58,7 @@ const Home = () => {
                     {/* <Input type='text' placeholder='Search ...' className='text-center mx-2' /> */}
                     <form className="w-full">
                         <div className="relative">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Search className="absolute left-2.5 top-2.5 h-5 w-4 text-muted-foreground" />
                             <Input
                                 type="search"
                                 placeholder="Search products..."
