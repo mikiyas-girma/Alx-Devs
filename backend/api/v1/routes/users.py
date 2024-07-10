@@ -7,7 +7,7 @@ from api.v1.routes import app_views
 from flask import jsonify, request, abort, make_response
 from flask_jwt_extended import (
                     create_access_token, jwt_required, get_csrf_token,
-                    set_access_cookies, unset_jwt_cookies)
+                    get_jwt_identity, unset_jwt_cookies)
 from models import storage
 from models.user import User
 from datetime import timedelta, datetime
@@ -56,6 +56,27 @@ def get_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404)
+    return jsonify(user.to_dict())
+
+
+@app_views.route('/users/<user_id>', methods=['PATCH'], strict_slashes=False)
+@jwt_required()
+def update_user(user_id):
+    """update user with given id"""
+
+    user_id = get_jwt_identity()
+
+    user = storage.get(User, id=user_id)
+    if not user:
+        abort(404)
+    req = request.get_json()
+    if not isinstance(req, dict):
+        return jsonify({"msg": "Not a json"}), 400
+
+    for key, value in req.items():
+        if key not in ['id']:
+            setattr(user, key, value)
+    user.save_user()
     return jsonify(user.to_dict())
 
 

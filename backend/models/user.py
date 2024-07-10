@@ -20,6 +20,10 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(36), nullable=True)
     email: Mapped[str] = mapped_column(String(120), unique=True,
                                        nullable=False)
+    image: Mapped[str] = mapped_column(String(255), nullable=True)
+    bio: Mapped[str] = mapped_column(String(255), nullable=True)
+    phone: Mapped[str] = mapped_column(String(15), nullable=True)
+    github: Mapped[str] = mapped_column(String(255), nullable=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)
     skills: Mapped[list[str]] = mapped_column(JSON, nullable=True)
     team_count: Mapped[int] = mapped_column(Integer, default=0)

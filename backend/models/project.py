@@ -18,7 +18,8 @@ class Project(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     title: Mapped[str] = mapped_column(String(80), nullable=False)
-    description: Mapped[str] = mapped_column(String(250))
+    description: Mapped[str] = mapped_column(String(250), nullable=False)
+    proposal: Mapped[str] = mapped_column(String(250), nullable=True)
     application: Mapped[str] = mapped_column(Enum(
                         'open', 'closed', name='application'), default='open')
 
