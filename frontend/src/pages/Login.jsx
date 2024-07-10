@@ -30,10 +30,11 @@ const Login = () => {
                 username,
                 password
             });
-            console.log("Login successful", response.data);
+            console.log("Login successful", response.data.user);
             setError('');
             // Redirect to home page
             navigate('/home');
+            return response.data;
         } catch (error) {
             console.error("Login failed", error);
             setError('Invalid credentials');

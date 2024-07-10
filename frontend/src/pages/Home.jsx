@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import PathConstants from "@/routes/pathConstants";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/utils/axiosInstance";
+import { Search } from "lucide-react";
 
 
 
@@ -44,7 +45,17 @@ const Home = () => {
                 <h2 className="my-7 font-serif text-xl text-center">Explore Some Projects You Can Do</h2>
                 <div className="m-auto w-96 sm:w-2/3 gap-4 flex justify-around">
                     <Input type='text' placeholder='Filter' className='text-center mx-2' />
-                    <Input type='text' placeholder='Search ...' className='text-center mx-2' />
+                    {/* <Input type='text' placeholder='Search ...' className='text-center mx-2' /> */}
+                    <form className="w-full">
+                        <div className="relative">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                type="search"
+                                placeholder="Search products..."
+                                className="pl-8"
+                            />
+                        </div>
+                    </form>
                 </div>
                 <div className="mx-6 my-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:m-2 sm:gap-2 md:gap-4 md:mx-6 md:my-4
                                 lg:grid-cols-3 flex flex-wrap">
