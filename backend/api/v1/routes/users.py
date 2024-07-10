@@ -11,6 +11,9 @@ from flask_jwt_extended import (
 from models import storage
 from models.user import User
 from datetime import timedelta, datetime
+import os
+from werkzeug.utils import secure_filename
+from flask import current_app
 
 
 @app_views.route('/users/', strict_slashes=False)
@@ -41,9 +44,9 @@ def register_user():
         return jsonify({"msg": "password is required"}), 400
 
     if storage.get(User, username=req['username']):
-        return jsonify({"msg": "user with username already exists"}), 400
+        return jsonify({"msg": "user with this username already exists"}), 400
     if User.get_by_email(User, req['email']):
-        return jsonify({"msg": "user with email already exists"}), 400
+        return jsonify({"msg": "user with this email already exists"}), 400
 
     new_user = User(**request.json)
     new_user.save_user()
@@ -73,11 +76,54 @@ def update_user(user_id):
     if not isinstance(req, dict):
         return jsonify({"msg": "Not a json"}), 400
 
+    if 'username' in req:
+        existing_user = storage.get(User, username=req['username'])
+        if existing_user and existing_user.id != user.id:
+            return jsonify({"msg": "user with this username already exists"}), 400
+
+    if 'email' in req:
+        existing_user = User.get_by_email(User, req['email'])
+        if existing_user and existing_user.id != user.id:
+            return jsonify({"msg": "user with this email already exists"}), 400
+
     for key, value in req.items():
         if key not in ['id']:
             setattr(user, key, value)
     user.save_user()
     return jsonify(user.to_dict())
+
+
+@app_views.route('/upload_image', methods=['POST'], strict_slashes=False)
+@jwt_required()
+def upload_image():
+    """upload image for user"""
+    user_id = get_jwt_identity()
+    user = storage.get(User, id=user_id)
+    if not user:
+        abort(404)
+    if 'image' not in request.files:
+        return jsonify({"msg": "No image file"}), 400
+    image = request.files['image']
+    if image.filename == '':
+        return jsonify({"msg": "No selected file"}), 400
+
+    filename = secure_filename(image.filename)
+    unique_filename = f"{user.id}_{filename}"
+
+    root = os.path.dirname(os.path.dirname(os.path.dirname(current_app.root_path)))
+
+    public_dir = os.path.join(root, 'frontend', 'public')
+    if not os.path.exists(public_dir):
+        os.makedirs(public_dir)
+    image_path = os.path.join(public_dir, unique_filename)
+
+    image.save(image_path)
+
+    user_image_url = f"/public/{unique_filename}"
+    user.image = user_image_url
+    user.save_user()
+
+    return jsonify({"img_url": user_image_url, "user": user.to_dict()})
 
 
 @app_views.route('/login', methods=['POST', 'GET'], strict_slashes=False)
@@ -100,7 +146,8 @@ def login():
 
     access_token = create_access_token(identity=user.id,
                                        expires_delta=timedelta(hours=4))
-    response = make_response(jsonify({"msg": "Login successfull", "user": user.to_dict()}), 200)
+    response = make_response(jsonify({"msg": "Login successfull",
+                                      "user": user.to_dict()}), 200)
 
     cookie_expiration = timedelta(hours=4)
     expires_at = datetime.now() + cookie_expiration

@@ -28,12 +28,12 @@ export function UpdateProfile() {
     const [email, setEmail] = useState(user.email || '');
     const [phone, setPhone] = useState(user.phone || '');
     const [github, setGithub] = useState(user.github || '');
+    const [error, setError] = useState('');
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     
 
     const handleSubmit = async (e) => {
-        console.log("ehhhhe")
         e.preventDefault();
-        console.log("yey user id ", user.id)
         try {
             const csrfToken = getCookie('csrf_access_token');
             const response = await axiosInstance.patch(`/users/${user.id}`, {
@@ -53,13 +53,16 @@ export function UpdateProfile() {
             console.log("Update successful", response.data);
 
             dispatch(setUserLogin(response.data));
+            setError('');
+            setIsDialogOpen(false);
         } catch (error) {
-            console.error("Update failed", error);
+            console.error("Update failed", error.response.data);
+            setError(error.response.data.msg);
         }
     };
 
     return (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
             <DialogTrigger asChild>
                 <Pencil className="text-center w-full text-[#E72F2F]" />
             </DialogTrigger>
@@ -106,6 +109,7 @@ export function UpdateProfile() {
                                 className="col-span-3"
                             />
                         </div>
+                        {error && <p className='text-center text-red-500'>{error}</p> }
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="email" className="text-right">
                                 Email
