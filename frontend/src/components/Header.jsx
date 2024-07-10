@@ -82,7 +82,7 @@ const Header = () => {
               />
             </div>
           </form> */}
-          <div className='ml-auto flex-1 sm:flex-initial'>
+          <div className='ml-auto flex-1 flex-initial'>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
@@ -100,9 +100,9 @@ const Header = () => {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <ModeToggle className='ml-2' />
-
+            <span className='ml-2' >
+                <ModeToggle />
+          </span>
           </div>
         </div>
       </header>

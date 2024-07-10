@@ -13,13 +13,15 @@ import { useSelector } from "react-redux"
 import { Pencil, SquareUserRound, UserCog,
          BadgeInfo, Mail, Github, PhoneCall } from 'lucide-react';
 
+import  { UpdateProfile }  from "@/components/Update-Profile"
+
 const Profile = () => {
 
     const user = useSelector((state) => state.user.user);
 
     return (
         <>
-            <Card className="container min-h-full flex flex-col justify-around px-4
+            <Card className="container mt-4 min-h-full flex flex-col justify-around px-4
                          sm:w-96 md:flex-row md:w-full lg:w-3/4">
                 <div className="w-1/2 order-2 md:m-4 flex items-center">
                     <div className="text-left">
@@ -53,17 +55,18 @@ const Profile = () => {
                             user.bio :
                             <div>
                                 <span className="text-[#E0A75E]">Add More Info about you so that other users  know you better
-                                    <Pencil className="text-center w-full text-[#E72F2F]" />
+                                    {/* <Pencil className="text-center w-full text-[#E72F2F]" /> */}
                                 </span>
                             </div>}
+                                    <UpdateProfile />
                         </div>
                     </div>
                     <CardContent className='m-auto text-left m-4 p-4 border border-green-100'>
-                        <div className='my-2 flex justify-end' variant='outline' type='submit'>
+                        {/* <div className='my-2 flex justify-end' variant='outline' type='submit'>
                             <Link to='/edit_profile'>
                                 <UserCog className="text-right w-full text-[#E72F2F]" />
                             </Link>
-                        </div>
+                        </div> */}
 
                         <div className="flex border">
                             <BadgeInfo color="#402E7A" className="my-auto ml-2" />

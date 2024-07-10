@@ -92,7 +92,7 @@ const Home = () => {
                             </Card>
                         </div>
                     ))}
-                    {/* <div className="flex-1">
+                    <div className="flex-1">
                         <Card className='h-full flex flex-col'>
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
@@ -109,7 +109,7 @@ const Home = () => {
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div> */}
+                    </div>
 
 
                 </div>
