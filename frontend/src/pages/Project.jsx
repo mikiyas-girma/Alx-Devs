@@ -10,12 +10,51 @@ import {
 } from "@/components/ui/card"
 
 import { useParams, Link } from "react-router-dom";
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/ui/separator";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProjectById, fetchUserById } from "@/utils/projectSlice";
+import { useEffect } from "react";
 
 
 
 const Project = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const project = useSelector((state) => state.projects.currentProject);
+    const creator = useSelector((state) => state.projects.creator);
+    const status = useSelector((state) => state.projects.status);
+    const error = useSelector((state) => state.projects.error);
+
+
+    useEffect(() => {
+        // Fetch project by ID if not loaded or if the ID has changed
+        if (!project || project.id !== id) {
+            dispatch(fetchProjectById(id))
+                .unwrap()
+                .then((fetchedProject) => {
+                    // Once the project is fetched, check if we need to fetch the creator
+                    if (fetchedProject && fetchedProject.creator_id && (!creator || creator.id !== fetchedProject.creator_id)) {
+                        dispatch(fetchUserById(fetchedProject.creator_id));
+                    }
+                })
+                .catch(error => console.error("Failed to fetch project or creator:", error));
+        }
+    }, [id, project, creator, dispatch]);
+
+
+    if (status == 'loading') {
+        return <div>Loading...</div>
+    }
+
+    if (status == 'failed') {
+        return <div>{ error }</div>
+    }
+
+    if (!project) {
+        return <div>Project not found</div>;
+    }
+    
+
     return (
         <>
             <div className="m-4">
@@ -23,22 +62,31 @@ const Project = () => {
                     <div className="flex-1">
                         <CardHeader className='text-center'>
                             <CardTitle>
-                                Project {id}
+                                {project.title}
                             </CardTitle>
                         </CardHeader>
+                        
                         <CardContent className=''>
                             <p className='font-serif '>
-                                This is the description of project
-                                The Construction and Machinery Material Management System
-                                (CMMS) is a web-based application that helps in managing
-                                The Construction and Machinery Material Management System
-                                CMMS is a web-based application that helps in managing
-
+                                {project.description}
                             </p>
                         </CardContent>
+
                         <div className="ml-6 p-2 ">
-                            <p>Project Creator: Mikias Girma</p>
-                            <p className="text-blue-900">Proposal Link: <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">peeps</a></p>
+                            {creator &&
+                                <p>Project Creator: {creator.name}</p>
+                            }   
+                            { project.proposal &&
+                                <p className="">Proposal Link:  
+                                    <a 
+                                        className="text-blue-900" 
+                                        href={project.proposal} 
+                                        target="_blank" rel="noopener noreferrer"
+                                    > 
+                                    <span> </span> {project.proposal}
+                                    </a>
+                                </p>
+                            }
                         </div>
                         <CardFooter className='justify-center'>
                             <div className="p-[3px] relative">
@@ -73,7 +121,9 @@ const Project = () => {
                     </div>
                 </Card>
                     <div className="text-center">
-                        <button className="p-2 my-4 border-4">See Another Projects</button>
+                        <Link to='/home'>
+                            <button className="p-2 my-4 border-4">See Another Projects</button>
+                        </Link>
                     </div>
             </div>
         </>

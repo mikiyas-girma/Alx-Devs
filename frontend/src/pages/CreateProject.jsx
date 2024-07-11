@@ -16,6 +16,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { getCookie } from "@/utils/utilities";
+import { addProject } from "@/utils/projectSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 // Define the Zod schema
@@ -27,6 +30,8 @@ const schema = z.object({
 
 const CreateProject = () => {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
@@ -35,20 +40,16 @@ const CreateProject = () => {
     const onSubmit = async (data) => {
 
         try {
-            const csrfToken = getCookie('csrf_access_token');
-            const response = await axiosInstance.post('/projects/', {
+
+            dispatch(addProject({
                 title: data.title,
-                description: data.description
-            },
-            {
-                headers: {
-                    'X-CSRF-Token': csrfToken
-                }
-            });
-            console.log("project created successfully", response.data);
+                description: data.description,
+                proposal: data.proposal,
+            }));
+            console.log("project created successfully")
+            navigate('/home');
 
         } catch (error) {
-            console.log(getCookie('csrf_access_token'))
             console.log("error creating the project", error)
         }
 

@@ -53,14 +53,17 @@ To run the Alx_Devs project locally, follow these steps:
 5. **Manage Requests**: Approve or reject requests to join your project.
 
 ## Screenshots
-![Home Page](/assets/landingpage.png)
 *This is the current landing page to be changed soon!*
+![Home Page](/assets/landingpage.png)
 
-![Profile Page](/assets/profilepage.png)
+*This is the page where created project get listed*
+![Project Listing Page](/assets/homepage.png)
+
 *This is the profile page in Dark Mode nb. the web app is have both light & dark mode*
+![Profile Page](/assets/profilepage.png)
 
-![Project Creation Page](/assets/createprojectpage.png)
 *this is the page where users after logged in create a project and find potential teammates*
+![Project Creation Page](/assets/createprojectpage.png)
 
 ## Contributing
 We welcome contributions to Alx_Devs! To contribute:

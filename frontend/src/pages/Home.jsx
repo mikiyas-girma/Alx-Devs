@@ -9,31 +9,44 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PathConstants from "@/routes/pathConstants";
-import { useState, useEffect } from "react";
-import axiosInstance from "@/utils/axiosInstance";
+import { useEffect } from "react";
 import { Search } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProjects, setCurrentProject } from "@/utils/projectSlice";
 
 
 
 const Home = () => {
-    const [projects, setProjects] = useState([]);
+
+    const dispatch = useDispatch()
+    const projects = useSelector((state) => state.projects.projects);
+    const projectStatus = useSelector((state) => state.projects.status);
+    const error = useSelector((state) => state.projects.error);
 
     const user = useSelector((state) => state.user.user);
+    const navigate = useNavigate();
+
+    const handleProjectClick = (project) => {
+        dispatch(setCurrentProject(project));
+
+        navigate(PathConstants.PROJECT.replace(':id', project.id));
+    }
 
     useEffect(() => {
-        axiosInstance.get('/projects')
-            .then((res) => {
-                setProjects(res.data);
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        if (projectStatus == 'idle') {
+            dispatch(fetchProjects());
+        }
+    }, [projectStatus, dispatch])
+
+    if (projectStatus == 'loading') {
+        return <div>Loading...</div>
     }
-        , []);
+
+    if (projectStatus == 'failed') {
+        return <div>{ error }</div>
+    }
 
 
     return (
@@ -80,10 +93,13 @@ const Home = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className='mt-auto'>
-                                    <Button variant='outline' asChild>
+                                    <Button 
+                                        variant='outline'
+                                        onClick={() => handleProjectClick(project)} 
+                                        asChild
+                                    >
                                         <Link
-                                            className="m-auto text-[#354A21]"
-                                            to={`${PathConstants.PROJECT.replace(':id', project.id)}`}
+                                            className="m-auto text-[#0C7C59]"
                                         >
                                             View
                                         </Link>
@@ -92,7 +108,7 @@ const Home = () => {
                             </Card>
                         </div>
                     ))}
-                    <div className="flex-1">
+                    {/* <div className="flex-1">
                         <Card className='h-full flex flex-col'>
                             <CardHeader>
                                 <CardTitle className='text-center'>CMMS </CardTitle>
@@ -109,7 +125,7 @@ const Home = () => {
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div>
+                    </div> */}
 
 
                 </div>
