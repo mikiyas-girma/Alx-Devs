@@ -62,6 +62,8 @@ def create_project():
         abort(400, 'project title is required')
     if 'description' not in data:
         abort(400, "description is required")
+    if 'roles' not in data:
+        abort(400, "roles is required")
 
     current_user_id = get_jwt_identity()
     user = storage.get(User, id=current_user_id)

@@ -27,19 +27,16 @@ const Project = () => {
 
 
     useEffect(() => {
-        // Fetch project by ID if not loaded or if the ID has changed
         if (!project || project.id !== id) {
-            dispatch(fetchProjectById(id))
-                .unwrap()
-                .then((fetchedProject) => {
-                    // Once the project is fetched, check if we need to fetch the creator
-                    if (fetchedProject && fetchedProject.creator_id && (!creator || creator.id !== fetchedProject.creator_id)) {
-                        dispatch(fetchUserById(fetchedProject.creator_id));
-                    }
-                })
-                .catch(error => console.error("Failed to fetch project or creator:", error));
+            dispatch(fetchProjectById(id));
         }
-    }, [id, project, creator, dispatch]);
+    }, [id, project, dispatch]);
+
+    useEffect(() => {
+        if (project && project.creator_id) {
+            dispatch(fetchUserById(project.creator_id));
+        }
+    }, [project, dispatch]);
 
 
     if (status == 'loading') {

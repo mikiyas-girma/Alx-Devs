@@ -4,7 +4,7 @@
 """
 import uuid
 from models.base import Base
-from sqlalchemy import String, ForeignKey, Enum
+from sqlalchemy import String, ForeignKey, Enum, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -22,6 +22,7 @@ class Project(Base):
     proposal: Mapped[str] = mapped_column(String(250), nullable=True)
     application: Mapped[str] = mapped_column(Enum(
                         'open', 'closed', name='application'), default='open')
+    roles: Mapped[list] = mapped_column(JSON, nullable=False)
 
     creator_id: Mapped[str] = mapped_column(String(36), ForeignKey('users.id'))
     creator = relationship('User', back_populates='projects')

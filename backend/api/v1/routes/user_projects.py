@@ -113,7 +113,7 @@ def approve_request(user_project_id):
                  methods=['DELETE'], strict_slashes=False)
 @jwt_required()
 def reject_request(user_project_id):
-    """to allow project owner to (approve) request and add user
+    """to allow project owner to (reject) request and add user
         requested to a team
     """
     user_id = get_jwt_identity()

@@ -13,12 +13,17 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
 import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { getCookie } from "@/utils/utilities";
 import { addProject } from "@/utils/projectSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+// import { TechStackDropdown } from "@/components/MultiSelect";
+import CreatableSelect from 'react-select/creatable';
+import {customStyles} from '@/components/ui/customStyles';
+
 
 
 // Define the Zod schema
@@ -29,6 +34,28 @@ const schema = z.object({
 });
 
 const CreateProject = () => {
+
+    const roleOptions = [
+        { value: 'frontend', label: 'Frontend' },
+        { value: 'backend', label: 'Backend' },
+        { value: 'fullstack', label: 'Full stack' },
+        { value: 'UI-designer', label: 'UI Designer' },
+      ];
+
+    const [selectedRoles, setSelectedRoles] = useState([]);
+
+    const handleChange = (selectedOptions) => {
+        setSelectedRoles(selectedOptions || []);
+    }
+
+    const handleRoleClick = () => {
+        const rolesJson = selectedRoles.reduce((acc, role) => {
+            acc[role.value] = [role.value];
+            return acc;
+        }, {});
+        return rolesJson;
+    }
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -41,10 +68,14 @@ const CreateProject = () => {
 
         try {
 
+            const roles = handleRoleClick();
+            console.log(roles);
+
             dispatch(addProject({
                 title: data.title,
                 description: data.description,
                 proposal: data.proposal,
+                roles: roles,
             }));
             console.log("project created successfully")
             navigate('/home');
@@ -66,31 +97,42 @@ const CreateProject = () => {
                 <CardContent className='w-3/4 m-auto'>
                     <div className="flex flex-col">
                         <Input
-                            {...register('title')} 
-                            type='text' 
-                            placeholder='Title' 
-                            className='mt-1 rounded' 
+                            {...register('title')}
+                            type='text'
+                            placeholder='Title'
+                            className='mt-1 rounded'
                         />
                         {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                     </div>
                     <div className="flex flex-col mt-4">
-                        <Textarea 
-                            {...register('description')} 
-                            className='mt-1 rounded' 
-                            placeholder='Project description' 
+                        <Textarea
+                            {...register('description')}
+                            className='mt-1 rounded'
+                            placeholder='Project description'
                         />
                         {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                         <label className="text-sm font-light">Tell us about the project, number of required team members, etc.</label>
                     </div>
                     <div className="flex flex-col mt-4">
-                        <Input 
-                            {...register('proposal')} 
-                            type='text' 
-                            placeholder='Proposal link' 
-                            id='proposal' 
-                            className='mt-1 rounded' 
+                        <Input
+                            {...register('proposal')}
+                            type='text'
+                            placeholder='Proposal link (optional)'
+                            id='proposal'
+                            className='mt-1 rounded'
                         />
-                        <label htmlFor="proposal" className="text-sm font-light">(optional)</label>
+                    </div>
+                    <div className="mt-2 ">
+                        <CreatableSelect
+                            styles={customStyles}
+                            isMulti
+                            options={roleOptions}
+                            onChange={handleChange}
+                            value={selectedRoles}
+                            className="font-light rounded"
+                            placeholder='Select or Add roles'
+                        />
+                        <label className="text-sm font-light mb-2">Select or Add required roles by writing in it</label>
                     </div>
                 </CardContent>
                 <CardContent className='text-center'>

@@ -74,7 +74,7 @@ const Home = () => {
                             <Search className="absolute left-2.5 top-2.5 h-5 w-4 text-muted-foreground" />
                             <Input
                                 type="search"
-                                placeholder="Search products..."
+                                placeholder="Search Projects..."
                                 className="pl-8"
                             />
                         </div>
