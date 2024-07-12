@@ -14,10 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjectById, fetchUserById } from "@/utils/projectSlice";
 import { useEffect, useState } from "react";
-// import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
+import { askToJoinProject } from "@/utils/userprojectSlice";
+import { useToast } from "@/components/ui/use-toast"
 
 
 
@@ -25,12 +23,18 @@ const Project = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const project = useSelector((state) => state.projects.currentProject);
+    const userproject = useSelector((state) => state.userProjects.userProjects);
+    const application_status = useSelector((state) => state.userProjects.application_status);
+    const form_status = useSelector((state) => state.userProjects.form_status);
     const creator = useSelector((state) => state.projects.creator);
     const status = useSelector((state) => state.projects.status);
     const error = useSelector((state) => state.projects.error);
 
     const [roles, setRoles] = useState({});
     const [selectedRole, setSelectedRole] = useState('');
+
+    const { toast } = useToast();
+
 
     useEffect(() => {
         if (!project || project.id !== id) {
@@ -59,6 +63,59 @@ const Project = () => {
 
     const handleRoleChange = (event) => {
         setSelectedRole(event.target.value)
+    }
+
+
+    const handleApply = () => {
+
+        if (!selectedRole) {
+            toast({
+                title: "Error",
+                description: "Please select a role",
+                status: "error",
+                duration: 2000,
+                isClosable: true,
+                variant: "destructive"
+            }
+            )
+            return;
+        }
+
+        try {
+            dispatch(askToJoinProject({
+                project_id: project.id,
+                role: selectedRole
+            }));
+
+            if (application_status === 'succeeded') {
+                toast({
+                    title: "Submitted Successfully",
+                    description: form_status,
+                    status: "success",
+                    duration: 2000,
+                    isClosable: true,
+                    variant: "success"
+                }
+                )
+            }
+
+            if (application_status === 'failed') {
+                toast({
+                    title: "Not Submitted ",
+                    description: form_status,
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                    variant: "destructive"
+                }
+                )
+                console.log(form_status);
+            }
+
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     return (
@@ -95,8 +152,8 @@ const Project = () => {
                             }
                         </div>
                         <div>
-                            <div className="p-4">
-                                <h2 className="text-lg font-bold mb-4">Select a Role & Apply</h2>
+                            <div className="p-4 text-center">
+                                <h2 className="text-lg font-bold mb-2">Select a Role & Apply</h2>
                                 <div className="flex flex-col">
                                     {Object.keys(roles).map((category) => (
                                         <div key={category} className="mb-2">
@@ -120,7 +177,13 @@ const Project = () => {
                         </div>
                         <CardFooter className='justify-center'>
                             <div className="p-[3px] relative">
-                                <button className="shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear">
+                                <button
+                                    className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
+                                    hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
+                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
+                                    type="submit"
+                                    onClick={handleApply}
+                                >
                                     Apply Here
                                 </button>
                             </div>
@@ -152,7 +215,14 @@ const Project = () => {
                 </Card>
                 <div className="text-center">
                     <Link to='/home'>
-                        <button className="p-2 my-4 border-4">See Another Projects</button>
+                        <button
+                            className=" mt-2 bg-gradient-to-r from-blue-400 via-blue-500 to-violet-500 
+                                    hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
+                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
+                        >
+                            See Another Projects
+                        </button>
+
                     </Link>
                 </div>
             </div>

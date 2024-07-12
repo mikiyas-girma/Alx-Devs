@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Toaster } from "@/components/ui/toaster"
 
 
 export default function Layout() {
@@ -23,6 +24,7 @@ export default function Layout() {
                 }>
                     <Outlet />
                 </Suspense>
+            <Toaster />
             </main>
             {/* <Footer /> */}
         </>
