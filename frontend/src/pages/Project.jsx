@@ -13,7 +13,11 @@ import { useParams, Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjectById, fetchUserById } from "@/utils/projectSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+// import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
 
 
 
@@ -25,18 +29,20 @@ const Project = () => {
     const status = useSelector((state) => state.projects.status);
     const error = useSelector((state) => state.projects.error);
 
+    const [roles, setRoles] = useState({});
+    const [selectedRole, setSelectedRole] = useState('');
 
     useEffect(() => {
         if (!project || project.id !== id) {
             dispatch(fetchProjectById(id));
         }
-    }, [id, project, dispatch]);
 
-    useEffect(() => {
         if (project && project.creator_id) {
+            setRoles(project.roles);
             dispatch(fetchUserById(project.creator_id));
         }
-    }, [project, dispatch]);
+
+    }, [id, project, dispatch]);
 
 
     if (status == 'loading') {
@@ -44,13 +50,16 @@ const Project = () => {
     }
 
     if (status == 'failed') {
-        return <div>{ error }</div>
+        return <div>{error}</div>
     }
 
     if (!project) {
         return <div>Project not found</div>;
     }
-    
+
+    const handleRoleChange = (event) => {
+        setSelectedRole(event.target.value)
+    }
 
     return (
         <>
@@ -62,7 +71,7 @@ const Project = () => {
                                 {project.title}
                             </CardTitle>
                         </CardHeader>
-                        
+
                         <CardContent className=''>
                             <p className='font-serif '>
                                 {project.description}
@@ -72,18 +81,42 @@ const Project = () => {
                         <div className="ml-6 p-2 ">
                             {creator &&
                                 <p>Project Creator: {creator.name}</p>
-                            }   
-                            { project.proposal &&
-                                <p className="">Proposal Link:  
-                                    <a 
-                                        className="text-blue-900" 
-                                        href={project.proposal} 
+                            }
+                            {project.proposal &&
+                                <p className="">Proposal Link:
+                                    <a
+                                        className="text-blue-900"
+                                        href={project.proposal}
                                         target="_blank" rel="noopener noreferrer"
-                                    > 
-                                    <span> </span> {project.proposal}
+                                    >
+                                        <span> </span> {project.proposal}
                                     </a>
                                 </p>
                             }
+                        </div>
+                        <div>
+                            <div className="p-4">
+                                <h2 className="text-lg font-bold mb-4">Select a Role & Apply</h2>
+                                <div className="flex flex-col">
+                                    {Object.keys(roles).map((category) => (
+                                        <div key={category} className="mb-2">
+                                            {roles[category].map((role, index) => (
+                                                <label key={index} className="inline-flex items-center mt-2">
+                                                    <input
+                                                        type="radio"
+                                                        name="role"
+                                                        value={role}
+                                                        checked={selectedRole === role}
+                                                        onChange={handleRoleChange}
+                                                        className="form-radio"
+                                                    />
+                                                    <span className="ml-2">{role}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                         <CardFooter className='justify-center'>
                             <div className="p-[3px] relative">
@@ -117,11 +150,11 @@ const Project = () => {
                         </div>
                     </div>
                 </Card>
-                    <div className="text-center">
-                        <Link to='/home'>
-                            <button className="p-2 my-4 border-4">See Another Projects</button>
-                        </Link>
-                    </div>
+                <div className="text-center">
+                    <Link to='/home'>
+                        <button className="p-2 my-4 border-4">See Another Projects</button>
+                    </Link>
+                </div>
             </div>
         </>
     )

@@ -131,6 +131,7 @@ const CreateProject = () => {
                             value={selectedRoles}
                             className="font-light rounded"
                             placeholder='Select or Add roles'
+                            required
                         />
                         <label className="text-sm font-light mb-2">Select or Add required roles by writing in it</label>
                     </div>
