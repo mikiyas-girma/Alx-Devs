@@ -137,3 +137,26 @@ def reject_request(user_project_id):
     storage.save()
 
     return jsonify({"msg": "Successfully removed the user"}), 200
+
+
+@app_views.route('/user_projects/<project_id>/team',
+                 methods=['GET'], strict_slashes=False)
+@jwt_required()
+def get_team(project_id):
+    """to get the team of a project"""
+    user_id = get_jwt_identity()
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"msg": "login first to get access"}), 401
+
+    project = storage.get(Project, id=project_id)
+    if not project:
+        return jsonify({"msg": "project not found"}), 404
+
+    # if user_id != project.creator_id:
+    #     return jsonify({"msg": "Permission denied"}), 403
+
+    team = storage.filter_all(UserProject, project_id=project_id)
+    team = [user_project.to_dict() for user_project in team]
+
+    return jsonify(team), 200
