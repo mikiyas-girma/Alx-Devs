@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import projectReducer from "./projectSlice";
 import userprojectSlice from "./userprojectSlice";
+import teamSlice from "./teamSlice";
 
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
         user: userReducer,
         projects: projectReducer,
         userProjects: userprojectSlice,
+        teams: teamSlice,
     },
 });
 
