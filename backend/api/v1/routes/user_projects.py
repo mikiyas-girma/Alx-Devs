@@ -159,4 +159,11 @@ def get_team(project_id):
     team = storage.filter_all(UserProject, project_id=project_id)
     team = [user_project.to_dict() for user_project in team]
 
-    return jsonify(team), 200
+    user_ids = [member['user_id'] for member in team]
+
+    team_members = {}
+    for user_id in user_ids:
+        user = storage.get(User, id=user_id)
+        team_members[user_id] = user.to_dict()
+
+    return jsonify({"team": team, "team_members": team_members}), 200
