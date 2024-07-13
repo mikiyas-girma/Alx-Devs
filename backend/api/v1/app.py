@@ -34,28 +34,28 @@ def do_teardown(self):
 @app.errorhandler(404)
 def page_not_found(e):
     """ handler for 404 error """
-    msg = {"error": "Not found"}
+    msg = {"error": e.description}
     return jsonify(msg), 404
 
 
 @app.errorhandler(400)
 def bad_request(e):
     """ handler for 400 error """
-    msg = {"error": "Bad request"}
+    msg = {"error": e.description}
     return jsonify(msg), 400
 
 
 @app.errorhandler(401)
 def unauthorized(e):
     """ handler for 401 error """
-    msg = {"error": "Unauthorized"}
+    msg = {"error": e.description}
     return jsonify(msg), 401
 
 
 @app.errorhandler(403)
 def forbidden(e):
     """ handler for 403 error """
-    msg = {"error": "Forbidden"}
+    msg = {"error": e.description}
     return jsonify(msg), 403
 
 

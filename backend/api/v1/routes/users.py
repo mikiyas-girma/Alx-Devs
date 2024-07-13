@@ -23,6 +23,8 @@ def get_users():
     """
     users = storage.all(User)
     users_list = []
+    if not users:
+        return jsonify({"msg": "No user found"})
     for user in users.values():
         users_list.append(user.to_dict())
     return jsonify(users_list)
@@ -35,18 +37,18 @@ def register_user():
     """
     req = request.get_json()
     if not isinstance(req, dict):
-        return jsonify({"msg": "Not a json"}), 400
+        abort(400, "Not a json")
     if 'email' not in req:
-        return jsonify({"msg": "email is required"}), 400
+        abort(400, "email is required")
     if 'username' not in req:
-        return jsonify({"msg": "username is required"}), 400
+        abort(400, "username is required")
     if 'password' not in req:
-        return jsonify({"msg": "password is required"}), 400
+        abort(400, "password is required")
 
     if storage.get(User, username=req['username']):
-        return jsonify({"msg": "user with this username already exists"}), 400
+        abort(400, "user with this username already exists")
     if User.get_by_email(User, req['email']):
-        return jsonify({"msg": "user with this email already exists"}), 400
+        abort(400, "user with this email already exists")
 
     new_user = User(**request.json)
     new_user.save_user()
@@ -58,7 +60,7 @@ def get_user(user_id):
     """get specific user with given id"""
     user = storage.get(User, user_id)
     if not user:
-        abort(404)
+        abort(404, "User not found")
     return jsonify(user.to_dict())
 
 
@@ -71,20 +73,20 @@ def update_user(user_id):
 
     user = storage.get(User, id=user_id)
     if not user:
-        abort(404)
+        abort(404, "User not found")
     req = request.get_json()
     if not isinstance(req, dict):
-        return jsonify({"msg": "Not a json"}), 400
+        abort(400, "Not a json")
 
     if 'username' in req:
         existing_user = storage.get(User, username=req['username'])
         if existing_user and existing_user.id != user.id:
-            return jsonify({"msg": "user with this username already exists"}), 400
+            abort(400, "user with this username already exists")
 
     if 'email' in req:
         existing_user = User.get_by_email(User, req['email'])
         if existing_user and existing_user.id != user.id:
-            return jsonify({"msg": "user with this email already exists"}), 400
+            abort(400, "user with this email already exists")
 
     for key, value in req.items():
         if key not in ['id']:
@@ -96,7 +98,9 @@ def update_user(user_id):
 @app_views.route('/upload_image', methods=['POST'], strict_slashes=False)
 @jwt_required()
 def upload_image():
-    """upload image for user"""
+    """
+        handles upload image for user profile and saves it to public folder
+    """
     user_id = get_jwt_identity()
     user = storage.get(User, id=user_id)
     if not user:
