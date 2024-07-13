@@ -6,7 +6,6 @@ import { getCookie } from "./utilities";
 const initialState = {
     projects: [],
     currentProject: null,
-    creator: null,
     status: 'idle',
     error: null,
 };
@@ -19,12 +18,6 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', async ()
 
 export const fetchProjectById = createAsyncThunk('projects/fetchProjectById', async (id) => {
     const response = await axiosInstance.get(`/projects/${id}`);
-    return response.data;
-});
-
-
-export const fetchUserById = createAsyncThunk('projects/fetchUserById', async (id) => {
-    const response = await axiosInstance.get(`/users/${id}`);
     return response.data;
 });
 
@@ -65,9 +58,6 @@ const projectSlice = createSlice({
             })
             .addCase(fetchProjectById.fulfilled, (state, action) => {
                 state.currentProject = action.payload;
-            })
-            .addCase(fetchUserById.fulfilled, (state, action) => {
-                state.creator = action.payload;
             })
             .addCase(addProject.fulfilled, (state, action) => {
                 state.projects.push(action.payload);

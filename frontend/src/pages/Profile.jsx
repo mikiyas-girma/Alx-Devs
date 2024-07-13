@@ -24,7 +24,7 @@ const Profile = () => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector((state) => state.user.user);
+    const loggeduser = useSelector((state) => state.user.loggeduser);
 
     const fileInputRef = useRef(null);
 
@@ -67,8 +67,8 @@ const Profile = () => {
         }
     }
     let path = ''
-    if (user && user.image) {
-        path = user?.image.split('/')[2]
+    if (loggeduser && loggeduser.image) {
+        path = loggeduser?.image.split('/')[2]
     }
 
     return (
@@ -92,7 +92,7 @@ const Profile = () => {
                 </div>
                 <div className="w-full md:order-2">
                     <CardHeader>
-                        {user?.image ?
+                        {loggeduser?.image ?
                             <div className=" flex justify-center items-center">
                                 <img className="w-32 h-32 rounded-full" src={path} alt="" />
                             </div>
@@ -118,8 +118,8 @@ const Profile = () => {
                         </form>
                     </CardHeader>
                     <div className="mx-10 flex justify-center">
-                        <div>{user.bio ?
-                            user.bio :
+                        <div>{loggeduser.bio ?
+                            loggeduser.bio :
                             <div>
                                 <span className="text-[#E0A75E]">Add More Info about you so that other users  know you better
                                     {/* <Pencil className="text-center w-full text-[#E72F2F]" /> */}
@@ -137,26 +137,26 @@ const Profile = () => {
 
                         <div className="flex border">
                             <BadgeInfo color="#402E7A" className="my-auto ml-2" />
-                            <p className="p-2">Name: {user?.name}</p>
+                            <p className="p-2">Name: {loggeduser?.name}</p>
                         </div>
 
                         <div className="flex border">
                            <Mail color="#402E7A" className="my-auto ml-2" /> 
-                           <p className="p-2">email: {user?.email}</p>
+                           <p className="p-2">email: {loggeduser?.email}</p>
                         </div>
 
-                        { user.phone ?
+                        { loggeduser.phone ?
                         <div className="flex border">
                             <PhoneCall color="#402E7A" className="my-auto ml-2" />
-                            <p className="p-2">Phone: {user?.phone}</p>
+                            <p className="p-2">Phone: {loggeduser?.phone}</p>
                         </div>
                         : ''
                         }
 
-                        { user.github ?
+                        { loggeduser.github ?
                         <div className="flex border">
                             <Github color="#402E7A" className="my-auto ml-2" />
-                            <p className="p-2">Github: {user?.github}</p> 
+                            <p className="p-2">Github: {loggeduser?.github}</p> 
                         </div>
                         : ''
                         }

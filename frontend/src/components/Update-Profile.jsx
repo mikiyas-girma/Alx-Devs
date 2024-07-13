@@ -20,14 +20,14 @@ import { setUserLogin } from '@/utils/userSlice';
 
 export function UpdateProfile() {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user.user);
+    const loggeduser = useSelector(state => state.user.loggeduser);
     
-    const [bio, setBio] = useState(user.bio || '');
-    const [name, setName] = useState(user.name || '');
-    const [username, setUsername] = useState(user.username || '');
-    const [email, setEmail] = useState(user.email || '');
-    const [phone, setPhone] = useState(user.phone || '');
-    const [github, setGithub] = useState(user.github || '');
+    const [bio, setBio] = useState(loggeduser.bio || '');
+    const [name, setName] = useState(loggeduser.name || '');
+    const [username, setUsername] = useState(loggeduser.username || '');
+    const [email, setEmail] = useState(loggeduser.email || '');
+    const [phone, setPhone] = useState(loggeduser.phone || '');
+    const [github, setGithub] = useState(loggeduser.github || '');
     const [error, setError] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     
@@ -36,7 +36,7 @@ export function UpdateProfile() {
         e.preventDefault();
         try {
             const csrfToken = getCookie('csrf_access_token');
-            const response = await axiosInstance.patch(`/users/${user.id}`, {
+            const response = await axiosInstance.patch(`/users/${loggeduser.id}`, {
                 bio,
                 name,
                 username,
@@ -56,8 +56,8 @@ export function UpdateProfile() {
             setError('');
             setIsDialogOpen(false);
         } catch (error) {
-            console.error("Update failed", error.response.data);
-            setError(error.response.data.msg);
+            // console.error("Update failed", error.response.data.error);
+            setError(error.response.data.error);
         }
     };
 

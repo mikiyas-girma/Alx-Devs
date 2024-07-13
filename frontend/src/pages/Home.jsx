@@ -25,7 +25,7 @@ const Home = () => {
     const projectStatus = useSelector((state) => state.projects.status);
     const error = useSelector((state) => state.projects.error);
 
-    const user = useSelector((state) => state.user.user);
+    const loggeduser = useSelector((state) => state.user.loggeduser);
     const navigate = useNavigate();
 
     const handleProjectClick = (project) => {
@@ -54,7 +54,7 @@ const Home = () => {
             <Card className="min-h-screen">
                 <Card className='flex justify-around border-green-50'>
                     <CardHeader className='text-center text-[#03AC13]'>
-                        <CardTitle>Welcome {user?.username}</CardTitle>
+                        <CardTitle>Welcome {loggeduser?.username}</CardTitle>
                         <CardDescription className='text-base tracking-wider
                                                             text-current font-serif'>
                             Explore and Apply for Projects

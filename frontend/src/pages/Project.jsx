@@ -12,18 +12,21 @@ import {
 import { useParams, Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProjectById, fetchUserById } from "@/utils/projectSlice";
+import { fetchProjectById } from "@/utils/projectSlice";
+import { fetchUserById } from "@/utils/userSlice";
 import { useEffect, useState } from "react";
-import { askToJoinProject } from "@/utils/userprojectSlice";
+import { askToJoinProject, getTeam } from "@/utils/userprojectSlice";
 import { useToast } from "@/components/ui/use-toast"
+import { setApplicationStatus, setFormError, setFormStatus } from "@/utils/userprojectSlice";
 
 
 
 const Project = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const loggeduser = useSelector((state) => state.user.loggeduser);
     const project = useSelector((state) => state.projects.currentProject);
-    const userproject = useSelector((state) => state.userProjects.userProjects);
+    const teams = useSelector((state) => state.userProjects.teams);
     const application_status = useSelector((state) => state.userProjects.application_status);
     const form_status = useSelector((state) => state.userProjects.form_status);
     const creator = useSelector((state) => state.projects.creator);
@@ -44,6 +47,7 @@ const Project = () => {
         if (project && project.creator_id) {
             setRoles(project.roles);
             dispatch(fetchUserById(project.creator_id));
+            dispatch(getTeam({ project_id: project.id }));
         }
 
     }, [id, project, dispatch]);
@@ -56,6 +60,7 @@ const Project = () => {
     if (status == 'failed') {
         return <div>{error}</div>
     }
+
 
     if (!project) {
         return <div>Project not found</div>;
@@ -74,48 +79,40 @@ const Project = () => {
                 description: "Please select a role",
                 status: "error",
                 duration: 2000,
-                isClosable: true,
                 variant: "destructive"
             }
             )
             return;
         }
 
-        try {
             dispatch(askToJoinProject({
                 project_id: project.id,
                 role: selectedRole
-            }));
-
-            if (application_status === 'succeeded') {
-                toast({
-                    title: "Submitted Successfully",
-                    description: form_status,
-                    status: "success",
-                    duration: 2000,
-                    isClosable: true,
-                    variant: "success"
+            }))
+            .then((result) => {
+                if (result.type.endsWith('fulfilled')) {
+                    console.log(result)
+                    toast({
+                        title: "Success",
+                        description: "Application submitted successfully",
+                        status: "success",
+                        duration: 2000,
+                        variant: "success"
+                    }
+                    )
+                } else if (result.type.endsWith('rejected')) {
+                    console.log(result)
+                    toast({
+                        title: "Error",
+                        description: "You already applied to this project",
+                        status: "error",
+                        duration: 2000,
+                        variant: "destructive"
+                    }
+                    )
                 }
-                )
             }
-
-            if (application_status === 'failed') {
-                toast({
-                    title: "Not Submitted ",
-                    description: form_status,
-                    status: "error",
-                    duration: 2000,
-                    isClosable: true,
-                    variant: "destructive"
-                }
-                )
-                console.log(form_status);
-            }
-
-        } catch (error) {
-            console.log(error);
-
-        }
+            )
     }
 
     return (
@@ -151,6 +148,7 @@ const Project = () => {
                                 </p>
                             }
                         </div>
+                        { loggeduser.id !== project.creator_id &&
                         <div>
                             <div className="p-4 text-center">
                                 <h2 className="text-lg font-bold mb-2">Select a Role & Apply</h2>
@@ -175,6 +173,8 @@ const Project = () => {
                                 </div>
                             </div>
                         </div>
+                        }
+                        { loggeduser.id !== project.creator_id ? 
                         <CardFooter className='justify-center'>
                             <div className="p-[3px] relative">
                                 <button
@@ -188,6 +188,20 @@ const Project = () => {
                                 </button>
                             </div>
                         </CardFooter>
+                        : 
+                        <CardFooter className='justify-center'>
+                            <div className="p-[3px] relative">
+                                <button
+                                    className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
+                                    hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
+                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
+                                    type="submit"
+                                >
+                                    Edit Project
+                                </button>
+                            </div>
+                        </CardFooter>
+                    }
                     </div>
                     <div className="flex-1 m-6 ">
                         <p className="text-green-600">Already Joined Members:</p>
