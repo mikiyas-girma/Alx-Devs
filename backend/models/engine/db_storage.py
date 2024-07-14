@@ -101,6 +101,14 @@ class DBStorage:
         """
         return self.__session.query(cls).filter_by(**kwargs).all()
 
+    def filter_by_ids(self, model, id_list):
+        """
+        find all objects of the given class with id in the provided list
+        """
+        if not id_list:
+            return []
+        return self.__session.query(model).filter(model.id.in_(id_list)).all()
+
     def delete(self, obj):
         """
             deletes an object of a class with given id

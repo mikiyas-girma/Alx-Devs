@@ -4,16 +4,15 @@ import { getCookie } from "./utilities";
 
 
 const initialState = {
-    teams: {},
-    teamDetails: [],
-    application_status: 'idle',
-    form_status: null,
+    team: [],
+    team_status: 'idle',
+    team_error: null,
 };
 
 
-export const getTeam = createAsyncThunk('/user_projects/Team', async (data, {rejectWithValue}) => {
+export const fetchTeam = createAsyncThunk('/user_projects/Team', async (project_id, {rejectWithValue}) => {
     try {
-        const response = await axiosInstance.get(`/user_projects/${data.project_id}/team`, {
+        const response = await axiosInstance.get(`/user_projects/${project_id}/team`, {
             headers: {
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
@@ -34,51 +33,55 @@ export const getTeam = createAsyncThunk('/user_projects/Team', async (data, {rej
 });
 
 
+export const addTeamMember = createAsyncThunk('/user_projects/AddTeamMember', async (data, {rejectWithValue}) => {
+    console.log("as payload: ",  data)
+    const response = await axiosInstance.post(`/projects/${data.project_id}/join`, data, {
+        headers: {
+            'X-CSRF-Token': getCookie('csrf_access_token')
+        }
+    });
+    return data;
+});
+
+
+
 const teamSlice = createSlice({
-    name: 'teams',
+    name: 'team',
     initialState,
 
-    reducers: {
-        setApplicationStatus: (state, action) => {
-            state.application_status = action.payload;
-        },
-
-        setFormStatus: (state, action) => {
-            state.form_status = action.payload;
-        },
-        addApplicantToTeam: (state, action) => {
-            const { project_id, user } = action.payload;
-            const team = state.teams[project_id]?.team || [];
-            const team_members = state.teams[project_id]?.team_members || [];
-
-            team.push(user);
-            team_members[user.user_id] = user.userDetails;
-
-            state.teams[project_id] = {
-                team: team,
-                team_members: team_members
-            };
-        }
-    },
+    reducers: { },
 
     extraReducers: (builder) => {
         builder
-        .addCase(getTeam.fulfilled, (state, action) => {
-            state.application_status = 'succeeded';
-            const { team, team_members } = action.payload;
-            state.teams[action.meta.arg.project_id] = {
-                team: team,
-                team_members: team_members,
-            };
+        .addCase(fetchTeam.pending, (state) => {
+            state.team_status = 'loading';
+        })
+        .addCase(fetchTeam.fulfilled, (state, action) => {
+            state.team_status = 'succeeded';
+            state.team = action.payload;
         })
         
-        .addCase(getTeam.rejected, (state, action) => {
-            state.application_status = 'failed';
-            state.form_status = 'You already applied to this project';
+        .addCase(fetchTeam.rejected, (state, action) => {
+            state.team_status = 'failed';
+            state.team_error = action.error.message;
         })
+        .addCase(addTeamMember.pending, (state) => {
+            state.team_status = 'loading';
+        })
+        .addCase(addTeamMember.fulfilled, (state, action) => {
+            if (action.payload) {
+                console.log("action to be added", action.payload)
+                state.team.push(action.payload);
+            } else {
+                console.log("domino uu", action.payload)
+            }
+        })
+        .addCase(addTeamMember.rejected, (state, action) => {
+            state.team_status = 'failed';
+            state.team_error = action.error.message;
+        });
     }
 });
 
 
-export const { addApplicantToTeam } = teamSlice.actions;
 export default teamSlice.reducer;

@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import projectReducer from "./projectSlice";
-import userprojectSlice from "./userprojectSlice";
-import teamSlice from "./teamSlice";
+import userProjectReducer from "./userprojectSlice";
+import teamReducer from "./teamSlice";
 
 
 const store = configureStore({
     reducer: {
         user: userReducer,
         projects: projectReducer,
-        userProjects: userprojectSlice,
-        teams: teamSlice,
+        userProjects: userProjectReducer,
+        team: teamReducer,
     },
 });
 

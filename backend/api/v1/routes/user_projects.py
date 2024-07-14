@@ -47,7 +47,9 @@ def ask_tojoin(project_id):
                                )
     user_project.save_user_project()
 
-    return jsonify({"msg": "request to join submitted"}), 201
+    new_member = storage.filter_one(UserProject, id=user_project.id)
+
+    return jsonify(new_member.to_dict()), 201
 
 
 @app_views.route('/projects/<project_id>/leave/', methods=['POST'],
@@ -161,9 +163,14 @@ def get_team(project_id):
 
     user_ids = [member['user_id'] for member in team]
 
-    team_members = {}
-    for user_id in user_ids:
-        user = storage.get(User, id=user_id)
-        team_members[user_id] = user.to_dict()
+    users = storage.filter_by_ids(User, user_ids)
+    user_details = {user.id: user.to_dict() for user in users}
 
-    return jsonify({"team": team, "team_members": team_members}), 200
+    detailed_team = []
+    for member in team:
+        user_detail = user_details.get(member['user_id'])
+        if user_detail:
+            member['user'] = user_detail
+            detailed_team.append(member)
+
+    return jsonify(detailed_team), 200
