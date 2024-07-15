@@ -12,22 +12,11 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProjects, filterMyProjects } from '@/utils/projectSlice';
 
 const MyProjects = () => {
-    const [projects, setProjects] = useState([
-        {
-            title: "Project Title",
-            description: "This is the description of project. The Construction and Machinery Material Management System (CMMS) is a web-based application."
-        },
-        {
-            title: "Project Title",
-            description: "This is the description of project. The Construction and Machinery Material Management System (CMMS) is a web-based application."
-        },
-        {
-            title: "Project Title",
-            description: "This is the description of project. The Construction and Machinery Material Management System (CMMS) is a web-based application."
-        },
-    ]);
 
     const [teamMembers, setTeamMembers] = useState([
         {
@@ -35,6 +24,28 @@ const MyProjects = () => {
             status: "pending" // This can be 'approved', 'rejected', or 'pending'
         },
     ]);
+
+    const dispatch = useDispatch();
+    const loggeduser = useSelector((state) => state.user.loggeduser);
+    const projects = useSelector((state) => state.projects.projects);
+    const myProjects = useSelector((state) => state.projects.myProjects);
+    const status = useSelector((state) => state.projects.status);
+    const error = useSelector((state) => state.projects.error);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProjects());
+        }
+    }, [status, dispatch]);
+
+    useEffect(() => {
+        // Fetch the projects from the backend
+        const userId = loggeduser?.id;
+        if (projects.length > 0 && userId) {
+            dispatch(filterMyProjects(userId));
+        }
+    }
+    , [projects, loggeduser?.id, dispatch]);
 
     const handleMemberStatusChange = (index, status) => {
         const updatedMembers = [...teamMembers];
@@ -46,7 +57,7 @@ const MyProjects = () => {
         <div className="m-auto w-96 sm:w-full">
             <Card className='min-h-96 flex flex-col sm:flex-row sm:m-4'>
                 <div className="flex-1">
-                    {projects.map((project, index) => (
+                    {myProjects.map((project, index) => (
                         <Card key={index} className="m-4 p-2">
                             <div>
                                 <p>{project.title}</p>
@@ -57,6 +68,18 @@ const MyProjects = () => {
                             <Button className='mt-2' variant='outline'> See Team Members </Button>
                         </Card>
                     ))}
+                    {
+                        myProjects.length === 0 &&
+                        <div className='flex flex-col items-center justify-center h-full'>
+                            <p className="font-serif font-light tracking-wider">You have not created any projects yet</p>
+                            <Button
+                                variant='outline'
+                                className='m-2'
+                            >
+                                <Link to='/create_project'>Create Project</Link>
+                            </Button>
+                        </div>
+                    }
                 </div>
                 <div className="flex-1">
                     <p className='text-center w-full font-bold'>Team Members</p>

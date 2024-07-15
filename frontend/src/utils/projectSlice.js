@@ -6,6 +6,7 @@ import { getCookie } from "./utilities";
 const initialState = {
     projects: [],
     currentProject: null,
+    myProjects: [],
     status: 'idle',
     error: null,
 };
@@ -41,6 +42,10 @@ const projectSlice = createSlice({
         setCurrentProject: (state, action) => {
             state.currentProject = action.payload;
         },
+        filterMyProjects: (state, action) => {
+            const userId = action.payload
+            state.myProjects = state.projects.filter(project => project.creator_id === userId);
+        },
     },
 
     extraReducers: (builder) => {
@@ -66,5 +71,5 @@ const projectSlice = createSlice({
 });
 
 
-export const { setCurrentProject } = projectSlice.actions;
+export const { setCurrentProject, filterMyProjects } = projectSlice.actions;
 export default projectSlice.reducer
