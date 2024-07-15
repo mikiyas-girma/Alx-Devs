@@ -1,9 +1,12 @@
 
 import { User, Briefcase, CheckCircle, Clock } from 'lucide-react';
 import { Card } from "@/components/ui/card"
+import { fetchTeam } from '@/utils/teamSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const MemberList = ({ team }) => {
-    console.log("team in: ", team);
+
   return (
     <Card className="m-6">
       <p className="text-green-600 font-bold text-center" >Team Members</p>

@@ -41,6 +41,8 @@ const Project = () => {
 
 
     useEffect(() => {
+        
+        dispatch(fetchTeam(id));
         if (!project || project.id !== id) {
             dispatch(fetchProjectById(id));
         }

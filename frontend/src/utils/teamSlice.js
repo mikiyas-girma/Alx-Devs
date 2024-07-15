@@ -17,15 +17,8 @@ export const fetchTeam = createAsyncThunk('/user_projects/Team', async (project_
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
         });
-
-        if (response.status === 200) {
-            return response.data;
-        }
-        
-        if (response.status === 401) {
-            return rejectWithValue(response.data);
-        }
-       
+        console.log("team :  ", response.data)
+        return response.data;
     }
     catch (error) {
         return rejectWithValue(error.response.data);
