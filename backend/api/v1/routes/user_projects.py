@@ -12,6 +12,26 @@ from models.project import Project
 from models.userproject import UserProject
 
 
+def get_detailed_team(project_id):
+    """Fetch and format team details for a given project."""
+    team = storage.filter_all(UserProject, project_id=project_id)
+    team = [user_project.to_dict() for user_project in team]
+
+    user_ids = [member['user_id'] for member in team]
+
+    users = storage.filter_by_ids(User, user_ids)
+    user_details = {user.id: user.to_dict() for user in users}
+
+    detailed_team = []
+    for member in team:
+        user_detail = user_details.get(member['user_id'])
+        if user_detail:
+            member['user'] = user_detail
+            detailed_team.append(member)
+
+    return detailed_team
+
+
 @app_views.route('/projects/<project_id>/join/', methods=['POST'],
                  strict_slashes=False)
 @jwt_required()
@@ -88,7 +108,11 @@ def approve_request(user_project_id):
     """to allow project owner to (approve) request and add user
         requested to a team
     """
+    print(user_project_id)
     user_id = get_jwt_identity()
+    print("user id: ", user_id)
+    if not user_id:
+        return jsonify({"msg": "login first to get access"}), 401
     user_project = storage.filter_one(UserProject, id=user_project_id)
 
     if not user_project:
@@ -96,6 +120,8 @@ def approve_request(user_project_id):
 
     approver = storage.filter_one(UserProject, user_id=user_id,
                                   project_id=user_project.project_id)
+    if not approver:
+        return jsonify({"msg": "No Approver found"}), 403
 
     if not approver.role == "Owner":
         return jsonify({"msg": "Permission denied"}), 403
@@ -108,7 +134,10 @@ def approve_request(user_project_id):
 
     storage.save()
 
-    return jsonify({"msg": "Successfully approved the request"}), 200
+    detailed_team = get_detailed_team(user_project.project_id)
+
+    return jsonify({"msg": "Successfully approved the request",
+                    "team": detailed_team}), 200
 
 
 @app_views.route('/user_projects/<user_project_id>/reject',
@@ -141,7 +170,7 @@ def reject_request(user_project_id):
     return jsonify({"msg": "Successfully removed the user"}), 200
 
 
-@app_views.route('/user_projects/<project_id>/team',
+@app_views.route('/projects/<project_id>/team',
                  methods=['GET'], strict_slashes=False)
 @jwt_required()
 def get_team(project_id):
@@ -155,22 +184,6 @@ def get_team(project_id):
     if not project:
         return jsonify({"msg": "project not found"}), 404
 
-    # if user_id != project.creator_id:
-    #     return jsonify({"msg": "Permission denied"}), 403
-
-    team = storage.filter_all(UserProject, project_id=project_id)
-    team = [user_project.to_dict() for user_project in team]
-
-    user_ids = [member['user_id'] for member in team]
-
-    users = storage.filter_by_ids(User, user_ids)
-    user_details = {user.id: user.to_dict() for user in users}
-
-    detailed_team = []
-    for member in team:
-        user_detail = user_details.get(member['user_id'])
-        if user_detail:
-            member['user'] = user_detail
-            detailed_team.append(member)
+    detailed_team = get_detailed_team(project_id)
 
     return jsonify(detailed_team), 200

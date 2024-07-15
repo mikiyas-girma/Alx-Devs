@@ -77,15 +77,15 @@ const Profile = () => {
                          sm:w-96 md:flex-row md:w-full lg:w-3/4">
                 <div className="w-1/2 order-2 md:m-4 flex items-center">
                     <div className="text-left">
-                        <Button className='m-2' variant='outline' asChild>
+                        <Button className='m-2 w-full' variant='outline' asChild>
                             <Link to='../my_projects' >My Projects</Link>
                         </Button>
                         <br />
-                        <Button className='m-2' variant='outline' asChild>
+                        <Button className='m-2 w-full' variant='outline' asChild>
                             <Link>My Teams</Link>
                         </Button>
                         <br />
-                        <Button className='m-2' variant='outline' asChild>
+                        <Button className='m-2 w-full' variant='outline' asChild>
                             <Link to='#' >My Applications</Link>
                         </Button>
                     </div>

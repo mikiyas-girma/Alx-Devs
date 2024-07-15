@@ -92,7 +92,9 @@ class DBStorage:
             finds  an object of the given class with the given filter
             criteria exists. Returns the object if found
         """
-        return self.__session.query(cls).filter_by(**kwargs).first()
+        result = self.__session.query(cls).filter_by(**kwargs).first()
+        if result:
+            return result
 
     def filter_all(self, cls, **kwargs):
         """

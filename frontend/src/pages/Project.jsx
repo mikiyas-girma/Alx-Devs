@@ -209,14 +209,18 @@ const Project = () => {
                             :
                             <CardFooter className='justify-center'>
                                 <div className="p-[3px] relative">
+                                    <Link
+                                        to='/my_projects'
+                                    >
                                     <button
                                         className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
                                         type="submit"
                                     >
-                                        Edit Project
+                                        manage requests
                                     </button>
+                                    </Link>
                                 </div>
                             </CardFooter>
                         }
