@@ -42,6 +42,20 @@ export const approveApplicant = createAsyncThunk('/user_projects/approve', async
 });
 
 
+export const rejectApplicant = createAsyncThunk('/user_projects/reject', async(user_project_id, {rejectWithValue}) => {
+    try {
+        const response = await axiosInstance.delete(`/user_projects/${user_project_id}/reject`, {
+            headers: {
+                'X-CSRF-Token': getCookie('csrf_access_token')
+            }
+        });
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
+
 export const addTeamMember = createAsyncThunk('/user_projects/AddTeamMember', async (data, {rejectWithValue}) => {
     console.log("as payload: ",  data)
     const response = await axiosInstance.post(`/projects/${data.project_id}/join`, data, {
@@ -93,10 +107,9 @@ const teamSlice = createSlice({
             state.team_status = 'succeeded';
             state.team = action.payload.team;
         })
-        .addCase(approveApplicant.rejected, (state, action) => {
-            state.team_status = 'failed';
-            state.team_error = action.error.message;
-            console.log(action.payload)
+        .addCase(rejectApplicant.fulfilled, (state, action) => {
+            state.team_status = 'succeeded';
+            state.team = action.payload.team;
         })
     }
 });

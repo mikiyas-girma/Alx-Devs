@@ -167,7 +167,10 @@ def reject_request(user_project_id):
 
     storage.save()
 
-    return jsonify({"msg": "Successfully removed the user"}), 200
+    detailed_team = get_detailed_team(user_project.project_id)
+
+    return jsonify({"msg": "Successfully rejected the request",
+                    "team": detailed_team}), 200
 
 
 @app_views.route('/projects/<project_id>/team',

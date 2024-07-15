@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjects, filterMyProjects } from '@/utils/projectSlice';
-import { fetchTeam, addTeamMember, approveApplicant } from "@/utils/teamSlice";
+import { fetchTeam, addTeamMember, approveApplicant, rejectApplicant } from "@/utils/teamSlice";
 
 
 const MyProjects = () => {
@@ -47,8 +47,14 @@ const MyProjects = () => {
     const handleMemberStatusChange = (e) => {
         console.log(e.target.value)
         const id = e.target.value.split(',')[0]
-        console.log(id)
-        dispatch(approveApplicant(id));
+        const action = e.target.value.split(',')[1]
+        if (action === 'approved') {
+            dispatch(approveApplicant(id));
+        }
+        else if (action === 'rejected') {
+            console.log("rejecting")
+            dispatch(rejectApplicant(id));
+        }
     };
 
     const seeApplicants = (e) => {
