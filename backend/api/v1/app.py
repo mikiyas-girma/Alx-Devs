@@ -11,7 +11,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, supports_credentials=True,
      resources={r"/api/v1/*": {"origins": ["http://localhost:5173", "https://mikiyas-girma.github.io",
-                                           "http://localhost:5000"]}})
+                                           "http://localhost:5000", "http://127.0.0.1:5000"]}})
 
 
 app.register_blueprint(app_views)
@@ -74,4 +74,4 @@ def api():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

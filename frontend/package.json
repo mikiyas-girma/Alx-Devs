@@ -1,6 +1,6 @@
 {
   "homepage": "https://mikiyas-girma.github.io/Alx-Devs",
-  "proxy": "http://localhost:5000/api/v1",
+  "proxy": "http://127.0.0.1:5000/api/v1",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
