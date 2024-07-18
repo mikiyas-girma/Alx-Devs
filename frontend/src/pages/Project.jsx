@@ -231,7 +231,7 @@ const Project = () => {
 
                     
                 </Card>
-                <div className="text-center">
+                <div className="text-center ">
                     <Link to='/home'>
                         <button
                             className=" mt-2 bg-gradient-to-r from-blue-400 via-blue-500 to-violet-500 

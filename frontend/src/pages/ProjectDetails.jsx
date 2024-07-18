@@ -22,6 +22,9 @@ const ProjectDetails = () => {
     const creator = useSelector((state) => state.projects.creator);
     const status = useSelector((state) => state.projects.status);
     const error = useSelector((state) => state.projects.error);
+    
+    const hasPendingRequests = team.some(member => member.status == 'pending' && member.role !== 'Owner');
+    const hasApprovedRequests = team.some(member => member.status == 'approved' && member.role !== 'Owner');
 
 
     useEffect(() => {
@@ -57,6 +60,20 @@ const ProjectDetails = () => {
     }
 
 
+        const handleMemberStatusChange = (id, action) => {
+        // console.log(e.target.value)
+        // const id = e.target.value.split(',')[0]
+        // const action = e.target.value.split(',')[1]
+
+        if (action === 'approved') {
+            dispatch(approveApplicant(id));
+        }
+        else if (action === 'rejected') {
+            dispatch(rejectApplicant(id));
+        }
+    };
+
+
     return (
         <>
             <div className="sm:w-full ">
@@ -73,41 +90,98 @@ const ProjectDetails = () => {
                                     </p>
                                 </div>
                                 <div className="lg:w-2/3 m-auto">
+                                {( hasApprovedRequests || hasPendingRequests) ?
+                                
                                     <div className="font-bold m-2">
-                                        <p>Applicants </p>
+                                        <p className="m-2">Applicants </p>
                                     </div>
+                                 : 
+                                <div className="font-bold m-2">
+                                    <p className="m-2">No applicants</p>
+                                </div>
+                                }
                                     <div className="flex flex-col">
+                                        {hasPendingRequests && (
+                                            <>
+                                        <p className="font-bold text-yellow-400 p-2">Pending requests</p>
                                         {team.map((member, index) => (
-                                            <div key={index} className='flex mb-2'>
-                                                {(member.status == 'pending' && member.role !== 'Owner') &&
+                                            <div key={index} className='flex'>
+                                                {
+                                                    (member.status == 'pending' && member.role !== 'Owner') &&
                                                     <div className="w-full">
-                                                        <div className="flex">
-                                                        <p className=" w-full text-left">{member.user.name}</p>
-                                                        <p className=" w-full text-left">{member.role}</p>
-                                                        <p className=" text-yellow-500 w-full text-left">{member.status}</p>
-                                                        <div className=''>
-                                                            <Check
-                                                                size={24}
-                                                                className="mx-2 text-green-500 hover:text-green-700"
-                                                                onClick={() => console.log('approved')}
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            <X
-                                                                size={24}
-                                                                className=" mx-2 text-red-500 hover:text-red-700"
-                                                                onClick={() => console.log('rejected')}
-                                                            />
-                                                        </div>
+                                                        <div className="flex m-2">
+                                                            <p className=" w-full text-left">{member.user.name}</p>
+                                                            <p className=" w-full text-left">{member.role}</p>
+                                                            <p className=" text-yellow-500 w-full text-left">{member.status}</p>
+                                                            <div className=''>
+                                                                <span
+                                                                    value={[member.id, 'approved']}
+                                                                    onClick={handleMemberStatusChange}
+                                                                >
+                                                                <Check
+                                                                    size={24}
+                                                                    className="mx-2 text-green-400 hover:text-green-700"
+                                                                    onClick={() => handleMemberStatusChange(member.id, 'approved')}
+                                                                />
+                                                                    
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <X
+                                                                    size={24}
+                                                                    className=" mx-2 text-red-500 hover:text-red-700"
+                                                                    onClick={() => handleMemberStatusChange(member.id, 'rejected')}
+                                                                />
+                                                            </div>
                                                         </div>
                                                         <Separator />
                                                     </div>
                                                 }
                                             </div>
                                         ))}
+                                        </>
+                                        )}
+
+                                        {hasApprovedRequests && (
+                                            <>
+                                        <p className="mt-2 font-bold text-green-400">Approved requests</p>
+                                        {team.map((member, index) => (
+                                            <div key={index} className='flex'>
+                                                {
+                                                    (member.status == 'approved' && member.role !== 'Owner') &&
+                                                    <div className="w-full">
+                                                        <div className="flex m-2">
+                                                            <p className=" w-full text-left">{member.user.name}</p>
+                                                            <p className=" w-full text-left">{member.role}</p>
+                                                            <p className=" text-green-400 w-full text-left">{member.status}</p>
+                                                        
+                                                            <div>
+                                                                <X
+                                                                    size={24}
+                                                                    className=" mx-2 text-red-500 hover:text-red-700"
+                                                                    onClick={() => handleMemberStatusChange(member.id, 'rejected')}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <Separator />
+                                                    </div>
+                                                }
+                                            </div>
+                                        ))}
+                                        </>
+                                        )}
                                     </div>
                                 </div>
                             </Card>
+                            <div className='m-2 p-4'>
+                                <div>
+                                    <Button
+                                        variant='destructive'
+                                    >
+                                        Close Project
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </Card>
