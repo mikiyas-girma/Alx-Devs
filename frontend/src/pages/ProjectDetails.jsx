@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { fetchTeam, approveApplicant, rejectApplicant } from "@/utils/teamSlice";
 import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import ConfirmableIcon from "@/components/ConfirmableIcon";
 
 
 const ProjectDetails = () => {
@@ -22,7 +23,7 @@ const ProjectDetails = () => {
     const creator = useSelector((state) => state.projects.creator);
     const status = useSelector((state) => state.projects.status);
     const error = useSelector((state) => state.projects.error);
-    
+
     const hasPendingRequests = team.some(member => member.status == 'pending' && member.role !== 'Owner');
     const hasApprovedRequests = team.some(member => member.status == 'approved' && member.role !== 'Owner');
 
@@ -60,11 +61,12 @@ const ProjectDetails = () => {
     }
 
 
-        const handleMemberStatusChange = (id, action) => {
+    const handleMemberStatusChange = (value) => {
         // console.log(e.target.value)
         // const id = e.target.value.split(',')[0]
         // const action = e.target.value.split(',')[1]
-
+        const id = value[0];
+        const action = value[1];
         if (action === 'approved') {
             dispatch(approveApplicant(id));
         }
@@ -90,85 +92,85 @@ const ProjectDetails = () => {
                                     </p>
                                 </div>
                                 <div className="lg:w-2/3 m-auto">
-                                {( hasApprovedRequests || hasPendingRequests) ?
-                                
-                                    <div className="font-bold m-2">
-                                        <p className="m-2">Applicants </p>
-                                    </div>
-                                 : 
-                                <div className="font-bold m-2">
-                                    <p className="m-2">No applicants</p>
-                                </div>
-                                }
+                                    {(hasApprovedRequests || hasPendingRequests) ?
+
+                                        <div className="font-bold m-2">
+                                            <p className="m-2">Applicants </p>
+                                        </div>
+                                        :
+                                        <div className="font-bold m-2">
+                                            <p className="m-2">No applicants</p>
+                                        </div>
+                                    }
                                     <div className="flex flex-col">
                                         {hasPendingRequests && (
                                             <>
-                                        <p className="font-bold text-yellow-400 p-2">Pending requests</p>
-                                        {team.map((member, index) => (
-                                            <div key={index} className='flex'>
-                                                {
-                                                    (member.status == 'pending' && member.role !== 'Owner') &&
-                                                    <div className="w-full">
-                                                        <div className="flex m-2">
-                                                            <p className=" w-full text-left">{member.user.name}</p>
-                                                            <p className=" w-full text-left">{member.role}</p>
-                                                            <p className=" text-yellow-500 w-full text-left">{member.status}</p>
-                                                            <div className=''>
-                                                                <span
-                                                                    value={[member.id, 'approved']}
-                                                                    onClick={handleMemberStatusChange}
-                                                                >
-                                                                <Check
-                                                                    size={24}
-                                                                    className="mx-2 text-green-400 hover:text-green-700"
-                                                                    onClick={() => handleMemberStatusChange(member.id, 'approved')}
-                                                                />
-                                                                    
-                                                                </span>
+                                                <p className="font-bold text-yellow-400 p-2">Pending requests</p>
+                                                {team.map((member, index) => (
+                                                    <div key={index} className='flex'>
+                                                        {
+                                                            (member.status == 'pending' && member.role !== 'Owner') &&
+                                                            <div className="w-full">
+                                                                <div className="flex">
+                                                                    <p className=" w-full text-left">{member.user.name}</p>
+                                                                    <p className=" w-full text-left">{member.role}</p>
+                                                                    <p className=" text-yellow-500 w-full text-left">{member.status}</p>
+                                                                    <div className='m-0'>
+                                                                            <ConfirmableIcon
+                                                                                iconType={'check'}
+                                                                                message='Are you sure you want to approve this applicant?'
+                                                                                onConfirm={handleMemberStatusChange}
+                                                                                value={[member.id, 'approved']}
+                                                                            />
+                                                                    </div>
+                                                                    <div className="m-0">
+                                                                        <ConfirmableIcon
+                                                                            iconType={X}
+                                                                            message='Are you sure you want to reject this applicant?
+                                                                                     this will remove the applicant from the team permanently'
+                                                                            onConfirm={handleMemberStatusChange}
+                                                                            value={[member.id, 'rejected']}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <Separator className='mb-2' />
                                                             </div>
-                                                            <div>
-                                                                <X
-                                                                    size={24}
-                                                                    className=" mx-2 text-red-500 hover:text-red-700"
-                                                                    onClick={() => handleMemberStatusChange(member.id, 'rejected')}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <Separator />
+                                                        }
                                                     </div>
-                                                }
-                                            </div>
-                                        ))}
-                                        </>
+                                                ))}
+                                            </>
                                         )}
 
                                         {hasApprovedRequests && (
                                             <>
-                                        <p className="mt-2 font-bold text-green-400">Approved requests</p>
-                                        {team.map((member, index) => (
-                                            <div key={index} className='flex'>
-                                                {
-                                                    (member.status == 'approved' && member.role !== 'Owner') &&
-                                                    <div className="w-full">
-                                                        <div className="flex m-2">
-                                                            <p className=" w-full text-left">{member.user.name}</p>
-                                                            <p className=" w-full text-left">{member.role}</p>
-                                                            <p className=" text-green-400 w-full text-left">{member.status}</p>
-                                                        
-                                                            <div>
-                                                                <X
-                                                                    size={24}
-                                                                    className=" mx-2 text-red-500 hover:text-red-700"
-                                                                    onClick={() => handleMemberStatusChange(member.id, 'rejected')}
-                                                                />
+                                                <p className="mt-2 font-bold text-green-400">Approved requests</p>
+                                                {team.map((member, index) => (
+                                                    <div key={index} className='flex'>
+                                                        {
+                                                            (member.status == 'approved' && member.role !== 'Owner') &&
+                                                            <div className="w-full">
+                                                                <div className="flex m-2">
+                                                                    <p className=" w-full text-left">{member.user.name}</p>
+                                                                    <p className=" w-full text-left">{member.role}</p>
+                                                                    <p className=" text-green-400 w-full text-left">{member.status}</p>
+
+                                                                    <div>
+                                                                        <ConfirmableIcon
+                                                                            iconType={X}
+                                                                            message='Are you sure you want to remove this member from the team?
+                                                                                     this will remove the member from the team permanently'
+                                                                            className=" mx-2 text-red-500 hover:text-red-700"
+                                                                            onConfirm={handleMemberStatusChange}
+                                                                            value={[member.id, 'rejected']}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <Separator />
                                                             </div>
-                                                        </div>
-                                                        <Separator />
+                                                        }
                                                     </div>
-                                                }
-                                            </div>
-                                        ))}
-                                        </>
+                                                ))}
+                                            </>
                                         )}
                                     </div>
                                 </div>
