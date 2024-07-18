@@ -11,18 +11,20 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects, filterMyProjects } from '@/utils/projectSlice';
-import { fetchTeam, addTeamMember, approveApplicant, rejectApplicant } from "@/utils/teamSlice";
+import { fetchProjects, filterMyProjects, setCurrentProject } from '@/utils/projectSlice';
+import { fetchTeam, approveApplicant, rejectApplicant } from "@/utils/teamSlice";
 import { Check, X } from 'lucide-react';
+import PathConstants from '@/routes/pathConstants';
 
 
 const MyProjects = () => {
 
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const loggeduser = useSelector((state) => state.user.loggeduser);
     const projects = useSelector((state) => state.projects.projects);
     const myProjects = useSelector((state) => state.projects.myProjects);
@@ -57,37 +59,36 @@ const MyProjects = () => {
         }
     };
 
-    const seeApplicants = (e) => {
+    const handleViewDetails = (project) => {
         // Show a modal or a new page with the team members
-        const project_id = e.target.value;
-        dispatch(fetchTeam(project_id));
+        dispatch(setCurrentProject(project));
+        navigate(PathConstants.PROJECT_DETAILS.replace(':id', project.id));
 
     }
 
 
     return (
         <div className="m-auto sm:w-full">
-            <Card className='min-h-96 flex'>
-                <div className="flex-1">
+            <Card className='min-h-screen'>
+                <div className="grid sm:grid-cols-2 ">
                     {myProjects.map((project, index) => (
-                        <Card key={index} className="flex flex-col md:flex-row m-4 p-2 focus:ring-2 focus:ring-blue-600">
-                            <Card className='flex-1 mb-4'>
+                        <div key={index} className="p-2 focus:ring-2 focus:ring-blue-600">
+                            <Card className='mb-4'>
                                 <div className='p-2 text-[#03C04A]'>
-                                    <p>{project.title}</p>
+                                    <p className='md:text-xl text-center'>{project.title}</p>
                                 </div>
                                 <div>
-                                    <p className='font-serif p-2'>{project.description}</p>
+                                    <p className='font-serif p-2 md:px-4'>{project.description}</p>
                                 </div>
                                 <Button
-                                    className='m-2 focus:ring-2 focus:ring-[#03C04A] '
-                                    variant='outline'
-                                    value={project.id}
-                                    onClick={seeApplicants}
-                                >
-                                    See Applicants
-                                </Button>
+                                        className='m-2 focus:ring-2 focus:ring-[#03C04A] '
+                                        variant='outline'
+                                        onClick={() => handleViewDetails(project)}
+                                    >
+                                        See Applicants
+                                    </Button>
                             </Card>
-
+                            {/* 
                             <div className="flex-1 m-2">
                                 {team.map((member, index) => (
                                     <div key={index} className='flex mb-2'>
@@ -150,9 +151,9 @@ const MyProjects = () => {
                                     </div>
                                 </div>
                                 <Separator />
-                            </div>
+                            </div> */}
 
-                        </Card>
+                        </div>
 
                     ))}
                     {

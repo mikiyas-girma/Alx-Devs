@@ -210,7 +210,7 @@ const Project = () => {
                             <CardFooter className='justify-center'>
                                 <div className="p-[3px] relative">
                                     <Link
-                                        to='/my_projects'
+                                        to={`/project_details/${id}/`}
                                     >
                                     <button
                                         className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
@@ -218,7 +218,7 @@ const Project = () => {
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
                                         type="submit"
                                     >
-                                        manage requests
+                                        Manage Requests
                                     </button>
                                     </Link>
                                 </div>

@@ -12,6 +12,7 @@ const Project = React.lazy(() => import("../pages/Project"))
 const CreateProject = React.lazy(() => import("../pages/CreateProject"))
 const MyProjects = React.lazy(() => import("../pages/MyProjects"))
 const LandingPage = React.lazy(() => import("../pages/LandingPage"))
+const ProjectDetails = React.lazy(() => import("../pages/ProjectDetails"))
 
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
     { path: PathConstants.PROJECT, element: <ProtectedRoute element={<Project />} /> },
     { path: PathConstants.CREATE_PROJECT, element: <ProtectedRoute element={<CreateProject />} /> },
     { path: PathConstants.MY_PROJECTS, element: <ProtectedRoute element={<MyProjects />} /> },
+    { path: PathConstants.PROJECT_DETAILS, element: <ProtectedRoute element={<ProjectDetails />} /> },
     { path: PathConstants.LANDING, element: <LandingPage />}
 ]
 
