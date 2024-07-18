@@ -1,4 +1,4 @@
-import{c as d,j as e,m as P,u as S,a as l,r as i,n as M,o as f,p as R,q as L,L as v,t as B}from"./index-P7fgyCsy.js";import{C as n,a as E,b as A,d as T,e as g}from"./card-BWfmlJFA.js";import"./separator-B-9BQN-S.js";/**
+import{c as d,j as e,m as P,u as S,a as l,r as i,n as M,o as f,p as R,q as L,L as v,t as B}from"./index-0zr3ocIV.js";import{C as n,a as E,b as A,d as T,e as g}from"./card-C6hSN6S5.js";import"./separator-gfDFbWZx.js";/**
  * @license lucide-react v0.396.0 - ISC
  *
  * This source code is licensed under the ISC license.
@@ -22,6 +22,6 @@ import{c as d,j as e,m as P,u as S,a as l,r as i,n as M,o as f,p as R,q as L,L a
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow`,type:"submit",onClick:_,children:"Apply Here"})})}):e.jsx(g,{className:"justify-center",children:e.jsx("div",{className:"p-[3px] relative",children:e.jsx(v,{to:`/project_details/${a}/`,children:e.jsx("button",{className:` mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
-                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow`,type:"submit",children:"Manage Requests"})})})})]}),e.jsx("div",{className:"flex-1 m-6 ",children:e.jsx(U,{team:b})})]}),e.jsx("div",{className:"text-center",children:e.jsx(v,{to:"/home",children:e.jsx("button",{className:` mt-2 bg-gradient-to-r from-blue-400 via-blue-500 to-violet-500 
+                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow`,type:"submit",children:"Manage Requests"})})})})]}),e.jsx("div",{className:"flex-1 m-6 ",children:e.jsx(U,{team:b})})]}),e.jsx("div",{className:"text-center ",children:e.jsx(v,{to:"/home",children:e.jsx("button",{className:` mt-2 bg-gradient-to-r from-blue-400 via-blue-500 to-violet-500 
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow`,children:"See Another Projects"})})})]})})};export{D as default};
