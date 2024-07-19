@@ -148,6 +148,10 @@ const Project = () => {
                             <p className='font-serif '>
                                 {project.description}
                             </p>
+                            <p className='font-serif italic dark:bg-slate-800 rounded-lg ring-1 ring-slate-900/5
+                                                   shadow  p-2 md:px-4 text-left m-auto mt-2'>
+                                        {project.application === 'open' ? 'Application Form is open' : 'Application Form is closed'}
+                            </p>
                         </CardContent>
 
                         <div className="ml-6 p-2 ">
@@ -166,7 +170,7 @@ const Project = () => {
                                 </p>
                             }
                         </div>
-                        {loggeduser.id !== project.creator_id &&
+                        {(loggeduser.id !== project.creator_id && project.application !== 'closed') &&
                             <div>
                                 <div className="p-4 m-auto">
                                     <h2 className="text-lg font-bold mb-2">Select a Role & Apply</h2>
@@ -192,7 +196,7 @@ const Project = () => {
                                 </div>
                             </div>
                         }
-                        {loggeduser.id !== project.creator_id ?
+                        {(loggeduser.id !== project.creator_id && project.application !== 'closed') ?
                             <CardFooter className='justify-center'>
                                 <div className="p-[3px] relative">
                                     <button
@@ -206,7 +210,7 @@ const Project = () => {
                                     </button>
                                 </div>
                             </CardFooter>
-                            :
+                            : (loggeduser.id == project.creator_id) ?
                             <CardFooter className='justify-center'>
                                 <div className="p-[3px] relative">
                                     <Link
@@ -221,6 +225,18 @@ const Project = () => {
                                         Manage Requests
                                     </button>
                                     </Link>
+                                </div>
+                            </CardFooter> : 
+                            <CardFooter className='justify-center'>
+                                <div className="p-[3px] relative">
+                                    <button
+                                        className=" mt-2 bg-gradient-to-r from-red-400 via-red-500 to-red-500 
+                                    hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
+                                    text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
+                                        type="submit"
+                                    >
+                                        Application Form Closed
+                                    </button>
                                 </div>
                             </CardFooter>
                         }
