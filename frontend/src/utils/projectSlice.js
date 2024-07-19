@@ -34,6 +34,16 @@ export const addProject = createAsyncThunk('project/addProject', async (newProje
 });
 
 
+export const updateProject = createAsyncThunk('project/updateProject', async (project) => {
+    const response = await axiosInstance.patch(`/projects/${project.id}`, project, {
+        headers: {
+            'X-CSRF-Token': getCookie('csrf_access_token')
+        }
+    });
+    return response.data.project;
+});
+
+
 const projectSlice = createSlice({
     name: 'projects',
     initialState,
@@ -66,6 +76,19 @@ const projectSlice = createSlice({
             })
             .addCase(addProject.fulfilled, (state, action) => {
                 state.projects.push(action.payload);
+            })
+            .addCase(updateProject.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateProject.fulfilled, (state, action) => {
+                const index = state.projects.findIndex(project => project.id === action.payload.id);
+                state.projects[index] = action.payload;
+                state.currentProject = action.payload;
+                state.status = 'succeeded';
+            })
+            .addCase(updateProject.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
             });
     }, 
 });

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Check, X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProjectById } from "@/utils/projectSlice";
+import { fetchProjectById, updateProject, setCurrentProject } from "@/utils/projectSlice";
 import { useState, useEffect } from "react";
 import { fetchTeam, approveApplicant, rejectApplicant } from "@/utils/teamSlice";
 import { useParams } from "react-router-dom";
@@ -45,7 +45,9 @@ const ProjectDetails = () => {
 
 
     if (status == 'loading') {
-        return <div>Loading...</div>
+        return <div className="flex items-center h-96 justify-center">
+                    <LoadingSpinner className='' />
+                </div>
     }
     
     if (status == 'failed') {
@@ -56,7 +58,7 @@ const ProjectDetails = () => {
     if (!project) {
         return <div>
             <LoadingSpinner className='m-auto' />
-        </div>;
+            </div>;
     }
     
 
@@ -76,8 +78,11 @@ const ProjectDetails = () => {
 
 
     const handleCloseProject = (value) => {
-        
-        console.log(value);
+        dispatch(updateProject({ id: value, application: 'closed' }));
+    }
+
+    const handleOpenProject = (value) => {
+        dispatch(updateProject({ id: value, application: 'open' }));
     }
 
 
@@ -94,6 +99,12 @@ const ProjectDetails = () => {
                                 <div>
                                     <p className='font-serif p-2 md:px-4 text-left m-auto lg:w-2/3'>
                                         {project.description}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className='font-serif italic dark:bg-slate-800 rounded-lg ring-1 ring-slate-900/5
+                                                   shadow  p-2 md:px-4 text-left m-auto lg:w-2/3'>
+                                        {project.application === 'open' ? 'Application Form is open' : 'Application Form is closed'}
                                     </p>
                                 </div>
                                 <div className="lg:w-2/3 m-auto">
@@ -181,6 +192,8 @@ const ProjectDetails = () => {
                                 </div>
                             </Card>
                             <div className='m-2 p-4'>
+                                { project.application === 'open' ?
+                                
                                 <div>
                                     <ConfirmableIcon
                                         iconType={'button'}
@@ -189,7 +202,16 @@ const ProjectDetails = () => {
                                         value={project.id}
                                         onConfirm={handleCloseProject}
                                     />
+                                </div> :
+                                <div>
+                                    <Button
+                                        className='bg-green-500 dark:bg-slate-800 dark:text-white'
+                                        onClick={() => handleOpenProject(project.id)}
+                                    >
+                                        Open Project
+                                    </Button>
                                 </div>
+                                }
                             </div>
                         </div>
                     </div>
