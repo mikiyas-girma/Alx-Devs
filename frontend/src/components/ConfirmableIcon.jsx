@@ -11,6 +11,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction
 } from '@/components/ui/alert-dialog';
+import { Button } from './ui/button';
 
 const ConfirmableIcon = ({ iconType, message, value, onConfirm }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -22,7 +23,7 @@ const ConfirmableIcon = ({ iconType, message, value, onConfirm }) => {
   };
 
   const handleConfirm = () => {
-    onConfirm(selectedValue); // Your logic for confirmed action here
+    onConfirm(selectedValue);
     setIsDialogOpen(false);
   };
 
@@ -30,7 +31,7 @@ const ConfirmableIcon = ({ iconType, message, value, onConfirm }) => {
     setIsDialogOpen(false);
   };
 
-  const IconComponent = iconType === 'check' ? Check : X;
+  const IconComponent = iconType === 'check' ? Check : iconType === 'x' ? X : iconType === 'button' ? X : null;
 
   return (
     <>
@@ -39,13 +40,20 @@ const ConfirmableIcon = ({ iconType, message, value, onConfirm }) => {
                 size={24}
                 className="cursor-pointer mx-2 text-green-500 hover:text-green-700"
                 onClick={() => handleIconClick(value)} />
-        ) : (
+        ) : iconType === 'x' ? (
           <X 
             size={24}
-            className=" mx-2 text-red-500 hover:text-red-700"
+            className="cursor-pointer mx-2 text-red-500 hover:text-red-700"
             onClick={() => handleIconClick(value)} 
           />
-        )
+        ) : iconType === 'button' ? (
+            <Button
+                variant="destructive"
+                onClick={() => handleIconClick(value)}
+            >
+                Close Project
+            </Button>
+        ) : null
         }
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogTrigger />

@@ -27,16 +27,15 @@ const ProjectDetails = () => {
     const hasPendingRequests = team.some(member => member.status == 'pending' && member.role !== 'Owner');
     const hasApprovedRequests = team.some(member => member.status == 'approved' && member.role !== 'Owner');
 
-
+    
     useEffect(() => {
         dispatch(fetchTeam(id));
         if (!project || project.id !== id) {
-            console.log("heyy")
             dispatch(fetchProjectById(id));
         }
     }
-        , [id, project, dispatch]);
-
+    , [id, project, dispatch]);
+    
     useEffect(() => {
         if (team_status === 'idle') {
             dispatch(fetchTeam(id));
@@ -48,18 +47,18 @@ const ProjectDetails = () => {
     if (status == 'loading') {
         return <div>Loading...</div>
     }
-
+    
     if (status == 'failed') {
         return <div>{error}</div>
     }
-
-
+    
+    
     if (!project) {
         return <div>
             <LoadingSpinner className='m-auto' />
         </div>;
     }
-
+    
 
     const handleMemberStatusChange = (value) => {
         // console.log(e.target.value)
@@ -74,6 +73,12 @@ const ProjectDetails = () => {
             dispatch(rejectApplicant(id));
         }
     };
+
+
+    const handleCloseProject = (value) => {
+        
+        console.log(value);
+    }
 
 
     return (
@@ -125,7 +130,7 @@ const ProjectDetails = () => {
                                                                     </div>
                                                                     <div className="m-0">
                                                                         <ConfirmableIcon
-                                                                            iconType={X}
+                                                                            iconType={'x'}
                                                                             message='Are you sure you want to reject this applicant?
                                                                                      this will remove the applicant from the team permanently'
                                                                             onConfirm={handleMemberStatusChange}
@@ -156,7 +161,7 @@ const ProjectDetails = () => {
 
                                                                     <div>
                                                                         <ConfirmableIcon
-                                                                            iconType={X}
+                                                                            iconType={'x'}
                                                                             message='Are you sure you want to remove this member from the team?
                                                                                      this will remove the member from the team permanently'
                                                                             className=" mx-2 text-red-500 hover:text-red-700"
@@ -177,11 +182,13 @@ const ProjectDetails = () => {
                             </Card>
                             <div className='m-2 p-4'>
                                 <div>
-                                    <Button
-                                        variant='destructive'
-                                    >
-                                        Close Project
-                                    </Button>
+                                    <ConfirmableIcon
+                                        iconType={'button'}
+                                        message='Are you sure you want to close this project?
+                                                 this will close the application form'
+                                        value={project.id}
+                                        onConfirm={handleCloseProject}
+                                    />
                                 </div>
                             </div>
                         </div>

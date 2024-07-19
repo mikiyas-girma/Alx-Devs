@@ -136,18 +136,18 @@ const Profile = () => {
                         </div> */}
 
                         <div className="flex border">
-                            <BadgeInfo color="#402E7A" className="my-auto ml-2" />
+                            <BadgeInfo color="#008000" className="my-auto ml-2" />
                             <p className="p-2">Name: {loggeduser?.name}</p>
                         </div>
 
                         <div className="flex border">
-                           <Mail color="#402E7A" className="my-auto ml-2" /> 
+                           <Mail color="#008000" className="my-auto ml-2" /> 
                            <p className="p-2">email: {loggeduser?.email}</p>
                         </div>
 
                         { loggeduser.phone ?
                         <div className="flex border">
-                            <PhoneCall color="#402E7A" className="my-auto ml-2" />
+                            <PhoneCall color="#008000" className="my-auto ml-2" />
                             <p className="p-2">Phone: {loggeduser?.phone}</p>
                         </div>
                         : ''
@@ -155,7 +155,7 @@ const Profile = () => {
 
                         { loggeduser.github ?
                         <div className="flex border">
-                            <Github color="#402E7A" className="my-auto ml-2" />
+                            <Github color="#008000" className="my-auto ml-2" />
                             <p className="p-2">Github: {loggeduser?.github}</p> 
                         </div>
                         : ''
