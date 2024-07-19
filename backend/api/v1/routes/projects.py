@@ -112,3 +112,33 @@ def remove_project(project_id):
     storage.save()
 
     return jsonify({"msg": "project deleted successfully"}), 200
+
+
+@app_views.route('/projects/<project_id>/', methods=['PATCH'],
+                 strict_slashes=False)
+@jwt_required()
+def update_project(project_id):
+    """ allows to update a project with specified id """
+
+    user_id = get_jwt_identity()
+    project = storage.get(Project, id=project_id)
+
+    if not user_id:
+        return jsonify({"msg": "Login First before attempting"}), 401
+    if not project:
+        return jsonify({"msg": "project not found"}), 404
+    if not user_id == project.creator_id:
+        return jsonify({"msg": "Permission denied"}), 403
+
+    data = request.get_json()
+    if not isinstance(data, dict):
+        abort(400, 'Not a json')
+
+    for key, value in data.items():
+        if key not in ['id', 'creator_id']:
+            setattr(project, key, value)
+
+    storage.save()
+
+    return jsonify({"msg": "project updated successfully",
+                    "project": project.to_dict()}), 200
