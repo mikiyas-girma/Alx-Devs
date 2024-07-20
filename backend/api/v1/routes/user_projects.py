@@ -190,3 +190,22 @@ def get_team(project_id):
     detailed_team = get_detailed_team(project_id)
 
     return jsonify(detailed_team), 200
+
+
+@app_views.route('/my_applications/',
+                 methods=['GET'], strict_slashes=False)
+@jwt_required()
+def my_applications():
+    """ endpoint for getting projects that a user has
+        applied to join a project team
+    """
+    user_id = get_jwt_identity()
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"msg": "login first to get access"}), 401
+
+    userprojects = storage.filter_all(UserProject, user_id=user_id)
+    my_applications = [user_project.to_dict() for user_project in userprojects]
+    print("my_applications ", my_applications)
+
+    return my_applications

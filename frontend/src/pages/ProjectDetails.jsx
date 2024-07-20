@@ -142,7 +142,7 @@ const ProjectDetails = () => {
                                                                     >
                                                                     <Info className="text-[#3a86ff] hover:text-[#0077b6] mx-2" />
                                                                     </Link>
-                                                                    <p className="text-left">{member.user.name}</p>
+                                                                    <p className="text-left w-24">{member.user.name}</p>
                                                                     </div>
                                                                     <p className=" text-left">{member.role}</p>
                                                                     <p className=" text-yellow-500 text-left">{member.status}</p>
@@ -189,7 +189,7 @@ const ProjectDetails = () => {
                                                                     >
                                                                     <Info className="mx-2 text-[#3a86ff] hover:text-[#0077b6]" />
                                                                     </Link>
-                                                                    <p className="text-left">{member.user.name}</p>
+                                                                    <p className="text-left w-24">{member.user.name}</p>
                                                                     </div>
                                                                     <p className="text-left">{member.role}</p>
                                                                     <p className="text-green-400 text-left">{member.status}</p>

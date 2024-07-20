@@ -52,16 +52,18 @@ const User = () => {
                 </div>
                 <div className="col-span-2 flex flex-col">
                 <CardFooter>
+                    {user?.bio &&
                     <Card className='p-4 rounded-lg'>
                         <p className="m-2 font-bold">Bio</p>
                         <CardDescription>
                             {user.bio}
                         </CardDescription>
                     </Card>
+                    }
                 </CardFooter>
 
                 <div className="pl-4 md:w-3/4">
-                    {user.name &&
+                    {user?.name &&
                     <div className="grid grid-cols-3 ml-2 p-2 ">
                         <p className="text-sm font-bold text-muted-foreground">Name</p> 
                         <p className="px-2 md:px-4 bg-[#25a244] bg-opacity-10 text-center 
@@ -71,7 +73,7 @@ const User = () => {
                     </div>
                     }
 
-                    {user.email &&
+                    {user?.email &&
                     <div className="grid grid-cols-3 ml-2 p-2">
                         <p className="text-sm font-bold text-muted-foreground">Email </p>
                         <p className="col-span-2 px-2 md:px-2 bg-[#25a244] bg-opacity-10 
@@ -81,7 +83,7 @@ const User = () => {
                     </div>
                     }
 
-                    {user.phone &&
+                    {user?.phone &&
                     <div className="grid grid-cols-3 ml-2 p-2 ">
                         <p className="text-sm font-bold text-muted-foreground">Phone </p>
                         <p className="col-span-2 px-2 md:px-2 bg-[#25a244] bg-opacity-10 
@@ -91,7 +93,7 @@ const User = () => {
                     </div>
                     }
 
-                    {user.github &&
+                    {user?.github &&
                     <div className="grid grid-cols-3 ml-2 p-2 ">
                         <p className="text-sm font-bold text-muted-foreground">Github</p>
                         <p className="col-span-2 px-2 md:px-2 bg-[#25a244] bg-opacity-10 
@@ -102,7 +104,7 @@ const User = () => {
                     </div>
                     }
 
-                    {user.website &&
+                    {user?.website &&
                     <div className="grid grid-cols-3 ml-2 p-2 ">
                         <p className="text-sm font-bold text-muted-foreground">Website </p>
                         <p className="col-span-2 px-2 md:px-2 bg-[#25a244] bg-opacity-10 
