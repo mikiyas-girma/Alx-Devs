@@ -2,7 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check, X } from "lucide-react";
+import { Info } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjectById, updateProject, setCurrentProject } from "@/utils/projectSlice";
 import { useState, useEffect } from "react";
@@ -10,6 +10,7 @@ import { fetchTeam, approveApplicant, rejectApplicant } from "@/utils/teamSlice"
 import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ConfirmableIcon from "@/components/ConfirmableIcon";
+import { Link } from "react-router-dom";
 
 
 const ProjectDetails = () => {
@@ -127,26 +128,35 @@ const ProjectDetails = () => {
                                                         {
                                                             (member.status == 'pending' && member.role !== 'Owner') &&
                                                             <div className="w-full">
-                                                                <div className="flex">
-                                                                    <p className=" w-full text-left">{member.user.name}</p>
-                                                                    <p className=" w-full text-left">{member.role}</p>
-                                                                    <p className=" text-yellow-500 w-full text-left">{member.status}</p>
-                                                                    <div className='m-0'>
+                                                                <div className="flex justify-between ">
+                                                                    <div className="flex">
+                                                                    <Link
+                                                                        to={`/user/${member.user.username}`}
+                                                                    >
+                                                                    <Info className="text-[#3a86ff] hover:text-[#0077b6] mx-2" />
+                                                                    </Link>
+                                                                    <p className="text-left">{member.user.name}</p>
+                                                                    </div>
+                                                                    <p className=" text-left">{member.role}</p>
+                                                                    <p className=" text-yellow-500 text-left">{member.status}</p>
+                                                                    <div className="flex">
+                                                                        <div className='m-0'>
                                                                             <ConfirmableIcon
                                                                                 iconType={'check'}
                                                                                 message='Are you sure you want to approve this applicant?'
                                                                                 onConfirm={handleMemberStatusChange}
                                                                                 value={[member.id, 'approved']}
                                                                             />
-                                                                    </div>
-                                                                    <div className="m-0">
-                                                                        <ConfirmableIcon
+                                                                        </div>
+                                                                        <div className="m-0">
+                                                                            <ConfirmableIcon
                                                                             iconType={'x'}
                                                                             message='Are you sure you want to reject this applicant?
                                                                                      this will remove the applicant from the team permanently'
                                                                             onConfirm={handleMemberStatusChange}
                                                                             value={[member.id, 'rejected']}
-                                                                        />
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <Separator className='mb-2' />
@@ -159,16 +169,23 @@ const ProjectDetails = () => {
 
                                         {hasApprovedRequests && (
                                             <>
-                                                <p className="mt-2 font-bold text-green-400">Approved requests</p>
+                                                <p className="my-2 font-bold text-green-400">Approved requests</p>
                                                 {team.map((member, index) => (
                                                     <div key={index} className='flex'>
                                                         {
                                                             (member.status == 'approved' && member.role !== 'Owner') &&
                                                             <div className="w-full">
-                                                                <div className="flex m-2">
-                                                                    <p className=" w-full text-left">{member.user.name}</p>
-                                                                    <p className=" w-full text-left">{member.role}</p>
-                                                                    <p className=" text-green-400 w-full text-left">{member.status}</p>
+                                                                <div className="flex justify-between">
+                                                                    <div className="flex">
+                                                                    <Link
+                                                                        to={`/user/${member.user.username}`}
+                                                                    >
+                                                                    <Info className="mx-2 text-[#3a86ff] hover:text-[#0077b6]" />
+                                                                    </Link>
+                                                                    <p className="text-left">{member.user.name}</p>
+                                                                    </div>
+                                                                    <p className="text-left">{member.role}</p>
+                                                                    <p className="text-green-400 text-left">{member.status}</p>
 
                                                                     <div>
                                                                         <ConfirmableIcon
