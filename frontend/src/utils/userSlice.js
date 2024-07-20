@@ -6,6 +6,7 @@ const storedUser = localStorage.getItem('user');
 const initialState = {
     loggeduser: storedUser ? JSON.parse(storedUser) : null, 
     users: [],
+    user: null,
     
 };
 
@@ -14,6 +15,12 @@ export const fetchUserById = createAsyncThunk('/users/fetchUserById', async (id)
     const response = await axiosInstance.get(`/users/${id}`);
     return response.data;
 });
+
+
+export const fetchUserByusername = createAsyncThunk('/users/fetchUserByusername', async (username) => {
+    const response = await axiosInstance.get(`/users/${username}`);
+    return response.data;
+})
 
 
 export const fetchUsers = createAsyncThunk('/users/fetchUsers', async () => {
@@ -38,16 +45,22 @@ const userSlice = createSlice({
             state.loggeduser = null;
             localStorage.removeItem('user');
         },
+        setUser: (state, action) => {
+            state.user = action.payload;
+        }
     },
 
     extraReducers: (builder) => {
         builder
             .addCase(fetchUserById.fulfilled, (state, action) => {
                 state.users.push(action.payload);
-            });
+            })
+            .addCase(fetchUserByusername.fulfilled, (state, action) => {
+                state.user = action.payload;
+            })
     },
 });
 
 
-export const { setUserLogin, setSignOut } = userSlice.actions;
+export const { setUserLogin, setSignOut, setUser } = userSlice.actions;
 export default userSlice.reducer;

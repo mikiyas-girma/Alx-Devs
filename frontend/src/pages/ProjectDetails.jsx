@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ConfirmableIcon from "@/components/ConfirmableIcon";
 import { Link } from "react-router-dom";
+import { setUser } from '@/utils/userSlice';
 
 
 const ProjectDetails = () => {
@@ -77,6 +78,11 @@ const ProjectDetails = () => {
         }
     };
 
+    const seeApplicant = (applicant) => {
+        console.log(applicant)
+        dispatch(setUser(applicant));
+    }
+
 
     const handleCloseProject = (value) => {
         dispatch(updateProject({ id: value, application: 'closed' }));
@@ -131,6 +137,7 @@ const ProjectDetails = () => {
                                                                 <div className="flex justify-between ">
                                                                     <div className="flex">
                                                                     <Link
+                                                                        onClick={() => seeApplicant(member)}
                                                                         to={`/user/${member.user.username}`}
                                                                     >
                                                                     <Info className="text-[#3a86ff] hover:text-[#0077b6] mx-2" />

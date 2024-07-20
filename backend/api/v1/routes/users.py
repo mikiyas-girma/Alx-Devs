@@ -14,6 +14,15 @@ from datetime import timedelta, datetime
 import os
 from werkzeug.utils import secure_filename
 from flask import current_app
+from uuid import UUID
+
+
+def is_valid_uuid(value):
+    try:
+        UUID(str(value))
+        return True
+    except ValueError:
+        return False
 
 
 @app_views.route('/users/', strict_slashes=False)
@@ -55,12 +64,20 @@ def register_user():
     return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
-def get_user(user_id):
-    """get specific user with given id"""
-    user = storage.get(User, user_id)
-    if not user:
-        abort(404, "User not found")
+@app_views.route('/users/<identifier>', methods=['GET'], strict_slashes=False)
+def get_user(identifier):
+    print("user is here ", identifier)
+    """get specific user with given id or username"""
+
+    if is_valid_uuid(identifier):
+        user = storage.get(User, identifier)
+        if not user:
+            abort(404, "User with this id not found")
+    else:
+        user = storage.get(User, username=identifier)
+        if not user:
+            abort(404, "user with this username not found")
+
     return jsonify(user.to_dict())
 
 
