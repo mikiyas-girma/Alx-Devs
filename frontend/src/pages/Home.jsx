@@ -52,7 +52,7 @@ const Home = () => {
     return (
         <>
             <Card className="min-h-screen">
-                <Card className='flex justify-around border-green-50'>
+                <Card className='flex justify-around items-center'>
                     <CardHeader className='text-center text-[#03AC13]'>
                         <CardTitle>Welcome {loggeduser?.username}</CardTitle>
                         <CardDescription className='text-base tracking-wider
@@ -60,10 +60,12 @@ const Home = () => {
                             Explore and Apply for Projects
                         </CardDescription>
                     </CardHeader>
-                    <Link to='../profile' >
-                        <Button className='m-4 border-green-700' variant='outline'>My Applications</Button>
+                    <Link to='../my_requests' >
+                        <Button className='m-4 border-green-700' variant='outline'>My Requests</Button>
                     </Link>
-                    <Link to='../create_project'><Button className='m-4 border-green-700' variant='outline'>Create Project</Button></Link>
+                    <Link to='../create_project'>
+                        <Button className='m-4 border-green-700' variant='outline'>Create Project</Button>
+                    </Link>
                 </Card>
                 <h2 className="my-7 font-serif text-xl text-center">Explore Some Projects You Can Do</h2>
                 <div className="m-auto w-96 sm:w-2/3 gap-4 flex justify-around">

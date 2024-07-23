@@ -47,17 +47,6 @@ const MyProjects = () => {
     }
         , [projects, loggeduser?.id, dispatch]);
 
-    const handleMemberStatusChange = (e) => {
-        console.log(e.target.value)
-        const id = e.target.value.split(',')[0]
-        const action = e.target.value.split(',')[1]
-        if (action === 'approved') {
-            dispatch(approveApplicant(id));
-        }
-        else if (action === 'rejected') {
-            dispatch(rejectApplicant(id));
-        }
-    };
 
     const handleViewDetails = (project) => {
         // Show a modal or a new page with the team members
@@ -66,92 +55,27 @@ const MyProjects = () => {
 
     }
 
-
     return (
         <div className="m-auto sm:w-full">
             <Card className='min-h-screen'>
-                <div className="grid sm:grid-cols-2 ">
+                <div className="grid sm:grid-cols-2">
                     {myProjects.map((project, index) => (
                         <div key={index} className="p-2 focus:ring-2 focus:ring-blue-600">
-                            <Card className='mb-4'>
+                            <Card className='mb-4 flex flex-col h-full'>
                                 <div className='p-2 text-[#03C04A]'>
                                     <p className='md:text-xl text-center'>{project.title}</p>
                                 </div>
-                                <div>
-                                    <p className='font-serif p-2 md:px-4'>{project.description}</p>
+                                <div className='flex-1 p-2 md:px-4'>
+                                    <p className='font-serif'>{project.description}</p>
                                 </div>
                                 <Button
-                                        className='m-2 focus:ring-2 focus:ring-[#03C04A] '
+                                        className='self-start text-left focus:ring-2 focus:ring-[#03C04A] '
                                         variant='outline'
                                         onClick={() => handleViewDetails(project)}
                                     >
                                         See Applicants
                                     </Button>
                             </Card>
-                            {/* 
-                            <div className="flex-1 m-2">
-                                {team.map((member, index) => (
-                                    <div key={index} className='flex mb-2'>
-                                        <p className=" w-full text-left">{member.user.name}</p>
-                                        <p className=" w-full">{member.role}</p>
-                                        <p className=" text-yellow-500 w-full">{member.status}</p>
-                                        <div className=''>
-                                            <Check
-                                                size={24}
-                                                className="mx-2 text-green-500 hover:text-green-700"
-                                                onClick={() => console.log('approved')}
-                                            />
-                                        </div>
-                                        <div>
-                                            <X
-                                                size={24}
-                                                className=" mx-2 text-red-500 hover:text-red-700"
-                                                onClick={() => console.log('rejected')}
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                                <div className='flex mb-2'>
-                                    <p className=" w-full text-left">Yoseph Girma</p>
-                                    <p className=" w-full">UI-designer</p>
-                                    <p className=" text-yellow-500 w-full">Pending</p>
-                                    <div className=''>
-                                        <Check
-                                            size={24}
-                                            className="mx-2 text-green-500 hover:text-green-700"
-                                            onClick={() => console.log('approved')}
-                                        />
-                                    </div>
-                                    <div>
-                                        <X
-                                            size={24}
-                                            className=" mx-2 text-red-500 hover:text-red-700"
-                                            onClick={() => console.log('rejected')}
-                                        />
-                                    </div>
-                                </div>
-                                <Separator />
-                                <div className='flex mb-2'>
-                                    <p className=" w-full text-left">Yoseph Girma</p>
-                                    <p className=" w-full">UI-designer</p>
-                                    <p className=" text-yellow-500 w-full">Pending</p>
-                                    <div className=''>
-                                        <Check
-                                            size={24}
-                                            className="mx-2 text-green-500 hover:text-green-700"
-                                            onClick={() => console.log('approved')}
-                                        />
-                                    </div>
-                                    <div>
-                                        <X
-                                            size={24}
-                                            className=" mx-2 text-red-500 hover:text-red-700"
-                                            onClick={() => console.log('rejected')}
-                                        />
-                                    </div>
-                                </div>
-                                <Separator />
-                            </div> */}
 
                         </div>
 
@@ -169,81 +93,6 @@ const MyProjects = () => {
                         </div>
                     }
                 </div>
-                {/* <div className="flex-1">
-                    <p className='text-center w-full font-bold p-2'>Applicants</p>
-                    <Card className="mb-4 p-2">
-                        <CardContent className='text-left p-4'>
-                            <div className="">
-                                <div className='flex mb-2'>
-                                    <p className=" w-full text-left">Yoseph Girma</p>
-                                    <p className=" w-full">UI-designer</p>
-                                    <p className=" text-green-500 w-full">Approved</p>
-                                    <div className=''>
-                                        <Check 
-                                            size={24} 
-                                            className="mx-2 text-green-500 hover:text-green-700" 
-                                            onClick={() => console.log('approved')}
-                                        />
-                                    </div>
-                                    <div>
-                                        <X 
-                                            size={24} 
-                                            className=" mx-2 text-red-500 hover:text-red-700" 
-                                            onClick={() => console.log('rejected')}
-                                        />
-                                    </div>
-                                </div>
-                                <Separator />
-                            </div>
-                            {team.map((member, index) => (
-                                <div key={index}>
-                                    {(member.status == 'approved' && member.role !== 'Owner') &&
-                                        <div className="">
-                                            <div className='flex'>
-                                                <p className="p-2 m-2 w-full">{member.user.name}</p>
-                                                <p className="p-2 m-2 w-full">{member.role}</p>
-                                                <p className="p-2 m-2 text-green-500 w-full">{member.status}</p>
-
-                                                <Button
-                                                    className="px-2 m-2 bg-red-500 w-full"
-                                                    value={[member.id, 'rejected']}
-                                                    onClick={handleMemberStatusChange}
-                                                >
-                                                    Reject
-                                                </Button>
-                                            </div>
-                                            <Separator />
-                                        </div>
-                                    }
-                                    {(member.status == 'pending' || member.status == 'rejected' && member.role !== 'Owner') &&
-                                        <div className="">
-                                            <div className='flex'>
-                                                <p className="p-2 m-2 w-full">{member.user.name}</p>
-                                                <p className="p-2 m-2 w-full">{member.role}</p>
-                                                <p className="p-2 m-2 text-yellow-400 w-full">{member.status}</p>
-
-                                                <Button
-                                                    className="px-2 m-2 w-full"
-                                                    value={[member.id, 'approved']}
-                                                    onClick={handleMemberStatusChange}
-                                                >
-                                                    Approve
-                                                </Button>
-                                            </div>
-                                            <Separator />
-                                        </div>
-                                    }
-                                    {
-                                        team.length <= 1 &&
-                                        <div className='flex flex-col items-center justify-center h-full'>
-                                            <p className="font-serif font-light tracking-wider">No applicants yet</p>
-                                        </div>
-                                    }
-                                </div>
-                            ))}
-                        </CardContent>
-                    </Card>
-                </div> */}
             </Card>
         </div>
     );

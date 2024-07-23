@@ -12,6 +12,7 @@ const PathConstants = {
     MY_PROJECTS: "/my_projects",
     PROJECT_DETAILS: "/project_details/:id",
     USER: "/user/:username",
+    MY_REQUESTS: "/my_requests"
 }
 
 export default PathConstants

@@ -86,7 +86,7 @@ const Profile = () => {
                         </Button>
                         <br />
                         <Button className='m-2 w-full' variant='outline' asChild>
-                            <Link to='#' >My Applications</Link>
+                            <Link to='/my_requests' >My Requests</Link>
                         </Button>
                     </div>
                 </div>

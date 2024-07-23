@@ -3,12 +3,6 @@ import axiosInstance from "./axiosInstance";
 import { getCookie } from "./utilities";
 
 
-const initialState = {
-    team: [],
-    team_status: 'idle',
-    team_error: null,
-};
-
 
 export const fetchTeam = createAsyncThunk('/projects/Team', async (project_id, {rejectWithValue}) => {
     try {
@@ -67,6 +61,30 @@ export const addTeamMember = createAsyncThunk('/user_projects/AddTeamMember', as
 });
 
 
+export const fetchMyRequests = createAsyncThunk('/my_requests', async () => {
+    try {
+        const response = await axiosInstance.get(`/my_requests`, {
+            headers: {
+                'X-CSRF-Token': getCookie('csrf_access_token')
+            }
+        });
+        console.log("my requests: ", response.data)
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+});
+
+
+
+
+const initialState = {
+    team: [],
+    my_requests: [],
+    team_status: 'idle',
+    team_error: null,
+};
+
 
 const teamSlice = createSlice({
     name: 'team',
@@ -110,6 +128,13 @@ const teamSlice = createSlice({
         .addCase(rejectApplicant.fulfilled, (state, action) => {
             state.team_status = 'succeeded';
             state.team = action.payload.team;
+        })
+        .addCase(fetchMyRequests.pending, (state) => {
+            state.team_status = 'loading';
+        })
+        .addCase(fetchMyRequests.fulfilled, (state, action) => {
+            state.team_status = 'succeeded';
+            state.my_requests = action.payload;
         })
     }
 });

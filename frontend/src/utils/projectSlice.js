@@ -3,14 +3,6 @@ import axiosInstance from "./axiosInstance";
 import { getCookie } from "./utilities";
 
 
-const initialState = {
-    projects: [],
-    currentProject: null,
-    myProjects: [],
-    status: 'idle',
-    error: null,
-};
-
 
 export const fetchProjects = createAsyncThunk('projects/fetchProjects', async () => {
     const response = await axiosInstance.get('/projects');
@@ -42,6 +34,16 @@ export const updateProject = createAsyncThunk('project/updateProject', async (pr
     });
     return response.data.project;
 });
+
+
+
+const initialState = {
+    projects: [],
+    currentProject: null,
+    myProjects: [],
+    status: 'idle',
+    error: null,
+};
 
 
 const projectSlice = createSlice({

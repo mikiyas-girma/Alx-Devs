@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProjectById } from "@/utils/projectSlice";
 import { fetchUserById } from "@/utils/userSlice";
 import { useEffect, useState } from "react";
-import { fetchTeam, addTeamMember } from "@/utils/teamSlice";
+import { fetchTeam, addTeamMember, fetchMyRequests } from "@/utils/teamSlice";
 import { useToast } from "@/components/ui/use-toast";
 import MemberList from "@/components/MemberList";
 
@@ -107,6 +107,7 @@ const Project = () => {
         dispatch(addTeamMember(newMember))
             .then((result) => {
                 if (result.type.endsWith('fulfilled')) {
+                    dispatch(fetchMyRequests())
 
                     toast({
                         title: "Success",
