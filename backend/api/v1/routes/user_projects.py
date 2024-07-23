@@ -98,7 +98,8 @@ def leave_project(project_id):
     storage.delete(existing_application)
     storage.save()
 
-    return jsonify({"msg": "You have leaved the project successfully"}), 200
+    return jsonify({"msg": "You have leaved the project successfully",
+                    "project_id": existing_application.project_id}), 200
 
 
 @app_views.route('/user_projects/<user_project_id>/approve',

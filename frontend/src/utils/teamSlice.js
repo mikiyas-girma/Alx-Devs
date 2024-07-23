@@ -11,8 +11,9 @@ export const fetchTeam = createAsyncThunk('/projects/Team', async (project_id, {
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
         });
-        console.log("team :  ", response.data)
+
         return response.data;
+        
     }
     catch (error) {
         return rejectWithValue(error.response.data);
@@ -29,7 +30,9 @@ export const approveApplicant = createAsyncThunk('/user_projects/approve', async
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
         });
+
         return response.data;
+
     } catch (error) {
         return rejectWithValue(error.response.data);
     }
@@ -43,7 +46,9 @@ export const rejectApplicant = createAsyncThunk('/user_projects/reject', async(u
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
         });
+
         return response.data;
+
     } catch (error) {
         return rejectWithValue(error.response.data);
     }
@@ -57,7 +62,9 @@ export const addTeamMember = createAsyncThunk('/user_projects/AddTeamMember', as
             'X-CSRF-Token': getCookie('csrf_access_token')
         }
     });
+
     return data;
+
 });
 
 
@@ -68,10 +75,27 @@ export const fetchMyRequests = createAsyncThunk('/my_requests', async () => {
                 'X-CSRF-Token': getCookie('csrf_access_token')
             }
         });
-        console.log("my requests: ", response.data)
+
         return response.data;
+
     } catch (error) {
         return error.response.data;
+    }
+});
+
+
+export const leaveTeam = createAsyncThunk('/projects/leave', async (project_id, {rejectWithValue}) => {
+    try {
+        const response = await axiosInstance.post(`/projects/${project_id}/leave`, {},  {
+            headers: {
+                'X-CSRF-Token': getCookie('csrf_access_token')
+            }
+        });
+
+        return response.data.project_id;
+
+    } catch (error) {
+        return rejectWithValue(error.response.data);
     }
 });
 
@@ -136,6 +160,14 @@ const teamSlice = createSlice({
             state.team_status = 'succeeded';
             state.my_requests = action.payload;
         })
+        .addCase(leaveTeam.pending, (state) => {
+            state.team_status = 'loading';
+        })
+        .addCase(leaveTeam.fulfilled, (state, action) => {
+            state.team_status = 'succeeded';
+            state.my_requests = state.my_requests.filter((request) => request.project_id !== action.payload);
+        })
+        
     }
 });
 

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import ConfirmableIcon from "@/components/ConfirmableIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchMyRequests } from "@/utils/teamSlice";
+import { fetchMyRequests, leaveTeam } from "@/utils/teamSlice";
 
 
 const MyRequests = () => {
@@ -28,6 +28,12 @@ const MyRequests = () => {
         }
     }
         , [dispatch, team_status]);
+
+
+    const handleRevokeRequest = (value) => {
+        dispatch(leaveTeam(value));
+        console.log('revoke request for project id:', value);
+    }
 
 
     return (
@@ -52,10 +58,10 @@ const MyRequests = () => {
                         {my_requests.length > 0 && (
                             <>
                                 {my_requests.map((myrequest, index) => (
-                                    <>
-                                    <div className="flex justify-between ">
+                                    <div key={index}>
+                                    <div className="grid grid-cols-5">
 
-                                        <div className="flex">
+                                        <div className="flex col-span-2 mr-2">
                                             <Link
                                                 to={`#`}
                                             >
@@ -73,15 +79,15 @@ const MyRequests = () => {
                                         <div className="flex items-center">
                                             <ConfirmableIcon
                                                 iconType={'x'}
-                                                message='Are you sure you want to reject this applicant?
-                                                                                     this will remove the applicant from the team permanently'
-                                                onConfirm
-                                                value={['1', 'rejected']}
+                                                message='Are you sure you want to revoke this request?
+                                                         this removes you from the team permanently'
+                                                onConfirm={handleRevokeRequest}
+                                                value={myrequest.project.id}
                                             />
                                         </div>
                                     </div>
                                 <Separator className='my-2' />
-                                </>
+                                </div>
                                 ))}
 
                             </>
