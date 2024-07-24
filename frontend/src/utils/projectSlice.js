@@ -73,7 +73,11 @@ const projectSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message;
             })
+            .addCase(fetchProjectById.pending, (state) => {
+                state.status = 'loading';
+            })
             .addCase(fetchProjectById.fulfilled, (state, action) => {
+                state.status = 'succeeded';
                 state.currentProject = action.payload;
             })
             .addCase(addProject.fulfilled, (state, action) => {

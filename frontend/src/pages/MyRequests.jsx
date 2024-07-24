@@ -63,7 +63,7 @@ const MyRequests = () => {
 
                                         <div className="flex col-span-2 mr-2">
                                             <Link
-                                                to={`#`}
+                                                to={`/project/${myrequest.project.id}`}
                                             >
                                                 <Info className="mx-2 text-[#3a86ff] hover:text-[#0077b6]" />
                                             </Link>

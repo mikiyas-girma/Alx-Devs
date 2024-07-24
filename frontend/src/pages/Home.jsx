@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { Search } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjects, setCurrentProject } from "@/utils/projectSlice";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 
 
@@ -35,13 +36,18 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if (projectStatus == 'idle') {
+        if (projectStatus == 'idle' || !projects.length) {
             dispatch(fetchProjects());
         }
     }, [projectStatus, dispatch])
 
     if (projectStatus == 'loading') {
-        return <div>Loading...</div>
+
+        return (
+            <div className="flex items-center h-96 justify-center">
+                    <LoadingSpinner className='' />
+            </div>
+        );
     }
 
     if (projectStatus == 'failed') {
@@ -68,7 +74,7 @@ const Home = () => {
                     </Link>
                 </Card>
                 <h2 className="my-7 font-serif text-xl text-center">Explore Some Projects You Can Do</h2>
-                <div className="m-auto w-96 sm:w-2/3 gap-4 flex justify-around">
+                <div className="m-auto md:pb-7 w-96 sm:w-2/3 gap-4 flex justify-around">
                     <Input type='text' placeholder='Filter' className='text-center mx-2' />
                     {/* <Input type='text' placeholder='Search ...' className='text-center mx-2' /> */}
                     <form className="w-full">

@@ -128,14 +128,14 @@ const ProjectDetails = () => {
                                     <div className="flex flex-col">
                                         {hasPendingRequests && (
                                             <>
-                                                <p className="font-bold text-yellow-400 p-2">Pending requests</p>
+                                                <p className="font-bold text-yellow-400 p-4">Pending requests</p>
                                                 {team.map((member, index) => (
                                                     <div key={index} className='flex'>
                                                         {
                                                             (member.status == 'pending' && member.role !== 'Owner') &&
                                                             <div className="w-full">
-                                                                <div className="flex justify-between ">
-                                                                    <div className="flex">
+                                                                <div className="grid grid-cols-6">
+                                                                    <div className="flex col-span-2">
                                                                     <Link
                                                                         onClick={() => seeApplicant(member)}
                                                                         to={`/user/${member.user.username}`}
@@ -144,7 +144,7 @@ const ProjectDetails = () => {
                                                                     </Link>
                                                                     <p className="text-left w-24">{member.user.name}</p>
                                                                     </div>
-                                                                    <p className=" text-left">{member.role}</p>
+                                                                    <p className=" text-left col-span-2">{member.role}</p>
                                                                     <p className=" text-yellow-500 text-left">{member.status}</p>
                                                                     <div className="flex">
                                                                         <div className='m-0'>
@@ -176,14 +176,14 @@ const ProjectDetails = () => {
 
                                         {hasApprovedRequests && (
                                             <>
-                                                <p className="my-2 font-bold text-green-400">Approved requests</p>
+                                                <p className="my-2 font-bold text-green-400 p-4">Approved requests</p>
                                                 {team.map((member, index) => (
                                                     <div key={index} className='flex'>
                                                         {
                                                             (member.status == 'approved' && member.role !== 'Owner') &&
                                                             <div className="w-full">
-                                                                <div className="flex justify-between">
-                                                                    <div className="flex">
+                                                                <div className="grid grid-cols-6 gap-0">
+                                                                    <div className="flex col-span-2">
                                                                     <Link
                                                                         to={`/user/${member.user.username}`}
                                                                     >
@@ -191,7 +191,7 @@ const ProjectDetails = () => {
                                                                     </Link>
                                                                     <p className="text-left w-24">{member.user.name}</p>
                                                                     </div>
-                                                                    <p className="text-left">{member.role}</p>
+                                                                    <p className="text-left col-span-2">{member.role}</p>
                                                                     <p className="text-green-400 text-left">{member.status}</p>
 
                                                                     <div>
@@ -205,7 +205,7 @@ const ProjectDetails = () => {
                                                                         />
                                                                     </div>
                                                                 </div>
-                                                                <Separator />
+                                                                <Separator className='mb-2' />
                                                             </div>
                                                         }
                                                     </div>

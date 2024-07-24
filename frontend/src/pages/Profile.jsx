@@ -128,7 +128,7 @@ const Profile = () => {
                                     <UpdateProfile />
                         </div>
                     </div>
-                    <CardContent className='m-auto text-left m-4 p-4 border border-green-100'>
+                    <CardContent className='m-auto text-left m-4 p-4 border'>
                         {/* <div className='my-2 flex justify-end' variant='outline' type='submit'>
                             <Link to='/edit_profile'>
                                 <UserCog className="text-right w-full text-[#E72F2F]" />

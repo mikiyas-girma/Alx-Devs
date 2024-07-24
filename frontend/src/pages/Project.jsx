@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { fetchTeam, addTeamMember, fetchMyRequests } from "@/utils/teamSlice";
 import { useToast } from "@/components/ui/use-toast";
 import MemberList from "@/components/MemberList";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 
 
@@ -41,7 +42,7 @@ const Project = () => {
 
 
     useEffect(() => {
-        
+
         dispatch(fetchTeam(id));
         if (!project || project.id !== id) {
             dispatch(fetchProjectById(id));
@@ -63,7 +64,11 @@ const Project = () => {
 
 
     if (status == 'loading') {
-        return <div>Loading...</div>
+        return (
+            <div className="flex items-center h-96 justify-center">
+                <LoadingSpinner className='' />
+            </div>
+        );
     }
 
     if (status == 'failed') {
@@ -94,16 +99,15 @@ const Project = () => {
             return;
         }
         const newMember = {
-            
+
             project_id: id,
             role: selectedRole,
             status: 'pending',
             user_id: loggeduser.id,
             user: loggeduser
-            }
-        
+        }
 
-        console.log("new member: ", newMember)
+
         dispatch(addTeamMember(newMember))
             .then((result) => {
                 if (result.type.endsWith('fulfilled')) {
@@ -121,7 +125,7 @@ const Project = () => {
                     console.log(result)
                     toast({
                         title: "Error",
-                        description: "You ! already applied to this project",
+                        description: "You have already applied to this project !",
                         status: "error",
                         duration: 2000,
                         variant: "destructive"
@@ -151,7 +155,7 @@ const Project = () => {
                             </p>
                             <p className='font-serif italic dark:bg-slate-800 rounded-lg ring-1 ring-slate-900/5
                                                    shadow  p-2 md:px-4 text-left m-auto mt-2'>
-                                        {project.application === 'open' ? 'Application Form is open' : 'Application Form is closed'}
+                                {project.application === 'open' ? 'Application Form is open' : 'Application Form is closed'}
                             </p>
                         </CardContent>
 
@@ -212,41 +216,41 @@ const Project = () => {
                                 </div>
                             </CardFooter>
                             : (loggeduser.id == project.creator_id) ?
-                            <CardFooter className='justify-center'>
-                                <div className="p-[3px] relative">
-                                    <Link
-                                        to={`/project_details/${id}/`}
-                                    >
-                                    <button
-                                        className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
+                                <CardFooter className='justify-center'>
+                                    <div className="p-[3px] relative">
+                                        <Link
+                                            to={`/project_details/${id}/`}
+                                        >
+                                            <button
+                                                className=" mt-2 bg-gradient-to-r from-green-400 via-green-500 to-green-500 
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
-                                        type="submit"
-                                    >
-                                        Manage Requests
-                                    </button>
-                                    </Link>
-                                </div>
-                            </CardFooter> : 
-                            <CardFooter className='justify-center'>
-                                <div className="p-[3px] relative">
-                                    <button
-                                        className=" mt-2 bg-gradient-to-r from-red-400 via-red-500 to-red-500 
+                                                type="submit"
+                                            >
+                                                Manage Requests
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </CardFooter> :
+                                <CardFooter className='justify-center'>
+                                    <div className="p-[3px] relative">
+                                        <button
+                                            className=" mt-2 bg-gradient-to-r from-red-400 via-red-500 to-red-500 
                                     hover:bg-gradient-to-r hover:from-blue-500 hover:via-blue-600 hover:to-blue-600 
                                     text-white font-semibold py-2 px-4 border border-gray-400 rounded-md shadow"
-                                        type="submit"
-                                    >
-                                        Application Form Closed
-                                    </button>
-                                </div>
-                            </CardFooter>
+                                            type="submit"
+                                        >
+                                            Application Form Closed
+                                        </button>
+                                    </div>
+                                </CardFooter>
                         }
                     </div>
                     <div className="flex-1 m-6 ">
-                    <MemberList team={team} />
+                        <MemberList team={team} />
                     </div>
 
-                    
+
                 </Card>
                 <div className="text-center ">
                     <Link to='/home'>
