@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from models import storage
 from api.v1.routes import app_views
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True,
@@ -21,6 +22,16 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_COOKIE_SECURE'] = True
+
+app.config['MAIL_SERVER'] = 'smtp.postmarkapp.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = getenv('POSTMARK_API_TOKEN')
+app.config['MAIL_PASSWORD'] = getenv('POSTMARK_API_TOKEN')
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEFAULT_SENDER'] = getenv('MAIL_USERNAME')
+
+mail = Mail(app)
 
 jwt = JWTManager(app)
 
@@ -71,6 +82,27 @@ def unauthorized_req(callbackdata):
 def api():
     """status of the api"""
     return jsonify({"status": "working"})
+
+
+@app.route('/api/v1/send-email', methods=['POST'],
+           strict_slashes=False)
+def send_email():
+    """send email to the user"""
+    req = request.get_json()
+    if not isinstance(req, dict):
+        return jsonify({"msg": "Not a json"}), 400
+    if 'email' not in req:
+        return jsonify({"msg": "email is required"}), 400
+    if 'subject' not in req:
+        return jsonify({"msg": "subject is required"}), 400
+    if 'body' not in req:
+        return jsonify({"msg": "body is required"}), 400
+
+    msg = Message(req['subject'], sender=getenv('MAIL_USERNAME'),
+                  recipients=["mikiyasgirmaet@gmail.com"])
+    msg.body = req['body']
+    mail.send(msg)
+    return jsonify({"msg": "email sent"}), 200
 
 
 if __name__ == "__main__":

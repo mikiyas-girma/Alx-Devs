@@ -6,7 +6,7 @@ import About from "@/components/About";
 
 const LandingPage = () => {
     return (
-        <div className="bg-gradient-to-b from-blue-500 to-sky-500">
+        <div className="">
             <div>
                     <Hero />
             </div>

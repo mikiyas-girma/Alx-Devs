@@ -10,12 +10,52 @@ import {
 
 const About = () => {
     return (
-        <div className="p-8">
-            <Card className='p-4 text-center' style={{
-                background: 'rgba(255, 255, 255, 0.5)',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.18)'
+        <div className="p-24 m-auto bg-[#1F3934]">
+            <div className="flex text-center font-space_grotesk gap-6">
+                <div className=''>
+                    <div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
+                    </div>
+                    <div>
+                        <div className=''>
+                            Find projects that match your skills and interests.
+                            Connect with opportunities tailored just for you.
+
+                        </div>
+                    </div>
+                </div>
+                <div className=''>
+                    <div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
+                    </div>
+                    <div>
+                        <div className=''>
+
+
+                            Showcase your contributions and skills. Create a portfolio
+                            that stands out to employers and collaborators.
+                        </div>
+                    </div>
+                </div>
+                <div className=''>
+                    <div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">Discover Projects</div>
+                    </div>
+                    <div>
+                        <div className=' font-space_grotesk'>
+
+                            Project creators can easily approve or reject requests to join their projects,
+                            ensuring the right fit for the team.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* <Card className='p-4 text-center' style={{
+                // background: 'rgba(255, 255, 255, 0.5)',
+                // backdropFilter: 'blur(10px)',
+                // boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                // border: '1px solid rgba(255, 255, 255, 0.18)'
             }}>
                 <CardHeader>
                     <CardTitle>About</CardTitle>
@@ -28,7 +68,7 @@ const About = () => {
                     community support you need to succeed. Join us and take the next step in your development journey!
                     </CardDescription>
                 </CardContent>
-            </Card>
+            </Card> */}
         </div>
 
     );
