@@ -5,6 +5,13 @@
   @tailwind components;
   @tailwind utilities;
 
+/* styles/globals.css */
+html, body {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
 
 @layer base {
   :root {

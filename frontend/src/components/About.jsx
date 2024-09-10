@@ -11,9 +11,9 @@ import {
 const About = () => {
     return (
         <>
-        <div className="bg-[url('/images/letsbuild.svg')] bg-[#1F3934] bg-center bg-cover pt-32 ">
+        <div className="bg-[url('/images/letsbuild.svg')] bg-[#1F3934] bg-center bg-cover pt-10 md:pt-32 ">
         
-            <div className="mx-10 grid grid-cols-3 justify-center items-start h-screen text-center font-space_grotesk gap-y-6">
+            <div className="mx-2 md:mx-10 grid grid-cols-1 md:grid-cols-3 justify-center items-start md:h-screen text-center font-space_grotesk gap-y-6">
                 
                 <div className='bg-[#1c5955] col-span-1 shadow-lg rounded-lg p-6'>
                     <div>

@@ -1,61 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Star } from 'lucide-react';
 
 const HeroSection = () => {
     return (
         <div className='bg-[#1F3934]'>
-            {/* <AspectRatio ratio={ 4 / 2 } className="bg-no-repeat bg-top bg-cover" style={{ backgroundImage: `url('landing1.jpg')` }}> */}
-            <div className='text-white flex flex-col h-screen items-center justify-center'>
-                <h1 className="flex text-6xl font-space_grotesk font-bold text-[#C7F494]">Collaborate
-                    <span className='mx-4'> & </span>
-                    <br />
-                    Grow with <span className='mx-2 underline hover:decoration-blue-500'>CoDevs</span>
-                </h1>
-                <p className="text-2xl m-6 font-victor_mono font-bold text-[#C7F494]">Find peers, join projects, and build your portfolio together.</p>
-                {/* <Link to="/signup"
-                    className="font-space_grotesk self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-7 rounded-xl">
-                    Get Started
-                </Link> */}
-                <div className="mt-10 text-2xl font-bold flex gap-10 font-libre text-[#FFFFB1]">
+            <div className='text-white flex flex-col pt-10 md:pt-24'>
+                <div className="text-3xl text-center md:text-6xl font-space_grotesk font-bold text-[#C7F494]">Collaborate
+                    <span className='mx-2'> & </span>
+                    <span className=''>Grow with</span> 
+                    <span className='mx-2 underline hover:decoration-blue-500'>CoDevs</span>
+                </div>
+                <p className="text-lg md:text-2xl text-center px-4 pt-7 md:pt-2 md:m-6 font-victor_mono font-bold text-[#C7F494]">
+                    Find peers, join projects, and build your portfolio together.
+                </p>
+                
+                <div className="m-auto mt-4 md:mt-10  md:text-center text-lg md:text-2xl font-bold 
+                     flex flex-col md:flex-row gap-4 md:gap-10 font-libre text-[#FFFFB1]">
                     <div className=''>
                         <span>
                             <Star
                                 color='#C7F494'
-                                className='m-auto my-2'
+                                className='m-auto md:my-2'
                             />
                         </span>
-                        <p className='mx-2'>Collaborate with developers</p>
+                        <p className='mx-2 flex justify-center'>Collaborate with developers</p>
                     </div>
-                    <div>
+                    <div className='text-center'>
                         <span>
                             <Star
                                 color='#C7F494'
-                                className='m-auto my-2'
+                                className='m-auto md:my-2'
                             />
                         </span>
-                        <p className='mx-2'>Work on real-world projects</p>
+                        <p className='mx-2 flex justify-center'>Work on real-world projects</p>
                     </div>
-                    <div>
+                    <div className='text-center'>
                         <span>
                             <Star
                                 color='#C7F494'
-                                className='m-auto my-2'
+                                className='m-auto md:my-2'
                             />
                         </span>
-                        <p className='mx-2'>Enhance your skills and portfolio</p>
+                        <p className='mx-2 flex justify-center'>Enhance  your skills</p>
                     </div>
                 </div>
-                <div className='mt-24'>
+                <div className='mt-16 my-4 md:mb-28 md:mt-24 text-center'>
                     <Link to="/signup"
-                        className="font-libre font-bold self-center text-[#1F3934] bg-[#FFFFB1] 
-                        py-4 px-20 mt-10">
+                        className="font-libre font-bold text-[#1F3934] bg-[#FFFFB1] 
+                        py-3 md:py-4 px-6 md:px-20 md:mt-10 rounded">
                         Start Working Real Projects
                     </Link>
                 </div>
             </div>
-            {/* </AspectRatio> */}
         </div>
     );
 };

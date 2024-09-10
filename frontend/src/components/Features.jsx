@@ -2,12 +2,12 @@
 const Features = () => {
     return (
         <>
-            <div className="bg-[url('/images/coworking1.svg')] bg-[#1F3934] bg-cover bg-center h-screen 
+            <div className="bg-[url('/images/coworking1.svg')] hidden md:block bg-[#1F3934] bg-cover bg-center h-screen 
              ">
             </div>
-            <div className="p-24 m-auto bg-[#1F3934]">
-            <div className="flex text-center font-space_grotesk gap-6">
-                <div className='shadow-lg rounded-lg p-6'>
+            <div className="bg-[#1F3934]">
+            <div className="flex flex-col md:flex-row text-center mx-2 md:mx-8 py-8 font-space_grotesk gap-6">
+                <div className='flex-1 shadow-lg rounded-xl p-6 bg-[#1c5955]'>
                     <div>
                         <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
                     </div>
@@ -19,12 +19,12 @@ const Features = () => {
                         </div>
                     </div>
                 </div>
-                <div className=''>
+                <div className='flex-1 rounded-xl bg-[#1c5955]'>
                     <div>
                         <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Build Your Portfolio</div>
                     </div>
                     <div>
-                        <div className='shadow-lg rounded-lg p-6'>
+                        <div className='shadow-lg py-4 md:p-6 '>
 
 
                             Showcase your contributions and skills. Create a portfolio
@@ -32,7 +32,7 @@ const Features = () => {
                         </div>
                     </div>
                 </div>
-                <div className='shadow-lg rounded-lg p-6'>
+                <div className='flex-1 shadow-lg rounded-xl p-6 bg-[#1c5955]'>
                     <div>
                         <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">
                             Flexible Approval Process
