@@ -18,7 +18,7 @@ const HeroSection = () => {
                     className="font-space_grotesk self-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-7 rounded-xl">
                     Get Started
                 </Link> */}
-                <div className="mt-10 text-xl font-bold flex gap-10 font-victor_mono">
+                <div className="mt-10 text-2xl font-bold flex gap-10 font-libre text-[#FFFFB1]">
                     <div className=''>
                         <span>
                             <Star
@@ -49,7 +49,7 @@ const HeroSection = () => {
                 </div>
                 <div className='mt-24'>
                     <Link to="/signup"
-                        className="font-victor_mono font-bold self-center text-[#1F3934] bg-[#C7F494] 
+                        className="font-libre font-bold self-center text-[#1F3934] bg-[#FFFFB1] 
                         py-4 px-20 mt-10">
                         Start Working Real Projects
                     </Link>

@@ -74,6 +74,7 @@ module.exports = {
       fontFamily: {
         space_grotesk: "Space Grotesk",
         victor_mono: "Victor Mono",
+        libre: "Libre Baskerville",
       }
     },
   },

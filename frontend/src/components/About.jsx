@@ -10,9 +10,12 @@ import {
 
 const About = () => {
     return (
-        <div className="p-24 m-auto bg-[#1F3934]">
-            <div className="flex text-center font-space_grotesk gap-6">
-                <div className=''>
+        <>
+        <div className="bg-[url('/images/letsbuild.svg')] bg-[#1F3934] bg-center bg-cover pt-32 ">
+        
+            <div className="grid grid-cols-3 justify-center items-start h-screen text-center font-space_grotesk gap-6">
+                
+                <div className='col-span-1 shadow-lg rounded-lg p-6'>
                     <div>
                         <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
                     </div>
@@ -24,9 +27,10 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <div className=''>
+                <div></div>
+                <div className='shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Build Your Portfolio</div>
                     </div>
                     <div>
                         <div className=''>
@@ -37,9 +41,26 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <div className=''>
+                <div className='shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">Discover Projects</div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">
+                            Flexible Approval Process
+                        </div>
+                    </div>
+                    <div>
+                        <div className=' font-space_grotesk'>
+
+                            Project creators can easily approve or reject requests to join their projects,
+                            ensuring the right fit for the team.
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+                <div className='shadow-lg rounded-lg p-6'>
+                    <div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">
+                            Flexible Approval Process
+                        </div>
                     </div>
                     <div>
                         <div className=' font-space_grotesk'>
@@ -70,6 +91,7 @@ const About = () => {
                 </CardContent>
             </Card> */}
         </div>
+        </>
 
     );
 }
