@@ -22,17 +22,17 @@ const About = () => {
                     <div>
                         <div className='flex gap-x-4 justify-center'>
                             <img 
-                                src="public/icons/React.svg" 
+                                src="icons/React.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Angular.svg" 
+                                src="icons/Angular.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Vue.js.svg" 
+                                src="icons/Vue.js.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
@@ -47,17 +47,17 @@ const About = () => {
                     <div className="">
                         <div className='flex gap-x-4 justify-center'>
                             <img 
-                                src="public/icons/Nest.js.svg" 
+                                src="icons/Nest.js.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Laravel.svg" 
+                                src="icons/Laravel.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/FastAPI.svg" 
+                                src="icons/FastAPI.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
@@ -71,17 +71,17 @@ const About = () => {
                     <div>
                         <div className='flex gap-x-4 justify-center'>
                             <img 
-                                src="public/icons/Figma.svg" 
+                                src="icons/Figma.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Canva.svg" 
+                                src="icons/Canva.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Adobe.svg" 
+                                src="icons/Adobe.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
@@ -96,17 +96,17 @@ const About = () => {
                     <div>
                         <div className='flex gap-x-4 justify-center'>
                             <img 
-                                src="public/icons/AWS.svg" 
+                                src="icons/AWS.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/Docker.svg" 
+                                src="icons/Docker.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
                             <img 
-                                src="public/icons/NGINX.svg" 
+                                src="icons/NGINX.svg" 
                                 alt="React Js" 
                                 width={70}
                             />
