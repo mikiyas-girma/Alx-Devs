@@ -13,60 +13,103 @@ const About = () => {
         <>
         <div className="bg-[url('/images/letsbuild.svg')] bg-[#1F3934] bg-center bg-cover pt-32 ">
         
-            <div className="grid grid-cols-3 justify-center items-start h-screen text-center font-space_grotesk gap-6">
+            <div className="mx-10 grid grid-cols-3 justify-center items-start h-screen text-center font-space_grotesk gap-y-6">
                 
-                <div className='col-span-1 shadow-lg rounded-lg p-6'>
+                <div className='bg-[#1c5955] col-span-1 shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Discover Projects</div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Frontend Technologies</div>
                     </div>
                     <div>
-                        <div className=''>
-                            Find projects that match your skills and interests.
-                            Connect with opportunities tailored just for you.
-
+                        <div className='flex gap-x-4 justify-center'>
+                            <img 
+                                src="public/icons/React.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Angular.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Vue.js.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
                         </div>
                     </div>
                 </div>
                 <div></div>
-                <div className='shadow-lg rounded-lg p-6'>
+                <div className='bg-[#1c5955] col-span-1 shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Build Your Portfolio</div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">Backend Technologies</div>
                     </div>
-                    <div>
-                        <div className=''>
-
-
-                            Showcase your contributions and skills. Create a portfolio
-                            that stands out to employers and collaborators.
+                    <div className="">
+                        <div className='flex gap-x-4 justify-center'>
+                            <img 
+                                src="public/icons/Nest.js.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Laravel.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/FastAPI.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className='shadow-lg rounded-lg p-6'>
+                <div className='bg-[#1c5955] col-span-1 shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">
-                            Flexible Approval Process
-                        </div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">UI UX Technologies</div>
                     </div>
                     <div>
-                        <div className=' font-space_grotesk'>
-
-                            Project creators can easily approve or reject requests to join their projects,
-                            ensuring the right fit for the team.
+                        <div className='flex gap-x-4 justify-center'>
+                            <img 
+                                src="public/icons/Figma.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Canva.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Adobe.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
                         </div>
                     </div>
                 </div>
                 <div></div>
-                <div className='shadow-lg rounded-lg p-6'>
+                <div className='bg-[#1c5955] col-span-1 shadow-lg rounded-lg p-6'>
                     <div>
-                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold font-space_grotesk">
-                            Flexible Approval Process
-                        </div>
+                        <div className="text-center text-2xl py-4 text-[#C7F494] font-bold">DevOps & Cloud Computing</div>
                     </div>
                     <div>
-                        <div className=' font-space_grotesk'>
-
-                            Project creators can easily approve or reject requests to join their projects,
-                            ensuring the right fit for the team.
+                        <div className='flex gap-x-4 justify-center'>
+                            <img 
+                                src="public/icons/AWS.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/Docker.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
+                            <img 
+                                src="public/icons/NGINX.svg" 
+                                alt="React Js" 
+                                width={70}
+                            />
                         </div>
                     </div>
                 </div>
