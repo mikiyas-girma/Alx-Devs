@@ -53,8 +53,14 @@ To run the Alx_Devs project locally, follow these steps:
 5. **Manage Requests**: Approve or reject requests to join your project.
 
 ## Screenshots
-*This is the current landing page to be changed soon!*
-![Home Page](/assets/landingpage.png)
+*Landing page*
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="/assets/pixel7.png" alt="Home Page" style="width: 48%;"/>
+    <img src="/assets/pixel2.png" alt="Home Page" style="width: 48%;"/>
+</div>
+
+![Home Page](/assets/xdr.png)
 
 *This is the page where created project get listed*
 ![Project Listing Page](/assets/homepage.png)
