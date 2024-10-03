@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Alx-Devs/',
+  base: '/CoDevs/',
   plugins: [react()],
   resolve: {
     alias: {
